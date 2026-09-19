@@ -22,7 +22,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Auth middleware for security
+// Public healthcheck for Render & UptimeRobot keepalive
+app.get(['/', '/health'], (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'MENTION WhatsApp Microservice',
+    isConnected,
+    uptimeSeconds: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Auth middleware for security on API endpoints
 app.use((req, res, next) => {
   const secret = req.headers['x-service-secret'];
   if (secret !== SERVICE_SECRET) {
