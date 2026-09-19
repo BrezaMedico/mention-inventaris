@@ -74,7 +74,7 @@ export async function createAdminSession(payload: { id: string; username: string
   const token = await new SignJWT({ ...payload, role: 'ADMIN' })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime('24h')
+    .setExpirationTime('7d')
     .sign(SECRET_KEY);
 
   const cookieStore = await cookies();
@@ -83,7 +83,7 @@ export async function createAdminSession(payload: { id: string; username: string
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    // Pure session cookie: automatically destroyed when leaving/closing the page
+    maxAge: 60 * 60 * 24 * 7, // 7 days persistent
   });
 
   return token;

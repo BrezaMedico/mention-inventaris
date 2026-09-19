@@ -34,6 +34,10 @@ export default function AdminWhatsAppPage() {
     try {
       setLoading(true);
       const res = await fetch('/api/admin/whatsapp');
+      if (res.status === 401) {
+        window.location.href = '/admin/login?from=/admin/whatsapp';
+        return;
+      }
       const data = await res.json();
       if (data.success) {
         setStatusData(data.status);

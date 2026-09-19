@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: result.error || 'Gagal menyimpan transaksi peminjaman.' }, { status: 409 });
     }
 
-    // 5. Trigger WhatsApp notification in background (non-blocking)
-    dispatchPendingNotifications().catch((err) => {
+    // 5. Trigger WhatsApp notification
+    await dispatchPendingNotifications().catch((err) => {
       console.warn('WhatsApp notification dispatch error (non-fatal):', err.message);
     });
 
