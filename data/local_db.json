@@ -11,821 +11,962 @@
   ],
   "generations": [
     {
-      "id": "gen-3",
+      "id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Angkatan 3",
       "order_index": 3,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.488Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "gen-4",
+      "id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Angkatan 4",
       "order_index": 4,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "gen-5",
+      "id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Angkatan 5",
       "order_index": 5,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "gen-6",
+      "id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Angkatan 6",
       "order_index": 6,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "gen-other",
+      "id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
       "name": "Lainnya",
       "order_index": 7,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     }
   ],
   "members": [
     {
-      "id": "mem-1",
-      "generation_id": "gen-6",
+      "id": "89ed4238-bcfa-4937-bac6-03821f1c201f",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Abdullah Al Muttaqii",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-2",
-      "generation_id": "gen-6",
+      "id": "670081b6-fd08-4cc4-a498-e85b60f4f3cf",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Abdul Fattah Al Anshori",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-3",
-      "generation_id": "gen-6",
+      "id": "60e79b37-b873-491d-8626-a2525f9ee977",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "A’fif Abdurrahim",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-4",
-      "generation_id": "gen-6",
+      "id": "8527392a-5d2e-4a10-b7ce-5622c000f0e3",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Ahmad Sahrudin",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-5",
-      "generation_id": "gen-6",
+      "id": "45bbe27b-01b5-4e13-b23f-b02ff3e25733",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Alifiandra Kautsar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-6",
-      "generation_id": "gen-6",
+      "id": "b05f1206-9209-48e7-9000-281e69475783",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Ghany Rizqi Yusuf",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-7",
-      "generation_id": "gen-6",
+      "id": "8b48337a-231f-42ab-97d7-80c9ecf97016",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Ghasan Kamil Al-Hamudi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-8",
-      "generation_id": "gen-6",
+      "id": "49e29187-3810-4eed-b0f3-3dd43d45b122",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Ihsan Alfarizi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-9",
-      "generation_id": "gen-6",
+      "id": "72298492-009b-46bb-8646-c6a7bb696cc4",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Ihsan Mubarak",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-10",
-      "generation_id": "gen-6",
+      "id": "b92db853-8256-4c0f-b55e-53c8dd930cda",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Indra Samudra",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-11",
-      "generation_id": "gen-6",
+      "id": "555c4d15-c31b-4151-9228-68d4c0cbbd41",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Jason Pratama Vinar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-12",
-      "generation_id": "gen-6",
+      "id": "e55711a6-99a7-4b10-8af1-854251f46d68",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Lukyan Sashenka Chandra",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-13",
-      "generation_id": "gen-6",
+      "id": "c3e07ce7-73ff-4451-bfa4-55d3195141d2",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Lutfi Dwi Aditya",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-14",
-      "generation_id": "gen-6",
+      "id": "6b64d5ac-5a50-4688-be44-8dba74cc3808",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Ali Alfarizi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-15",
-      "generation_id": "gen-6",
+      "id": "c73642ab-a75c-4681-b83e-219efa99f1bb",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Faruq",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-16",
-      "generation_id": "gen-6",
+      "id": "cd412512-5fa2-44c1-8de1-615b97f738f8",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Fadhlan Fadila",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-17",
-      "generation_id": "gen-6",
+      "id": "5fecccf9-5c82-4b80-9fac-cf85339ebe60",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Nur Alamsyah",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-18",
-      "generation_id": "gen-6",
+      "id": "7b4586bb-1c16-45af-9cd2-372671110140",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Rizky Sopian",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-19",
-      "generation_id": "gen-6",
+      "id": "345e611f-aa40-466a-9542-cf807f5ca5e2",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Muhammad Yusuf Alfatih",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-20",
-      "generation_id": "gen-6",
+      "id": "a1027e38-89c4-4211-a990-2faa677e72ab",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Randi Gilang Ramadhan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-21",
-      "generation_id": "gen-6",
+      "id": "392d8f53-b2bb-4c2b-858f-48bbd386ad1a",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Rayhan Mifzal Alfarizi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-22",
-      "generation_id": "gen-6",
+      "id": "fd760185-06b6-4ef5-8a42-72817d10d757",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Reyhan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-23",
-      "generation_id": "gen-6",
+      "id": "1bbf586b-468e-45bf-9ea6-803ed8bef37f",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Thoriq Muwajjih Roby",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-24",
-      "generation_id": "gen-6",
+      "id": "fddb81d4-8929-4a92-969c-ba4b2bb19d0b",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Wahidin Halim",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-25",
-      "generation_id": "gen-6",
+      "id": "a37a4725-bf65-4608-a321-201b91b109b6",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Zaelani Putra Wijaya",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-26",
-      "generation_id": "gen-6",
+      "id": "aeecf4d0-b5b0-4314-bc6b-48ba090f3dcf",
+      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
       "name": "Yusuf Affan Vela",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-27",
-      "generation_id": "gen-5",
+      "id": "f3789193-f638-4b24-b552-b6afad06fd69",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Rendi Rahardian",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-28",
-      "generation_id": "gen-5",
+      "id": "8ff8b077-79dd-4d02-b943-15c8969dd569",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Rizq Arfi Arrazaqqufaiq Nugraha",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-29",
-      "generation_id": "gen-5",
+      "id": "515a3189-bb58-486c-8ea6-4c9e04daada8",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Lutfan Izzat M",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-30",
-      "generation_id": "gen-5",
+      "id": "5344d9e9-787c-4ecc-b7a2-587f0809527b",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Shafwan Mahlil Al Hanu",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-31",
-      "generation_id": "gen-5",
+      "id": "34a70ff0-adf3-4083-ae70-057ce245c227",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Naufal Syafii",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-32",
-      "generation_id": "gen-5",
+      "id": "5d8d74a8-bb80-4b2d-9cf7-903a240b9b94",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Moh. Azril Arropi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-33",
-      "generation_id": "gen-5",
+      "id": "cbdbd4a6-ad82-4735-978a-05a7d9154c09",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Hafidz Dwi Setiawan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-34",
-      "generation_id": "gen-5",
+      "id": "c3fede8d-4dba-4252-b948-692ed702323a",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Akhdan Mahya Rafid C P",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-35",
-      "generation_id": "gen-5",
+      "id": "ff0d98f7-71c6-4075-93a2-70f9d5295a58",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Dhabith Abdillah Adipraja",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-36",
-      "generation_id": "gen-5",
+      "id": "1a596ef8-c92c-4997-a445-d5a3aad96e80",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Ammar Bassam Setiawan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-37",
-      "generation_id": "gen-5",
+      "id": "56476dc2-2298-4189-a7b4-75bbc5cd6211",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "M Tajul Arus Arrofy",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-38",
-      "generation_id": "gen-5",
+      "id": "dc9026a7-4c14-4a4c-be9e-9955a9a36715",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Farhan Audia Fitrah",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-39",
-      "generation_id": "gen-5",
+      "id": "e80cffa4-1ffa-4f11-a62c-7ea0d542e813",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Ahmad Muzaky Jauhar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-40",
-      "generation_id": "gen-5",
+      "id": "44495085-ad27-4078-b0c9-69f3dbdb777b",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Yusuf Ahnaf Hilali",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-41",
-      "generation_id": "gen-5",
+      "id": "31510c7d-0e02-42a2-9bf7-625667b35425",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Abdurrahman Fathan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-42",
-      "generation_id": "gen-5",
+      "id": "faae8822-fb22-4666-91f0-0f00ab3cd5d6",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "M Fayyadh",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-43",
-      "generation_id": "gen-5",
+      "id": "10c328d3-ab4c-4577-8269-3cb985268410",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Salman Fahri",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-44",
-      "generation_id": "gen-5",
+      "id": "0b382575-ee72-4c19-bbec-65d95fe9f70e",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Ferdinand Faadhilah",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-45",
-      "generation_id": "gen-5",
+      "id": "dd401824-e5e6-494a-a49f-c593bb8d5919",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Furqon Nailul Huda",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-46",
-      "generation_id": "gen-5",
+      "id": "80c07646-61f5-4379-b05f-d6f94fe6d56a",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Muhammad Taqy Abdurrahman K",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-47",
-      "generation_id": "gen-5",
+      "id": "095db468-177c-4ef4-b2c0-a55e247ce4fd",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Hadi Muhammad Rizky",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-48",
-      "generation_id": "gen-5",
+      "id": "4428655a-43be-4367-85d9-c36349676415",
+      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
       "name": "Ahmad Maulana alfajri",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-49",
-      "generation_id": "gen-4",
+      "id": "6925726f-66ef-4464-b33b-c2fcc3faeeee",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Abidzar Algiffari",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-50",
-      "generation_id": "gen-4",
+      "id": "d6d39417-5fe5-4f35-a236-e84dcb1df448",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Breza Artha Medico",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-51",
-      "generation_id": "gen-4",
+      "id": "1730ba26-bb4f-402d-b8a9-d5e5211552d8",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Farray Saleh Abdad",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-52",
-      "generation_id": "gen-4",
+      "id": "0fd6d18c-94d8-4795-a396-0dd89be16a68",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Gusti Prayoga",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-53",
-      "generation_id": "gen-4",
+      "id": "c6d9c608-aaa4-4977-98c1-74c2951c3052",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Halipah Mubarok",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-54",
-      "generation_id": "gen-4",
+      "id": "fb9f591b-2c58-4277-a940-6f3cd73683ae",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Khalik Syahir",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-55",
-      "generation_id": "gen-4",
+      "id": "7bf6c8f9-3f79-41f9-a42a-918649f367e0",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Maajid Pratama",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-56",
-      "generation_id": "gen-4",
+      "id": "ba2d6775-19db-4a14-b6be-be2bd17f16db",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Nashiruddin Al Husaini",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-57",
-      "generation_id": "gen-4",
+      "id": "27e1b1cf-ac22-4d7e-994d-4fa14a0e2699",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Azan Ohorella",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-58",
-      "generation_id": "gen-4",
+      "id": "581ed839-0ec1-4ef1-85c2-d4bd62d6f868",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Choerul Akbar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-59",
-      "generation_id": "gen-4",
+      "id": "40aa36ff-85a6-4d9c-8e99-1a9396ae849e",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Dzurunnafis Khairuddin",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-60",
-      "generation_id": "gen-4",
+      "id": "bece3776-fd13-442c-b18e-f45936a49e13",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Fadhil Ziyad Daniyal",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-61",
-      "generation_id": "gen-4",
+      "id": "faff7182-40c4-4bbd-b4ba-4ecbd76db5c9",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Farhan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-62",
-      "generation_id": "gen-4",
+      "id": "5e21506d-dba7-4f27-9da6-48bb38a77449",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Fatihah Rizki",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-63",
-      "generation_id": "gen-4",
+      "id": "2e272b1b-ee71-4f8c-a976-5f95d365a119",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Ihsan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-64",
-      "generation_id": "gen-4",
+      "id": "8e4683ce-66a2-4372-abaf-d0520a2e70ff",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Inzi Alfarizi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-65",
-      "generation_id": "gen-4",
+      "id": "39e90e21-caed-44e6-8839-a5f12219b48e",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "M. Syauqi Azka",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-66",
-      "generation_id": "gen-4",
+      "id": "4d33a758-739a-483e-a6b6-9148ae6e1968",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Najieb El Bawafi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-67",
-      "generation_id": "gen-4",
+      "id": "aedf88fb-e2f1-41a3-9739-3bb3521f76cd",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Naufal Aziz Nabigh Siagian",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-68",
-      "generation_id": "gen-4",
+      "id": "65080dba-b4bb-4809-b733-d045520864b8",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Rafarel Haidar Yastaqi",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-69",
-      "generation_id": "gen-4",
+      "id": "9d493d9a-59dc-4b1f-8ed8-d8d2ce7c13b5",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Rafka Aditya Ramadhan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-70",
-      "generation_id": "gen-4",
+      "id": "8a54b89e-83d2-4215-8f15-8604220839b7",
+      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
       "name": "Zio Alfinois",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-71",
-      "generation_id": "gen-3",
+      "id": "e5c31a90-0282-4931-b0d8-78c72cbf3feb",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Ahmad Fairuz Ghaly",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-72",
-      "generation_id": "gen-3",
+      "id": "cf64fc51-2e14-4ed6-9982-65bed6085f06",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Ahmad Ibrahimovic",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-73",
-      "generation_id": "gen-3",
+      "id": "82f0858f-e3ba-4341-81c7-c3683f63d9f3",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Ahmad Royhan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-74",
-      "generation_id": "gen-3",
+      "id": "0c71672a-c75c-45cb-8c84-773683af6d22",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Akram Mujamman Raton",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-75",
-      "generation_id": "gen-3",
+      "id": "b191df10-b70d-4a69-8d8b-87834aa95f0a",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Arfin Desca Al Zakhri",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-76",
-      "generation_id": "gen-3",
+      "id": "8928bb3c-c8c8-48af-8600-cea6abc0679e",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Baetul Fadla",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-77",
-      "generation_id": "gen-3",
+      "id": "412775a6-1210-46df-b3e0-535262b58a70",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Danish Athaya Natha Surendra",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-78",
-      "generation_id": "gen-3",
+      "id": "15a922f9-1dc1-4479-be6f-47567ddb9904",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Erlangga Arta Dwi Cahya",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-79",
-      "generation_id": "gen-3",
+      "id": "e439a11c-9b31-4a84-8c5c-94f22b98702e",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Fakhri Zainul Arifin",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-80",
-      "generation_id": "gen-3",
+      "id": "32e73e14-0a7b-466b-b395-13622decdd61",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Fawwaz Imtiyatul Afkar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-81",
-      "generation_id": "gen-3",
+      "id": "7f0bc3c1-5b27-4577-8fcf-0bfe7d6801c5",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Moh. Fakhri Rizkian",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-82",
-      "generation_id": "gen-3",
+      "id": "23bba984-4d13-415e-9e1d-689d61317ce4",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Ali Yafie Yosna",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-83",
-      "generation_id": "gen-3",
+      "id": "d6dbf5a6-a55f-4ded-afd8-5250c214bff1",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Rizki Ar Royyan",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-84",
-      "generation_id": "gen-3",
+      "id": "aaaf69a2-899d-4922-9f66-4b69f37ac3f5",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Iqbal Asqalani",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-85",
-      "generation_id": "gen-3",
+      "id": "8e57da2d-60aa-4bda-8ecc-014e5eae1dc7",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Dzikri",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-86",
-      "generation_id": "gen-3",
+      "id": "d0d6205b-42f1-44aa-a419-c08b3ecd6c11",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Revan Rizki",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-87",
-      "generation_id": "gen-3",
+      "id": "98729ff3-d52c-418e-8481-ad21a7701f85",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "M. Sayyid Husein Al-Karim",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-88",
-      "generation_id": "gen-3",
+      "id": "b9f9c670-b2ef-43c4-bfab-ba1cec458deb",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Nur Yusuf Ferdiansyah",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-89",
-      "generation_id": "gen-3",
+      "id": "d99da213-7e70-466b-b1eb-96cdda0e5539",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Qiageng Berke Jaisyurrahman",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-90",
-      "generation_id": "gen-3",
+      "id": "15bd8990-67ea-4364-9342-c0d4a01e30a0",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Rifky Febrian Iskandar",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-91",
-      "generation_id": "gen-3",
+      "id": "9b28e726-4aa5-4009-9c08-7a4d0d02fafb",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Syarif Barri Abdillah",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-92",
-      "generation_id": "gen-3",
+      "id": "ff1e297f-27a5-42de-b47e-8108bc479ca2",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Wais Al-Qorni",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-93",
-      "generation_id": "gen-3",
+      "id": "fe09ee61-dae6-4e33-bf08-94f15692883d",
+      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
       "name": "Yusuf Regan Manggala Ghalib",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     },
     {
-      "id": "mem-94",
-      "generation_id": "gen-other",
+      "id": "7e704613-f433-4d74-b89e-ebf5f2b61c30",
+      "generation_id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
       "name": "Bintang Tamu / Eksternal",
-      "phone": "",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T04:47:48.489Z"
-    },
-    {
-      "id": "mem-other-1789798247821",
-      "generation_id": "gen-other",
-      "name": "Breza",
-      "phone": "085714963093",
-      "is_active": true,
-      "created_at": "2026-09-19T06:10:47.821Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     }
   ],
   "checkers": [
     {
-      "id": "chk-1789793034574",
-      "name": "Breza Artha Medico",
-      "pin_hash": "$2b$10$LEr.DDTY8FNZ8RR7UJwxjeraQwu8L8LeQiJg2LMyz.Zm1y8Yd8CgC",
+      "id": "a8380e94-9389-4ef7-bcf9-e97028f81a44",
+      "name": "Rian (Divisi Logistik)",
+      "pin_hash": "$2b$10$hhYg4/O0AFnjw49XSG9oS.mM/u2NsHv//4TKKCJWLwAgSs8r0onu6",
       "is_active": true,
-      "created_at": "2026-09-19T04:43:54.574Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+    },
+    {
+      "id": "88f2d2e2-eace-47a7-97fb-03fc58a4ee44",
+      "name": "Siti (Koordinator Aset)",
+      "pin_hash": "$2b$10$hhYg4/O0AFnjw49XSG9oS.mM/u2NsHv//4TKKCJWLwAgSs8r0onu6",
+      "is_active": true,
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     }
   ],
   "items": [
     {
-      "id": "item-1789797039513",
-      "name": "Camera Canon",
-      "code": "ITM-9513",
-      "description": "Camera Yayasan",
+      "id": "842d0e4d-1da6-4700-bbb9-5784cc4d868a",
+      "name": "Kamera Sony Alpha A7 III",
+      "code": "CAM-001",
+      "description": "Kamera mirrorless full-frame untuk dokumentasi",
+      "image_url": null,
       "status": "AVAILABLE",
-      "created_at": "2026-09-19T05:50:39.513Z",
-      "updated_at": "2026-09-19T06:12:45.188Z"
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+    },
+    {
+      "id": "13905377-ab36-4729-a07f-d139c7526d6f",
+      "name": "Tripod Manfrotto 290",
+      "code": "TRP-001",
+      "description": "Tripod aluminium kokoh untuk foto & video",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+    },
+    {
+      "id": "f0d617d7-4bdd-4cc6-a0b2-e9e600ecebe9",
+      "name": "Laptop ASUS Vivobook 15",
+      "code": "LPT-001",
+      "description": "Laptop operasional dan editing ringan",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+    },
+    {
+      "id": "5cb8bce5-37be-4834-b272-cc9a19a657b3",
+      "name": "Wireless Mic Hollyland Lark M1",
+      "code": "MIC-001",
+      "description": "Wireless microphone 2 transmitter + 1 receiver",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+    },
+    {
+      "id": "8f0799d0-d568-4e7b-86c8-7c38fc71a91b",
+      "name": "Lighting Godox SL-60W",
+      "code": "LGT-001",
+      "description": "Lampu LED continuous 5600K",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T07:03:28.335419+00:00",
+      "updated_at": "2026-09-19T07:03:28.335419+00:00"
     }
   ],
   "item_accessories": [

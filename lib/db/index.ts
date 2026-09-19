@@ -199,16 +199,58 @@ export async function getMembersByGeneration(
   generationId: string,
   options?: { onlyActiveLoans?: boolean }
 ): Promise<Member[]> {
-  const db = readLocalDb();
-  let members = db.members.filter((m) => m.generation_id === generationId && m.is_active);
+  // 1. Try Supabase first if online
+  try {
+    const { data, error } = await supabase
+      .from('members')
+      .select('*, generation:generations(*)')
+      .eq('generation_id', generationId)
+      .eq('is_active', true)
+      .order('name', { ascending: true });
 
-  // If onlyActiveLoans is requested (used for Return page for "Lainnya" or all),
-  // only include members who have active unreturned loans with borrowed items!
+    if (!error && data && data.length > 0) {
+      let members = data as Member[];
+
+      const genName = members[0]?.generation?.name || '';
+      const isLainnya = generationId === 'gen-other' || genName.toLowerCase().includes('lainnya');
+
+      if (options?.onlyActiveLoans || (isLainnya && options?.onlyActiveLoans !== false)) {
+        if (options?.onlyActiveLoans) {
+          const { data: activeLoans } = await supabase
+            .from('loans')
+            .select('member_id, status, loan_items(status)')
+            .in('status', ['ACTIVE', 'PARTIALLY_RETURNED']);
+
+          const activeMemberIds = new Set(
+            (activeLoans || [])
+              .filter((l: any) => (l.loan_items || []).some((li: any) => li.status === 'BORROWED'))
+              .map((l: any) => l.member_id)
+          );
+          members = members.filter((m) => activeMemberIds.has(m.id));
+        }
+      }
+
+      return members;
+    }
+  } catch {}
+
+  // 2. Fallback to local DB (match by ID or generation name)
+  const db = readLocalDb();
+  const targetGen =
+    db.generations.find((g) => g.id === generationId) ||
+    db.generations.find((g) => g.name.toLowerCase() === generationId.toLowerCase());
+  const targetGenId = targetGen ? targetGen.id : generationId;
+
+  let members = db.members.filter(
+    (m) => (m.generation_id === targetGenId || m.generation_id === generationId) && m.is_active
+  );
+
   const isLainnya =
     generationId === 'gen-other' ||
-    db.generations.find((g) => g.id === generationId)?.name.toLowerCase().includes('lainnya');
+    targetGen?.name.toLowerCase().includes('lainnya') ||
+    false;
 
-  if (options?.onlyActiveLoans || isLainnya && options?.onlyActiveLoans !== false) {
+  if (options?.onlyActiveLoans || (isLainnya && options?.onlyActiveLoans !== false)) {
     if (options?.onlyActiveLoans) {
       const activeMemberIds = new Set<string>();
       for (const loan of db.loans) {
@@ -228,7 +270,7 @@ export async function getMembersByGeneration(
   return members
     .map((m) => ({
       ...m,
-      generation: db.generations.find((g) => g.id === m.generation_id),
+      generation: db.generations.find((g) => g.id === m.generation_id) || targetGen,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
