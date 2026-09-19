@@ -897,175 +897,22 @@
       "is_active": true,
       "created_at": "2026-09-19T07:03:28.335419+00:00",
       "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    }
-  ],
-  "checkers": [
+    },
     {
-      "id": "a8380e94-9389-4ef7-bcf9-e97028f81a44",
-      "name": "Rian (Divisi Logistik)",
-      "pin_hash": "$2b$10$hhYg4/O0AFnjw49XSG9oS.mM/u2NsHv//4TKKCJWLwAgSs8r0onu6",
+      "id": "9461a926-234d-4209-8603-6c03cc6d7639",
+      "generation_id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
+      "name": "Siswa Peminjam Baru",
+      "phone": "",
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    },
-    {
-      "id": "88f2d2e2-eace-47a7-97fb-03fc58a4ee44",
-      "name": "Siti (Koordinator Aset)",
-      "pin_hash": "$2b$10$hhYg4/O0AFnjw49XSG9oS.mM/u2NsHv//4TKKCJWLwAgSs8r0onu6",
-      "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:15:24.544Z"
     }
   ],
-  "items": [
-    {
-      "id": "842d0e4d-1da6-4700-bbb9-5784cc4d868a",
-      "name": "Kamera Sony Alpha A7 III",
-      "code": "CAM-001",
-      "description": "Kamera mirrorless full-frame untuk dokumentasi",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    },
-    {
-      "id": "13905377-ab36-4729-a07f-d139c7526d6f",
-      "name": "Tripod Manfrotto 290",
-      "code": "TRP-001",
-      "description": "Tripod aluminium kokoh untuk foto & video",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    },
-    {
-      "id": "f0d617d7-4bdd-4cc6-a0b2-e9e600ecebe9",
-      "name": "Laptop ASUS Vivobook 15",
-      "code": "LPT-001",
-      "description": "Laptop operasional dan editing ringan",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    },
-    {
-      "id": "5cb8bce5-37be-4834-b272-cc9a19a657b3",
-      "name": "Wireless Mic Hollyland Lark M1",
-      "code": "MIC-001",
-      "description": "Wireless microphone 2 transmitter + 1 receiver",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    },
-    {
-      "id": "8f0799d0-d568-4e7b-86c8-7c38fc71a91b",
-      "name": "Lighting Godox SL-60W",
-      "code": "LGT-001",
-      "description": "Lampu LED continuous 5600K",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
-    }
-  ],
-  "item_accessories": [
-    {
-      "id": "acc-1789797039791-0",
-      "item_id": "item-1789797039513",
-      "name": "Baterai",
-      "is_required": true
-    },
-    {
-      "id": "acc-1789797039791-1",
-      "item_id": "item-1789797039513",
-      "name": "Baterai 2",
-      "is_required": true
-    },
-    {
-      "id": "acc-1789797039791-2",
-      "item_id": "item-1789797039513",
-      "name": "Charger Case",
-      "is_required": true
-    },
-    {
-      "id": "acc-1789797039791-3",
-      "item_id": "item-1789797039513",
-      "name": "SD Card",
-      "is_required": true
-    }
-  ],
-  "loans": [
-    {
-      "id": "loan-1789798247821",
-      "loan_code": "MNT-20260919-2891",
-      "member_id": "mem-other-1789798247821",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "chk-1789793034574",
-      "notes": "",
-      "created_at": "2026-09-19T06:10:47.821Z",
-      "actual_return_date": "2026-09-19",
-      "return_checker_id": "chk-1789793034574",
-      "updated_at": "2026-09-19T06:12:45.188Z"
-    }
-  ],
-  "loan_items": [
-    {
-      "id": "li-1789798247821-0",
-      "loan_id": "loan-1789798247821",
-      "item_id": "item-1789797039513",
-      "status": "RETURNED",
-      "initial_condition": "Ada Catatan",
-      "initial_accessories": [
-        "Baterai",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "1 baterainya rusak",
-      "created_at": "2026-09-19T06:10:47.821Z",
-      "item": {
-        "id": "item-1789797039513",
-        "name": "Camera Canon",
-        "code": "ITM-9513",
-        "description": "Camera Yayasan",
-        "status": "BORROWED",
-        "created_at": "2026-09-19T05:50:39.513Z",
-        "updated_at": "2026-09-19T06:10:47.821Z"
-      },
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 2",
-        "Charger Case",
-        "SD Card",
-        "Baterai"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T06:12:45.188Z"
-    }
-  ],
-  "notification_events": [
-    {
-      "id": "notif-1789798247821",
-      "loan_id": "loan-1789798247821",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza\n\nAngkatan:\nLainnya\n\nBarang:\n- Camera Canon\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "created_at": "2026-09-19T06:10:47.821Z",
-      "sent_at": "2026-09-19T06:10:49.200Z"
-    },
-    {
-      "id": "notif-1789798365188",
-      "loan_id": "loan-1789798247821",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza\n\nAngkatan:\nLainnya\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "created_at": "2026-09-19T06:12:45.188Z",
-      "sent_at": "2026-09-19T06:12:45.845Z"
-    }
-  ],
+  "checkers": [],
+  "items": [],
+  "item_accessories": [],
+  "loans": [],
+  "loan_items": [],
+  "notification_events": [],
   "whatsapp_configs": [
     {
       "id": "wa-1",
