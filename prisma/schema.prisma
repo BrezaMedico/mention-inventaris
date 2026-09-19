@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  password_hash String
+  name          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Generation {
+  id          String   @id @default(uuid())
+  name        String
+  order_index Int      @default(0)
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  members     Member[]
+
+  @@map("generations")
+}
+
+model Member {
+  id            String      @id @default(uuid())
+  generation_id String
+  name          String
+  phone         String?
+  is_active     Boolean     @default(true)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  generation    Generation  @relation(fields: [generation_id], references: [id], onDelete: Cascade)
+  loans         Loan[]
+
+  @@map("members")
+}
+
+model Checker {
+  id          String   @id @default(uuid())
+  name        String
+  pin_hash    String
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  loans_as_initial Loan[] @relation("InitialChecker")
+  loans_as_return  Loan[] @relation("ReturnChecker")
+
+  @@map("checkers")
+}
+
+model Item {
+  id          String          @id @default(uuid())
+  name        String
+  code        String?         @unique
+  description String?
+  image_url   String?
+  status      String          @default("AVAILABLE") // AVAILABLE, BORROWED, MAINTENANCE, INACTIVE
+  created_at  DateTime        @default(now())
+  updated_at  DateTime        @updatedAt
+  accessories ItemAccessory[]
+  loan_items  LoanItem[]
+
+  @@map("items")
+}
+
+model ItemAccessory {
+  id          String   @id @default(uuid())
+  item_id     String
+  name        String
+  is_required Boolean  @default(false)
+  created_at  DateTime @default(now())
+  item        Item     @relation(fields: [item_id], references: [id], onDelete: Cascade)
+
+  @@map("item_accessories")
+}
+
+model Loan {
+  id                  String     @id @default(uuid())
+  loan_code           String     @unique
+  member_id           String
+  borrow_date         String
+  expected_return_date String
+  actual_return_date  String?
+  status              String     @default("ACTIVE") // ACTIVE, PARTIALLY_RETURNED, RETURNED, OVERDUE
+  initial_checker_id  String
+  return_checker_id   String?
+  notes               String?
+  created_at          DateTime   @default(now())
+  updated_at          DateTime   @updatedAt
+
+  member              Member     @relation(fields: [member_id], references: [id])
+  initial_checker     Checker    @relation("InitialChecker", fields: [initial_checker_id], references: [id])
+  return_checker      Checker?   @relation("ReturnChecker", fields: [return_checker_id], references: [id])
+  items               LoanItem[]
+  reminders           OverdueReminder[]
+
+  @@map("loans")
+}
+
+model LoanItem {
+  id                 String    @id @default(uuid())
+  loan_id            String
+  item_id            String
+  status             String    @default("BORROWED") // BORROWED, RETURNED
+  initial_condition  String    @default("Aman")
+  initial_accessories String   @default("[]") // JSON stringified array of accessory names
+  initial_notes      String?
+  return_condition   String?
+  return_accessories String?   @default("[]") // JSON stringified array
+  return_notes       String?
+  returned_at        DateTime?
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+
+  loan               Loan      @relation(fields: [loan_id], references: [id], onDelete: Cascade)
+  item               Item      @relation(fields: [item_id], references: [id])
+
+  @@map("loan_items")
+}
+
+model NotificationEvent {
+  id            String   @id @default(uuid())
+  loan_id       String?
+  type          String   // BORROW, RETURN, OVERDUE, TEST
+  message       String
+  status        String   @default("PENDING") // PENDING, SENT, FAILED
+  error_message String?
+  sent_at       DateTime?
+  created_at    DateTime @default(now())
+
+  @@map("notification_events")
+}
+
+model WhatsAppConfig {
+  id                String    @id @default("default")
+  target_group_jid  String?
+  target_group_name String?
+  is_connected      Boolean   @default(false)
+  phone_number      String?
+  last_connected_at DateTime?
+  updated_at        DateTime  @updatedAt
+
+  @@map("whatsapp_configs")
+}
+
+model OverdueReminder {
+  id        String   @id @default(uuid())
+  loan_id   String
+  week_key  String
+  sent_at   DateTime @default(now())
+  loan      Loan     @relation(fields: [loan_id], references: [id], onDelete: Cascade)
+
+  @@unique([loan_id, week_key])
+  @@map("overdue_reminders")
+}

@@ -1,0 +1,939 @@
+{
+  "admins": [
+    {
+      "id": "admin-1",
+      "username": "mention",
+      "password_hash": "$2b$10$8RmPPVxSFDAW1PBodvMoR.my7lJCFUj7cBhCdYSQsVZ1OOr.RnSpe",
+      "name": "Mention Administrator",
+      "created_at": "2026-01-01T00:00:00.000Z",
+      "updated_at": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "generations": [
+    {
+      "id": "gen-3",
+      "name": "Angkatan 3",
+      "order_index": 3,
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.488Z"
+    },
+    {
+      "id": "gen-4",
+      "name": "Angkatan 4",
+      "order_index": 4,
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "gen-5",
+      "name": "Angkatan 5",
+      "order_index": 5,
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "gen-6",
+      "name": "Angkatan 6",
+      "order_index": 6,
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "gen-other",
+      "name": "Lainnya",
+      "order_index": 7,
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    }
+  ],
+  "members": [
+    {
+      "id": "mem-1",
+      "generation_id": "gen-6",
+      "name": "Abdullah Al Muttaqii",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-2",
+      "generation_id": "gen-6",
+      "name": "Abdul Fattah Al Anshori",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-3",
+      "generation_id": "gen-6",
+      "name": "A’fif Abdurrahim",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-4",
+      "generation_id": "gen-6",
+      "name": "Ahmad Sahrudin",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-5",
+      "generation_id": "gen-6",
+      "name": "Alifiandra Kautsar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-6",
+      "generation_id": "gen-6",
+      "name": "Ghany Rizqi Yusuf",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-7",
+      "generation_id": "gen-6",
+      "name": "Ghasan Kamil Al-Hamudi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-8",
+      "generation_id": "gen-6",
+      "name": "Ihsan Alfarizi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-9",
+      "generation_id": "gen-6",
+      "name": "Ihsan Mubarak",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-10",
+      "generation_id": "gen-6",
+      "name": "Indra Samudra",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-11",
+      "generation_id": "gen-6",
+      "name": "Jason Pratama Vinar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-12",
+      "generation_id": "gen-6",
+      "name": "Lukyan Sashenka Chandra",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-13",
+      "generation_id": "gen-6",
+      "name": "Lutfi Dwi Aditya",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-14",
+      "generation_id": "gen-6",
+      "name": "Muhammad Ali Alfarizi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-15",
+      "generation_id": "gen-6",
+      "name": "Muhammad Faruq",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-16",
+      "generation_id": "gen-6",
+      "name": "Muhammad Fadhlan Fadila",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-17",
+      "generation_id": "gen-6",
+      "name": "Muhammad Nur Alamsyah",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-18",
+      "generation_id": "gen-6",
+      "name": "Muhammad Rizky Sopian",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-19",
+      "generation_id": "gen-6",
+      "name": "Muhammad Yusuf Alfatih",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-20",
+      "generation_id": "gen-6",
+      "name": "Randi Gilang Ramadhan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-21",
+      "generation_id": "gen-6",
+      "name": "Rayhan Mifzal Alfarizi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-22",
+      "generation_id": "gen-6",
+      "name": "Reyhan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-23",
+      "generation_id": "gen-6",
+      "name": "Thoriq Muwajjih Roby",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-24",
+      "generation_id": "gen-6",
+      "name": "Wahidin Halim",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-25",
+      "generation_id": "gen-6",
+      "name": "Zaelani Putra Wijaya",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-26",
+      "generation_id": "gen-6",
+      "name": "Yusuf Affan Vela",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-27",
+      "generation_id": "gen-5",
+      "name": "Rendi Rahardian",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-28",
+      "generation_id": "gen-5",
+      "name": "Rizq Arfi Arrazaqqufaiq Nugraha",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-29",
+      "generation_id": "gen-5",
+      "name": "Lutfan Izzat M",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-30",
+      "generation_id": "gen-5",
+      "name": "Shafwan Mahlil Al Hanu",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-31",
+      "generation_id": "gen-5",
+      "name": "Naufal Syafii",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-32",
+      "generation_id": "gen-5",
+      "name": "Moh. Azril Arropi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-33",
+      "generation_id": "gen-5",
+      "name": "Hafidz Dwi Setiawan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-34",
+      "generation_id": "gen-5",
+      "name": "Akhdan Mahya Rafid C P",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-35",
+      "generation_id": "gen-5",
+      "name": "Dhabith Abdillah Adipraja",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-36",
+      "generation_id": "gen-5",
+      "name": "Ammar Bassam Setiawan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-37",
+      "generation_id": "gen-5",
+      "name": "M Tajul Arus Arrofy",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-38",
+      "generation_id": "gen-5",
+      "name": "Farhan Audia Fitrah",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-39",
+      "generation_id": "gen-5",
+      "name": "Ahmad Muzaky Jauhar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-40",
+      "generation_id": "gen-5",
+      "name": "Yusuf Ahnaf Hilali",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-41",
+      "generation_id": "gen-5",
+      "name": "Abdurrahman Fathan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-42",
+      "generation_id": "gen-5",
+      "name": "M Fayyadh",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-43",
+      "generation_id": "gen-5",
+      "name": "Salman Fahri",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-44",
+      "generation_id": "gen-5",
+      "name": "Ferdinand Faadhilah",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-45",
+      "generation_id": "gen-5",
+      "name": "Furqon Nailul Huda",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-46",
+      "generation_id": "gen-5",
+      "name": "Muhammad Taqy Abdurrahman K",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-47",
+      "generation_id": "gen-5",
+      "name": "Hadi Muhammad Rizky",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-48",
+      "generation_id": "gen-5",
+      "name": "Ahmad Maulana alfajri",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-49",
+      "generation_id": "gen-4",
+      "name": "Abidzar Algiffari",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-50",
+      "generation_id": "gen-4",
+      "name": "Breza Artha Medico",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-51",
+      "generation_id": "gen-4",
+      "name": "Farray Saleh Abdad",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-52",
+      "generation_id": "gen-4",
+      "name": "Gusti Prayoga",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-53",
+      "generation_id": "gen-4",
+      "name": "Halipah Mubarok",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-54",
+      "generation_id": "gen-4",
+      "name": "Khalik Syahir",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-55",
+      "generation_id": "gen-4",
+      "name": "Maajid Pratama",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-56",
+      "generation_id": "gen-4",
+      "name": "M. Nashiruddin Al Husaini",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-57",
+      "generation_id": "gen-4",
+      "name": "M. Azan Ohorella",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-58",
+      "generation_id": "gen-4",
+      "name": "M. Choerul Akbar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-59",
+      "generation_id": "gen-4",
+      "name": "M. Dzurunnafis Khairuddin",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-60",
+      "generation_id": "gen-4",
+      "name": "M. Fadhil Ziyad Daniyal",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-61",
+      "generation_id": "gen-4",
+      "name": "M. Farhan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-62",
+      "generation_id": "gen-4",
+      "name": "M. Fatihah Rizki",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-63",
+      "generation_id": "gen-4",
+      "name": "M. Ihsan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-64",
+      "generation_id": "gen-4",
+      "name": "M. Inzi Alfarizi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-65",
+      "generation_id": "gen-4",
+      "name": "M. Syauqi Azka",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-66",
+      "generation_id": "gen-4",
+      "name": "Najieb El Bawafi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-67",
+      "generation_id": "gen-4",
+      "name": "Naufal Aziz Nabigh Siagian",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-68",
+      "generation_id": "gen-4",
+      "name": "Rafarel Haidar Yastaqi",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-69",
+      "generation_id": "gen-4",
+      "name": "Rafka Aditya Ramadhan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-70",
+      "generation_id": "gen-4",
+      "name": "Zio Alfinois",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-71",
+      "generation_id": "gen-3",
+      "name": "Ahmad Fairuz Ghaly",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-72",
+      "generation_id": "gen-3",
+      "name": "Ahmad Ibrahimovic",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-73",
+      "generation_id": "gen-3",
+      "name": "Ahmad Royhan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-74",
+      "generation_id": "gen-3",
+      "name": "Akram Mujamman Raton",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-75",
+      "generation_id": "gen-3",
+      "name": "Arfin Desca Al Zakhri",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-76",
+      "generation_id": "gen-3",
+      "name": "Baetul Fadla",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-77",
+      "generation_id": "gen-3",
+      "name": "Danish Athaya Natha Surendra",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-78",
+      "generation_id": "gen-3",
+      "name": "Erlangga Arta Dwi Cahya",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-79",
+      "generation_id": "gen-3",
+      "name": "Fakhri Zainul Arifin",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-80",
+      "generation_id": "gen-3",
+      "name": "Fawwaz Imtiyatul Afkar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-81",
+      "generation_id": "gen-3",
+      "name": "Moh. Fakhri Rizkian",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-82",
+      "generation_id": "gen-3",
+      "name": "M. Ali Yafie Yosna",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-83",
+      "generation_id": "gen-3",
+      "name": "M. Rizki Ar Royyan",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-84",
+      "generation_id": "gen-3",
+      "name": "M. Iqbal Asqalani",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-85",
+      "generation_id": "gen-3",
+      "name": "M. Dzikri",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-86",
+      "generation_id": "gen-3",
+      "name": "M. Revan Rizki",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-87",
+      "generation_id": "gen-3",
+      "name": "M. Sayyid Husein Al-Karim",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-88",
+      "generation_id": "gen-3",
+      "name": "Nur Yusuf Ferdiansyah",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-89",
+      "generation_id": "gen-3",
+      "name": "Qiageng Berke Jaisyurrahman",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-90",
+      "generation_id": "gen-3",
+      "name": "Rifky Febrian Iskandar",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-91",
+      "generation_id": "gen-3",
+      "name": "Syarif Barri Abdillah",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-92",
+      "generation_id": "gen-3",
+      "name": "Wais Al-Qorni",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-93",
+      "generation_id": "gen-3",
+      "name": "Yusuf Regan Manggala Ghalib",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-94",
+      "generation_id": "gen-other",
+      "name": "Bintang Tamu / Eksternal",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-09-19T04:47:48.489Z"
+    },
+    {
+      "id": "mem-other-1789798247821",
+      "generation_id": "gen-other",
+      "name": "Breza",
+      "phone": "085714963093",
+      "is_active": true,
+      "created_at": "2026-09-19T06:10:47.821Z"
+    }
+  ],
+  "checkers": [
+    {
+      "id": "chk-1789793034574",
+      "name": "Breza Artha Medico",
+      "pin_hash": "$2b$10$LEr.DDTY8FNZ8RR7UJwxjeraQwu8L8LeQiJg2LMyz.Zm1y8Yd8CgC",
+      "is_active": true,
+      "created_at": "2026-09-19T04:43:54.574Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "item-1789797039513",
+      "name": "Camera Canon",
+      "code": "ITM-9513",
+      "description": "Camera Yayasan",
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T05:50:39.513Z",
+      "updated_at": "2026-09-19T06:12:45.188Z"
+    }
+  ],
+  "item_accessories": [
+    {
+      "id": "acc-1789797039791-0",
+      "item_id": "item-1789797039513",
+      "name": "Baterai",
+      "is_required": true
+    },
+    {
+      "id": "acc-1789797039791-1",
+      "item_id": "item-1789797039513",
+      "name": "Baterai 2",
+      "is_required": true
+    },
+    {
+      "id": "acc-1789797039791-2",
+      "item_id": "item-1789797039513",
+      "name": "Charger Case",
+      "is_required": true
+    },
+    {
+      "id": "acc-1789797039791-3",
+      "item_id": "item-1789797039513",
+      "name": "SD Card",
+      "is_required": true
+    }
+  ],
+  "loans": [
+    {
+      "id": "loan-1789798247821",
+      "loan_code": "MNT-20260919-2891",
+      "member_id": "mem-other-1789798247821",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "chk-1789793034574",
+      "notes": "",
+      "created_at": "2026-09-19T06:10:47.821Z",
+      "actual_return_date": "2026-09-19",
+      "return_checker_id": "chk-1789793034574",
+      "updated_at": "2026-09-19T06:12:45.188Z"
+    }
+  ],
+  "loan_items": [
+    {
+      "id": "li-1789798247821-0",
+      "loan_id": "loan-1789798247821",
+      "item_id": "item-1789797039513",
+      "status": "RETURNED",
+      "initial_condition": "Ada Catatan",
+      "initial_accessories": [
+        "Baterai",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "1 baterainya rusak",
+      "created_at": "2026-09-19T06:10:47.821Z",
+      "item": {
+        "id": "item-1789797039513",
+        "name": "Camera Canon",
+        "code": "ITM-9513",
+        "description": "Camera Yayasan",
+        "status": "BORROWED",
+        "created_at": "2026-09-19T05:50:39.513Z",
+        "updated_at": "2026-09-19T06:10:47.821Z"
+      },
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 2",
+        "Charger Case",
+        "SD Card",
+        "Baterai"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T06:12:45.188Z"
+    }
+  ],
+  "notification_events": [
+    {
+      "id": "notif-1789798247821",
+      "loan_id": "loan-1789798247821",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza\n\nAngkatan:\nLainnya\n\nBarang:\n- Camera Canon\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "created_at": "2026-09-19T06:10:47.821Z",
+      "sent_at": "2026-09-19T06:10:49.200Z"
+    },
+    {
+      "id": "notif-1789798365188",
+      "loan_id": "loan-1789798247821",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza\n\nAngkatan:\nLainnya\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "created_at": "2026-09-19T06:12:45.188Z",
+      "sent_at": "2026-09-19T06:12:45.845Z"
+    }
+  ],
+  "whatsapp_configs": [
+    {
+      "id": "wa-1",
+      "target_group_jid": "120363412393589816@g.us",
+      "target_group_name": "Mention",
+      "is_connected": true,
+      "updated_at": "2026-09-19T04:33:01.752Z",
+      "phone_number": "628211904959"
+    }
+  ],
+  "overdue_reminders": []
+}

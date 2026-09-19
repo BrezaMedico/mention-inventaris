@@ -1,0 +1,17 @@
+{
+  "name": "mention-whatsapp-service",
+  "version": "1.0.0",
+  "description": "Persistent WhatsApp Web microservice for MENTION borrowing system",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.12",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "pino": "^9.6.0",
+    "qrcode": "^1.5.4"
+  }
+}
