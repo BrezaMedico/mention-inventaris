@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'PIC Checker harus dipilih.' }, { status: 400 });
     }
 
-    if (!pin || !/^\d{6}$/.test(pin.trim())) {
-      return NextResponse.json({ success: false, error: 'PIN PIC harus 6 digit angka.' }, { status: 400 });
+    if (!pin || !/^\d{6,8}$/.test(pin.trim())) {
+      return NextResponse.json({ success: false, error: 'PIN PIC harus 6-8 digit angka.' }, { status: 400 });
     }
 
     // 2. Re-verify PIC PIN on server
@@ -37,20 +37,20 @@ export async function POST(request: NextRequest) {
       items,
     });
 
-    if (!result.success || !result.loan) {
+    if (!result.success) {
       return NextResponse.json({ success: false, error: result.error || 'Gagal memproses pengembalian.' }, { status: 400 });
     }
 
-    // 4. Trigger WhatsApp notification
-    await dispatchPendingNotifications().catch((err) => {
+    // 4. Trigger WhatsApp notification (asynchronous, non-fatal)
+    dispatchPendingNotifications().catch((err) => {
       console.warn('WhatsApp notification dispatch error (non-fatal):', err.message);
     });
 
     return NextResponse.json({
       success: true,
       message: 'Pengembalian barang berhasil dicatat.',
-      loanId: result.loan.id,
-      loanStatus: result.loan.status,
+      loanId: result.loan?.id || loanId,
+      loanStatus: result.loan?.status || 'RETURNED',
     });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message || 'Terjadi kesalahan pada server.' }, { status: 500 });

@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Nama PIC wajib diisi.' }, { status: 400 });
     }
 
-    if (!pin || !/^\d{6}$/.test(pin.trim())) {
-      return NextResponse.json({ success: false, error: 'PIN PIC harus tepat 6 digit angka.' }, { status: 400 });
+    if (!pin || !/^\d{6,8}$/.test(pin.trim())) {
+      return NextResponse.json({ success: false, error: 'PIN PIC harus 6-8 digit angka.' }, { status: 400 });
     }
 
     await saveChecker(name.trim(), pin.trim());
@@ -50,11 +50,11 @@ export async function PUT(request: NextRequest) {
     }
 
     if (action === 'reset_pin') {
-      if (!pin || !/^\d{6}$/.test(pin.trim())) {
-        return NextResponse.json({ success: false, error: 'PIN baru harus tepat 6 digit angka.' }, { status: 400 });
+      if (!pin || !/^\d{6,8}$/.test(pin.trim())) {
+        return NextResponse.json({ success: false, error: 'PIN baru harus 6-8 digit angka.' }, { status: 400 });
       }
       const success = await updateCheckerPin(id, pin.trim());
-      return NextResponse.json({ success, message: 'PIN 6 digit PIC berhasil diubah.' });
+      return NextResponse.json({ success, message: 'PIN PIC berhasil diubah.' });
     }
 
     if (action === 'toggle_active') {

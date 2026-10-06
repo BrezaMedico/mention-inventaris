@@ -1,926 +1,1627 @@
 {
   "admins": [
     {
-      "id": "admin-1",
+      "id": "800ec975-a7a9-4f48-9e64-2df108cbb88e",
       "username": "mention",
       "password_hash": "$2b$10$8RmPPVxSFDAW1PBodvMoR.my7lJCFUj7cBhCdYSQsVZ1OOr.RnSpe",
       "name": "Mention Administrator",
-      "created_at": "2026-01-01T00:00:00.000Z",
-      "updated_at": "2026-01-01T00:00:00.000Z"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     }
   ],
   "generations": [
     {
-      "id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Angkatan 3",
       "order_index": 3,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Angkatan 4",
       "order_index": 4,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Angkatan 5",
       "order_index": 5,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Angkatan 6",
       "order_index": 6,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
+      "id": "3525ae3f-1cb5-4b43-bf70-5ef975a53d9d",
       "name": "Lainnya",
       "order_index": 7,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     }
   ],
   "members": [
     {
-      "id": "89ed4238-bcfa-4937-bac6-03821f1c201f",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "084e97c3-52d9-4ef7-b7b9-d4f4a08d02f9",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Abdullah Al Muttaqii",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "670081b6-fd08-4cc4-a498-e85b60f4f3cf",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "42cef690-f4b9-4f66-b061-f8db68121c80",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Abdul Fattah Al Anshori",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "60e79b37-b873-491d-8626-a2525f9ee977",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "e79ce525-ae8e-45b7-8af4-31db351e72ae",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "A’fif Abdurrahim",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8527392a-5d2e-4a10-b7ce-5622c000f0e3",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "c47906c1-4947-4ef5-9415-b66487ff5e5a",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Ahmad Sahrudin",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "45bbe27b-01b5-4e13-b23f-b02ff3e25733",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "e340ae30-efb3-4c8d-87a4-41be151c4dd9",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Alifiandra Kautsar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "b05f1206-9209-48e7-9000-281e69475783",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "96a0fd55-d9d8-48cc-91b6-38e1fc43732e",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Ghany Rizqi Yusuf",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8b48337a-231f-42ab-97d7-80c9ecf97016",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "e5e210e6-6be1-4779-9352-48d2f4deb5ec",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Ghasan Kamil Al-Hamudi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "49e29187-3810-4eed-b0f3-3dd43d45b122",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "1973ecac-3cf7-47c2-8ac8-cb4564ea215b",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Ihsan Alfarizi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "72298492-009b-46bb-8646-c6a7bb696cc4",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "f95739eb-6eb3-4029-9adf-927a874b77da",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Ihsan Mubarak",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "b92db853-8256-4c0f-b55e-53c8dd930cda",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "48a3873c-e3b1-4720-a93b-7ed0945152a0",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Indra Samudra",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "555c4d15-c31b-4151-9228-68d4c0cbbd41",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "b2ea62af-57aa-41a1-a493-a636d66450c8",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Jason Pratama Vinar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "e55711a6-99a7-4b10-8af1-854251f46d68",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "767d2a6a-bd79-4036-9fd1-7a6cb72596e3",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Lukyan Sashenka Chandra",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "c3e07ce7-73ff-4451-bfa4-55d3195141d2",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "c6d76092-17a3-49fe-a0d2-895f13744202",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Lutfi Dwi Aditya",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "6b64d5ac-5a50-4688-be44-8dba74cc3808",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "0c9b2c90-be8c-44b2-a681-09fbdce6b618",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Ali Alfarizi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "c73642ab-a75c-4681-b83e-219efa99f1bb",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "9acd0217-9157-42f6-809c-1c509328bfcc",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Faruq",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "cd412512-5fa2-44c1-8de1-615b97f738f8",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "e9305815-c099-4ce8-bbe1-f5c30ef697c5",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Fadhlan Fadila",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "5fecccf9-5c82-4b80-9fac-cf85339ebe60",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "5718b59d-6e88-4e9c-8a00-233d16dc77fd",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Nur Alamsyah",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "7b4586bb-1c16-45af-9cd2-372671110140",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "a7749b35-2b89-437f-8257-633d21574ad1",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Rizky Sopian",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "345e611f-aa40-466a-9542-cf807f5ca5e2",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "ffdcee33-7b17-4bec-b020-1ac7dace74d2",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Muhammad Yusuf Alfatih",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "a1027e38-89c4-4211-a990-2faa677e72ab",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "07c70860-54c5-41c5-9430-f18af0ab41d9",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Randi Gilang Ramadhan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "392d8f53-b2bb-4c2b-858f-48bbd386ad1a",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "91ec3a22-05e2-4460-a249-01918e7358fc",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Rayhan Mifzal Alfarizi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "fd760185-06b6-4ef5-8a42-72817d10d757",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "60200131-c3bd-49fb-88d7-b380c7189da3",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Reyhan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "1bbf586b-468e-45bf-9ea6-803ed8bef37f",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "87d67205-f927-4b06-92d7-2d6d1ba9dbad",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Thoriq Muwajjih Roby",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "fddb81d4-8929-4a92-969c-ba4b2bb19d0b",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "bea7f0ad-4d39-4ec9-bb8d-fc99b4d009ef",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Wahidin Halim",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "a37a4725-bf65-4608-a321-201b91b109b6",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "9a85f10c-42fc-4fab-a4a2-3de4e3fd4a0d",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Zaelani Putra Wijaya",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "aeecf4d0-b5b0-4314-bc6b-48ba090f3dcf",
-      "generation_id": "1deb939e-aed5-4af1-b4a5-5373ad526add",
+      "id": "0c2d1f3d-9f6f-4305-aa78-1558db778e14",
+      "generation_id": "1570d3d9-7a4b-481e-ac67-9862e603b604",
       "name": "Yusuf Affan Vela",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "f3789193-f638-4b24-b552-b6afad06fd69",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "418134ed-99f1-4498-bba7-f5429a6e5976",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Rendi Rahardian",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8ff8b077-79dd-4d02-b943-15c8969dd569",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "566b4f9e-670c-4099-bd77-e3b571af7a0c",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Rizq Arfi Arrazaqqufaiq Nugraha",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "515a3189-bb58-486c-8ea6-4c9e04daada8",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "2d5de1fd-153b-47b9-b8ca-f75cb4b5382c",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Lutfan Izzat M",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "5344d9e9-787c-4ecc-b7a2-587f0809527b",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "7fb70f32-f642-466e-9a99-3aaac400538d",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Shafwan Mahlil Al Hanu",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "34a70ff0-adf3-4083-ae70-057ce245c227",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "4430064f-e123-415b-8650-7c959db7e3f0",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Naufal Syafii",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "5d8d74a8-bb80-4b2d-9cf7-903a240b9b94",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "63bcf1aa-046c-4ff5-8aa9-917d1363af90",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Moh. Azril Arropi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "cbdbd4a6-ad82-4735-978a-05a7d9154c09",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "676d0d37-d4ca-4221-8d09-19841be39148",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Hafidz Dwi Setiawan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "c3fede8d-4dba-4252-b948-692ed702323a",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "8b6eb579-8ede-4bab-9e6b-21f9ed0973e8",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Akhdan Mahya Rafid C P",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "ff0d98f7-71c6-4075-93a2-70f9d5295a58",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "10a24f7b-8d1e-417c-9392-57a9d37f1687",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Dhabith Abdillah Adipraja",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "1a596ef8-c92c-4997-a445-d5a3aad96e80",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "0c182a62-5d31-4873-b068-5ef9c0507d0f",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Ammar Bassam Setiawan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "56476dc2-2298-4189-a7b4-75bbc5cd6211",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "1cb0c463-4967-4c45-a714-29495804cc39",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "M Tajul Arus Arrofy",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "dc9026a7-4c14-4a4c-be9e-9955a9a36715",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "f3ae3bd2-a5d3-4195-ad10-cb88b968330c",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Farhan Audia Fitrah",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "e80cffa4-1ffa-4f11-a62c-7ea0d542e813",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "21d2fcb5-2363-4539-a2bd-2160b74f5f3b",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Ahmad Muzaky Jauhar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "44495085-ad27-4078-b0c9-69f3dbdb777b",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "a0f8620b-33ab-455e-ba62-1ff674462748",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Yusuf Ahnaf Hilali",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "31510c7d-0e02-42a2-9bf7-625667b35425",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "8959d147-70a0-43a1-b48f-304a00672c26",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Abdurrahman Fathan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "faae8822-fb22-4666-91f0-0f00ab3cd5d6",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "ad31a8c5-83c1-4288-89c9-70f2567454bc",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "M Fayyadh",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "10c328d3-ab4c-4577-8269-3cb985268410",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "b2dcdc4c-ecdb-468a-a853-6f93d2c845da",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Salman Fahri",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "0b382575-ee72-4c19-bbec-65d95fe9f70e",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "d0dcf197-3692-4421-b420-4b37cf4340bb",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Ferdinand Faadhilah",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "dd401824-e5e6-494a-a49f-c593bb8d5919",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "20dca6e5-5080-4821-a7b7-673fe3e7bffd",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Furqon Nailul Huda",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "80c07646-61f5-4379-b05f-d6f94fe6d56a",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "ec9942ab-5ecc-419d-a0de-3c5d3fcbdbb5",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Muhammad Taqy Abdurrahman K",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "095db468-177c-4ef4-b2c0-a55e247ce4fd",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "bb654ff5-0514-4dbb-8db9-4240281a963f",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Hadi Muhammad Rizky",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "4428655a-43be-4367-85d9-c36349676415",
-      "generation_id": "bc870982-9bf2-4c3f-8e40-ca429b5483ae",
+      "id": "6e9687db-83d7-4e0b-b667-59f3647ddfe2",
+      "generation_id": "ecb357ca-c515-4710-b9d1-bce2a23392d4",
       "name": "Ahmad Maulana alfajri",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "6925726f-66ef-4464-b33b-c2fcc3faeeee",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "9dc223b2-9966-4e86-a3f2-4e439abe2524",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Abidzar Algiffari",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "d6d39417-5fe5-4f35-a236-e84dcb1df448",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Breza Artha Medico",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "1730ba26-bb4f-402d-b8a9-d5e5211552d8",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "86f82c18-d01c-4310-94b7-f837ec0af63f",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Farray Saleh Abdad",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "0fd6d18c-94d8-4795-a396-0dd89be16a68",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "c1901b1d-792e-4ac3-8ba9-04f95e6815d0",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Gusti Prayoga",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "c6d9c608-aaa4-4977-98c1-74c2951c3052",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "349ae404-4296-4ac7-9d7f-a4a4703dc457",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Halipah Mubarok",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "fb9f591b-2c58-4277-a940-6f3cd73683ae",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "11758503-8747-4e39-8dd1-85160750992f",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Khalik Syahir",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "7bf6c8f9-3f79-41f9-a42a-918649f367e0",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "4118b650-4774-4782-ab42-45270133d3bf",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Maajid Pratama",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "ba2d6775-19db-4a14-b6be-be2bd17f16db",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "427dd305-7d56-49a7-9d91-5694f3593872",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Nashiruddin Al Husaini",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "27e1b1cf-ac22-4d7e-994d-4fa14a0e2699",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "165a39d9-2b96-4b56-a2b9-d322e5652270",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Azan Ohorella",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "581ed839-0ec1-4ef1-85c2-d4bd62d6f868",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "fca1c905-1764-4e8d-86b6-818c94d7b476",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Choerul Akbar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "40aa36ff-85a6-4d9c-8e99-1a9396ae849e",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "c2d86bfe-6d00-4cfe-906f-9760692baca1",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Dzurunnafis Khairuddin",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "bece3776-fd13-442c-b18e-f45936a49e13",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "5e966c01-10d3-4800-b841-1c201e5f2bf1",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Fadhil Ziyad Daniyal",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "faff7182-40c4-4bbd-b4ba-4ecbd76db5c9",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "a022f288-9118-4391-8ac0-cb2dc99d3213",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Farhan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "5e21506d-dba7-4f27-9da6-48bb38a77449",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "ecbacd4e-c033-49c7-a8d7-c312f0269140",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Fatihah Rizki",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "2e272b1b-ee71-4f8c-a976-5f95d365a119",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "c27185ec-89ea-4f35-a7ab-9268ef3cd291",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Ihsan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8e4683ce-66a2-4372-abaf-d0520a2e70ff",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "650babca-7767-460b-9d3e-36b86561e624",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Inzi Alfarizi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "39e90e21-caed-44e6-8839-a5f12219b48e",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "04f83a6f-5b65-412a-ac08-3595ed51e7ca",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "M. Syauqi Azka",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "4d33a758-739a-483e-a6b6-9148ae6e1968",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "52f4b6c8-16c4-4424-a38c-dc1c3f77ebeb",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Najieb El Bawafi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "aedf88fb-e2f1-41a3-9739-3bb3521f76cd",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "31c3cad3-9215-4241-84bf-7eaa3df44e81",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Naufal Aziz Nabigh Siagian",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "65080dba-b4bb-4809-b733-d045520864b8",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "720f820c-461b-472d-a3e9-87b1f1295b51",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Rafarel Haidar Yastaqi",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "9d493d9a-59dc-4b1f-8ed8-d8d2ce7c13b5",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "21334ab1-6189-4a49-bb61-d7375aa378e0",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Rafka Aditya Ramadhan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8a54b89e-83d2-4215-8f15-8604220839b7",
-      "generation_id": "68b98e27-68f5-46c8-919f-14fc61800558",
+      "id": "0904cdc8-f6d0-4e53-b7ee-3ea48eb99669",
+      "generation_id": "3d25a971-ab1d-4676-a355-91bf5e43d48a",
       "name": "Zio Alfinois",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "e5c31a90-0282-4931-b0d8-78c72cbf3feb",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "c5e60a80-8c08-4c16-9303-32d03253775b",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Ahmad Fairuz Ghaly",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "cf64fc51-2e14-4ed6-9982-65bed6085f06",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "11ce43d6-de90-42af-809e-c97f310dd6ac",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Ahmad Ibrahimovic",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "82f0858f-e3ba-4341-81c7-c3683f63d9f3",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "ceb746ee-f8c3-4f79-b693-625fcedf0105",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Ahmad Royhan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "0c71672a-c75c-45cb-8c84-773683af6d22",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "38bccf5d-b78e-4538-8889-8d5550b29e4e",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Akram Mujamman Raton",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "b191df10-b70d-4a69-8d8b-87834aa95f0a",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "0c30d36c-f594-415e-ba5b-719656d11f02",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Arfin Desca Al Zakhri",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8928bb3c-c8c8-48af-8600-cea6abc0679e",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "760e8d89-42f0-4d58-a874-a6ac7314071b",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Baetul Fadla",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "412775a6-1210-46df-b3e0-535262b58a70",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "f373a86c-c61a-49df-aa3e-729c9cadaabd",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Danish Athaya Natha Surendra",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "15a922f9-1dc1-4479-be6f-47567ddb9904",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "c2a8dc52-40b9-4666-8bb2-f1a6af479863",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Erlangga Arta Dwi Cahya",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "e439a11c-9b31-4a84-8c5c-94f22b98702e",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "d2f65b0e-3337-43d9-b6a4-7ce607136872",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Fakhri Zainul Arifin",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "32e73e14-0a7b-466b-b395-13622decdd61",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "44d0b86d-7878-4216-9e73-44d7b0475919",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Fawwaz Imtiyatul Afkar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "7f0bc3c1-5b27-4577-8fcf-0bfe7d6801c5",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "1c87e2c7-f3c6-479a-86f6-0d742190a837",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Moh. Fakhri Rizkian",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "23bba984-4d13-415e-9e1d-689d61317ce4",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "f7feeb9a-7d7f-462b-89d4-d021cae44fad",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Ali Yafie Yosna",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "d6dbf5a6-a55f-4ded-afd8-5250c214bff1",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "d9b11516-d6cf-48ed-9911-1f8bea54e818",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Rizki Ar Royyan",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "aaaf69a2-899d-4922-9f66-4b69f37ac3f5",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "596ae55c-beab-4eda-9fef-97d510b25f5b",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Iqbal Asqalani",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "8e57da2d-60aa-4bda-8ecc-014e5eae1dc7",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "910a1589-0cb5-4109-a218-eaf16ad911ea",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Dzikri",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "d0d6205b-42f1-44aa-a419-c08b3ecd6c11",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "3ac702b6-c5bc-4101-b616-f389c0e4e833",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Revan Rizki",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "98729ff3-d52c-418e-8481-ad21a7701f85",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "a79198ca-6b98-4ee9-8a0b-3ef78931fc7b",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "M. Sayyid Husein Al-Karim",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "b9f9c670-b2ef-43c4-bfab-ba1cec458deb",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "59e1478a-20ff-4508-aefd-b1412253d064",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Nur Yusuf Ferdiansyah",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "d99da213-7e70-466b-b1eb-96cdda0e5539",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "7a5e4707-95d2-4b12-9714-e3d2f2a26ad3",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Qiageng Berke Jaisyurrahman",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "15bd8990-67ea-4364-9342-c0d4a01e30a0",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "f8917c63-b235-4569-b9e9-980fe6356e0e",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Rifky Febrian Iskandar",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "9b28e726-4aa5-4009-9c08-7a4d0d02fafb",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "5f707b26-e3c7-4fa8-9074-bdb8dcd6d625",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Syarif Barri Abdillah",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "ff1e297f-27a5-42de-b47e-8108bc479ca2",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "792b35ae-713c-4ca5-b680-c36efdc664c3",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Wais Al-Qorni",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "fe09ee61-dae6-4e33-bf08-94f15692883d",
-      "generation_id": "a44c044c-e783-4dc9-be8f-370738320544",
+      "id": "a52c1e5c-0f0e-4c6b-a139-27d8c2d4c940",
+      "generation_id": "86938d2b-7658-466f-b62f-9fab5eb59816",
       "name": "Yusuf Regan Manggala Ghalib",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "7e704613-f433-4d74-b89e-ebf5f2b61c30",
-      "generation_id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
+      "id": "45054c96-c9a8-4b1a-89e1-75adc8ead605",
+      "generation_id": "3525ae3f-1cb5-4b43-bf70-5ef975a53d9d",
       "name": "Bintang Tamu / Eksternal",
       "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:03:28.335419+00:00",
-      "updated_at": "2026-09-19T07:03:28.335419+00:00"
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-09-19T07:25:08.055299+00:00"
     },
     {
-      "id": "9461a926-234d-4209-8603-6c03cc6d7639",
-      "generation_id": "86ddb083-c135-4e62-9a2b-9e97056d7a72",
-      "name": "Siswa Peminjam Baru",
-      "phone": "",
+      "id": "a4b49f62-a1d2-4ffe-a05c-24656d87352e",
+      "generation_id": "3525ae3f-1cb5-4b43-bf70-5ef975a53d9d",
+      "name": "pew",
+      "phone": null,
       "is_active": true,
-      "created_at": "2026-09-19T07:15:24.544Z"
+      "created_at": "2026-09-25T08:58:41.292902+00:00",
+      "updated_at": "2026-09-25T08:58:41.292902+00:00"
     }
   ],
-  "checkers": [],
-  "items": [],
-  "item_accessories": [],
-  "loans": [],
-  "loan_items": [],
-  "notification_events": [],
+  "checkers": [
+    {
+      "id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "name": "Breza Artha Medico",
+      "pin_hash": "$2b$10$mz94ray6SS2WZDvtkeijHemmfFEiIgxEVWuAfXlry6g0LvRRvFccu",
+      "is_active": true,
+      "created_at": "2026-09-19T07:30:44.320076+00:00",
+      "updated_at": "2026-09-19T07:30:44.320076+00:00"
+    }
+  ],
+  "items": [
+    {
+      "id": "bcd4083e-7b3e-441e-a410-84b2bee20893",
+      "name": "Lampu sorot",
+      "code": "ITM-7259",
+      "description": "Lampu sorot",
+      "image_url": null,
+      "status": "MAINTENANCE",
+      "created_at": "2026-09-19T08:59:07.259+00:00",
+      "updated_at": "2026-09-19T08:59:07.477072+00:00"
+    },
+    {
+      "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "name": "Trippod",
+      "code": "ITM-8509",
+      "description": "Trippod Camera",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T08:55:48.509+00:00",
+      "updated_at": "2026-10-06T14:59:54.235Z"
+    },
+    {
+      "id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
+      "name": "DJI Osmo Nano",
+      "code": "ITM-3638",
+      "description": "",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T08:58:23.638+00:00",
+      "updated_at": "2026-10-06T14:53:25.631Z"
+    },
+    {
+      "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "Camera Canon",
+      "code": "ITM-5004",
+      "description": "Camera yayasan",
+      "image_url": null,
+      "status": "BORROWED",
+      "created_at": "2026-09-19T07:30:25.004+00:00",
+      "updated_at": "2026-09-19T09:00:37.193+00:00"
+    }
+  ],
+  "item_accessories": [
+    {
+      "id": "e60afaba-fcf1-42f3-b1b5-999623e11d8e",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "Baterai 1",
+      "is_required": true,
+      "created_at": "2026-09-19T07:30:26.573246+00:00"
+    },
+    {
+      "id": "437b8f65-e6f2-4739-820f-f9391b63f681",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "Baterai 2",
+      "is_required": true,
+      "created_at": "2026-09-19T07:30:26.573246+00:00"
+    },
+    {
+      "id": "a2984fc0-f9fd-4345-8c80-424543bd23ad",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "Charger Case",
+      "is_required": true,
+      "created_at": "2026-09-19T07:30:26.573246+00:00"
+    },
+    {
+      "id": "72c9bee9-93d6-414e-a080-d81c93acf5bc",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "SD Card",
+      "is_required": true,
+      "created_at": "2026-09-19T07:30:26.573246+00:00"
+    },
+    {
+      "id": "56c2cbbd-7165-458c-999e-753f742020be",
+      "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
+      "name": "Baterai DJI",
+      "is_required": true,
+      "created_at": "2026-09-19T08:58:24.796342+00:00"
+    },
+    {
+      "id": "0955201d-68b6-409a-b9d3-c6b3f6e476ca",
+      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "name": "Phone holder",
+      "is_required": true,
+      "created_at": "2026-09-19T09:01:53.307051+00:00"
+    }
+  ],
+  "loans": [
+    {
+      "id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "loan_code": "MNT-20260919-4083",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-19",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "Untuk Dokumentasi",
+      "created_at": "2026-09-19T07:46:16.224569+00:00",
+      "updated_at": "2026-09-19T07:48:05.493+00:00"
+    },
+    {
+      "id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
+      "loan_code": "MNT-20260919-4007",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-19",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "Dokum",
+      "created_at": "2026-09-19T07:49:17.635698+00:00",
+      "updated_at": "2026-09-19T07:49:42.137+00:00"
+    },
+    {
+      "id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
+      "loan_code": "MNT-20260919-9260",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-21",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-09-19T07:50:46.783419+00:00",
+      "updated_at": "2026-09-19T07:51:48.175+00:00"
+    },
+    {
+      "id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
+      "loan_code": "MNT-20260919-3506",
+      "member_id": "11758503-8747-4e39-8dd1-85160750992f",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-21",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-09-19T07:52:36.344488+00:00",
+      "updated_at": "2026-09-19T08:50:35.036+00:00"
+    },
+    {
+      "id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
+      "loan_code": "MNT-20260919-2800",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-19",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-09-19T08:51:44.409638+00:00",
+      "updated_at": "2026-09-19T09:00:37.193+00:00"
+    },
+    {
+      "id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
+      "loan_code": "MNT-20260919-3533",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-09-19",
+      "expected_return_date": "2026-09-19",
+      "actual_return_date": "2026-09-19",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-09-19T09:08:23.150726+00:00",
+      "updated_at": "2026-09-19T09:08:51.576+00:00"
+    },
+    {
+      "id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "loan_code": "MNT-20260925-2665",
+      "member_id": "767d2a6a-bd79-4036-9fd1-7a6cb72596e3",
+      "borrow_date": "2026-09-25",
+      "expected_return_date": "2027-01-01",
+      "actual_return_date": "2026-09-25",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "mau tahun baruan",
+      "created_at": "2026-09-25T09:10:53.513286+00:00",
+      "updated_at": "2026-09-25T09:14:37.259+00:00"
+    },
+    {
+      "id": "3393e55c-0547-4947-b124-6417c1711600",
+      "loan_code": "MNT-20261006-1715",
+      "member_id": "e340ae30-efb3-4c8d-87a4-41be151c4dd9",
+      "borrow_date": "2026-10-06",
+      "expected_return_date": "2026-10-08",
+      "actual_return_date": null,
+      "status": "ACTIVE",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "return_checker_id": null,
+      "notes": "",
+      "created_at": "2026-10-06T14:13:43.915814+00:00",
+      "updated_at": "2026-10-06T14:13:43.915814+00:00"
+    },
+    {
+      "id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
+      "loan_code": "MNT-20261006-3507",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-10-06",
+      "expected_return_date": "2026-10-06",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-10-06T14:52:54.688Z",
+      "actual_return_date": "2026-10-06",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "updated_at": "2026-10-06T14:53:25.631Z"
+    },
+    {
+      "id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
+      "loan_code": "MNT-20261006-9536",
+      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
+      "borrow_date": "2026-10-06",
+      "expected_return_date": "2026-10-08",
+      "status": "RETURNED",
+      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "notes": "",
+      "created_at": "2026-10-06T14:59:16.312Z",
+      "actual_return_date": "2026-10-06",
+      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
+      "updated_at": "2026-10-06T14:59:54.235Z"
+    }
+  ],
+  "loan_items": [
+    {
+      "id": "52e55aa9-e969-4a6d-a090-32748dde28eb",
+      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 1",
+        "Charger Case",
+        "SD Card"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T07:48:05.493+00:00",
+      "created_at": "2026-09-19T07:46:16.5724+00:00",
+      "updated_at": "2026-09-19T07:46:16.5724+00:00"
+    },
+    {
+      "id": "17d92a2a-9280-4b3b-9029-cd1393880b7f",
+      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T07:49:42.137+00:00",
+      "created_at": "2026-09-19T07:49:17.941241+00:00",
+      "updated_at": "2026-09-19T07:49:17.941241+00:00"
+    },
+    {
+      "id": "44de75ba-7c79-4e20-a822-9ab8cbac3bac",
+      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T07:51:48.175+00:00",
+      "created_at": "2026-09-19T07:50:47.080653+00:00",
+      "updated_at": "2026-09-19T07:50:47.080653+00:00"
+    },
+    {
+      "id": "8acaaaa5-74b7-430a-84dc-3801b50e997d",
+      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T08:50:35.036+00:00",
+      "created_at": "2026-09-19T07:52:36.654099+00:00",
+      "updated_at": "2026-09-19T07:52:36.654099+00:00"
+    },
+    {
+      "id": "69af8ca3-55fb-4b8c-8108-4f3fdb9b9ef7",
+      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T09:00:37.193+00:00",
+      "created_at": "2026-09-19T08:51:45.247152+00:00",
+      "updated_at": "2026-09-19T08:51:45.247152+00:00"
+    },
+    {
+      "id": "ba2ea6f1-a9cc-48a8-9587-367cc0f93175",
+      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
+      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Phone holder"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Phone holder"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-19T09:08:51.576+00:00",
+      "created_at": "2026-09-19T09:08:23.475887+00:00",
+      "updated_at": "2026-09-19T09:08:23.475887+00:00"
+    },
+    {
+      "id": "670b4842-7219-4d5a-ab66-e4c1b6a2a9f2",
+      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai DJI"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai DJI"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-25T09:14:37.259+00:00",
+      "created_at": "2026-09-25T09:10:53.851198+00:00",
+      "updated_at": "2026-09-25T09:10:53.851198+00:00"
+    },
+    {
+      "id": "09892ecd-ff27-4784-8ea9-42b86fb5ef07",
+      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Phone holder"
+      ],
+      "initial_notes": "",
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Phone holder"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-09-25T09:14:37.259+00:00",
+      "created_at": "2026-09-25T09:10:54.973433+00:00",
+      "updated_at": "2026-09-25T09:10:54.973433+00:00"
+    },
+    {
+      "id": "7d613099-678e-4846-8130-8e4744d05cec",
+      "loan_id": "3393e55c-0547-4947-b124-6417c1711600",
+      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "status": "BORROWED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai 1",
+        "Baterai 2",
+        "Charger Case",
+        "SD Card"
+      ],
+      "initial_notes": "",
+      "return_condition": null,
+      "return_accessories": [],
+      "return_notes": null,
+      "returned_at": null,
+      "created_at": "2026-10-06T14:13:44.119233+00:00",
+      "updated_at": "2026-10-06T14:13:44.119233+00:00"
+    },
+    {
+      "id": "40960e0c-d848-46d1-b179-066f1d43992f",
+      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
+      "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Baterai DJI"
+      ],
+      "initial_notes": "",
+      "created_at": "2026-10-06T14:52:54.688Z",
+      "item": {
+        "id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
+        "name": "DJI Osmo Nano",
+        "code": "ITM-3638",
+        "description": "",
+        "image_url": null,
+        "status": "BORROWED",
+        "created_at": "2026-09-19T08:58:23.638+00:00",
+        "updated_at": "2026-10-06T14:52:54.688Z"
+      },
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Baterai DJI"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-10-06T14:53:25.631Z"
+    },
+    {
+      "id": "bb1773fd-601e-4c82-914c-915a6aee1aba",
+      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
+      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "status": "RETURNED",
+      "initial_condition": "Aman",
+      "initial_accessories": [
+        "Phone holder"
+      ],
+      "initial_notes": "",
+      "created_at": "2026-10-06T14:59:16.312Z",
+      "item": {
+        "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+        "name": "Trippod",
+        "code": "ITM-8509",
+        "description": "Trippod Camera",
+        "image_url": null,
+        "status": "BORROWED",
+        "created_at": "2026-09-19T08:55:48.509+00:00",
+        "updated_at": "2026-10-06T14:59:16.312Z"
+      },
+      "return_condition": "Aman",
+      "return_accessories": [
+        "Phone holder"
+      ],
+      "return_notes": "",
+      "returned_at": "2026-10-06T14:59:54.235Z"
+    }
+  ],
+  "notification_events": [
+    {
+      "id": "b70e2dff-28ab-4206-a544-1da931e722ce",
+      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "FAILED",
+      "error_message": "This operation was aborted",
+      "sent_at": null,
+      "created_at": "2026-09-19T07:46:17.729151+00:00"
+    },
+    {
+      "id": "8fe41c80-ab35-42c3-9596-121770afd39d",
+      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-19T07:48:36.984+00:00",
+      "created_at": "2026-09-19T07:48:08.251058+00:00"
+    },
+    {
+      "id": "acda68a3-582f-4200-83c8-9655f903e149",
+      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-19T07:48:38.509+00:00",
+      "created_at": "2026-09-19T07:47:58.664548+00:00"
+    },
+    {
+      "id": "0a9797ae-91f4-4ed2-9153-3cb60d7b923a",
+      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "FAILED",
+      "error_message": "This operation was aborted",
+      "sent_at": null,
+      "created_at": "2026-09-19T07:49:18.538038+00:00"
+    },
+    {
+      "id": "e7834d62-9007-4ddb-b5e3-f82757042126",
+      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-21\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-19T07:51:35.262+00:00",
+      "created_at": "2026-09-19T07:50:48.187663+00:00"
+    },
+    {
+      "id": "1fa9efb5-6b32-4d6c-9d88-d6f847308ed6",
+      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "FAILED",
+      "error_message": "This operation was aborted",
+      "sent_at": null,
+      "created_at": "2026-09-19T07:49:44.766479+00:00"
+    },
+    {
+      "id": "0a858913-a970-4e46-88b1-e7d7558239eb",
+      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-21\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-19T08:00:34.187+00:00",
+      "created_at": "2026-09-19T07:52:37.785315+00:00"
+    },
+    {
+      "id": "1054a604-5484-443d-9bec-92fba24d4b16",
+      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-19T08:00:35.576+00:00",
+      "created_at": "2026-09-19T07:51:50.337759+00:00"
+    },
+    {
+      "id": "c4c6e299-4dfb-4636-8278-b1f3da4c895e",
+      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n- Trippod\n\nTanggal Pengembalian:\n2026-09-25\n\nPIC Checker:\n-\n\nKondisi:\nAman, Aman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:52.252+00:00",
+      "created_at": "2026-09-25T09:14:40.971375+00:00"
+    },
+    {
+      "id": "b9843727-1c78-4e15-a2e1-a32df03fe911",
+      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n- Trippod\n\nTanggal Pengembalian:\n2026-09-25\n\nPIC Checker:\n-\n\nKondisi:\nAman, Aman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:53.152+00:00",
+      "created_at": "2026-09-25T09:14:31.766756+00:00"
+    },
+    {
+      "id": "769485a4-2251-4cbb-9467-dea5ee8e04cc",
+      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n- Barang\n\nTanggal Peminjaman:\n2026-09-25\n\nTanggal Pengembalian:\n2027-01-01\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:54.148+00:00",
+      "created_at": "2026-09-25T09:10:56.081247+00:00"
+    },
+    {
+      "id": "64076e79-75d0-4c81-a28b-192d9f916403",
+      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Trippod\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:56.769+00:00",
+      "created_at": "2026-09-19T09:08:54.70725+00:00"
+    },
+    {
+      "id": "8196bc6a-9f2d-41bc-b47b-556eaf5be300",
+      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:57.772+00:00",
+      "created_at": "2026-09-19T09:08:24.577758+00:00"
+    },
+    {
+      "id": "ccd4d140-3f92-4c91-94b1-9291303d6b23",
+      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:58.78+00:00",
+      "created_at": "2026-09-19T09:00:41.061116+00:00"
+    },
+    {
+      "id": "6b9a459e-7d3f-4128-8962-9e3331d9cae1",
+      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:15:59.645+00:00",
+      "created_at": "2026-09-19T08:51:46.395761+00:00"
+    },
+    {
+      "id": "2e144996-f55e-403a-b14d-1efa349dec8d",
+      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-09-25T09:16:00.544+00:00",
+      "created_at": "2026-09-19T08:50:38.25628+00:00"
+    },
+    {
+      "id": "82a68019-5908-4b44-b01c-7a3b9d8ef265",
+      "loan_id": "3393e55c-0547-4947-b124-6417c1711600",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-08\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "error_message": null,
+      "sent_at": "2026-10-06T14:59:18.392Z",
+      "created_at": "2026-10-06T14:13:44.294323+00:00"
+    },
+    {
+      "id": "e5dea46c-c85e-4aae-95e4-05dd4ab0f0e8",
+      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- DJI Osmo Nano\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "created_at": "2026-10-06T14:52:54.688Z",
+      "sent_at": "2026-10-06T14:59:18.003Z"
+    },
+    {
+      "id": "45e785e2-1223-40c2-a8a1-09e177fd7b63",
+      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "created_at": "2026-10-06T14:53:25.631Z",
+      "sent_at": "2026-10-06T14:59:17.601Z"
+    },
+    {
+      "id": "1d0bd781-ccdd-4816-82f4-e97c19f077c4",
+      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
+      "type": "BORROW",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- Trippod\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-08\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
+      "status": "SENT",
+      "created_at": "2026-10-06T14:59:16.312Z",
+      "sent_at": "2026-10-06T14:59:17.215Z"
+    },
+    {
+      "id": "6dc04502-2b1a-4498-bf3b-eaa39c6e93f5",
+      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
+      "type": "RETURN",
+      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang Dikembalikan:\n- Trippod\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "status": "SENT",
+      "created_at": "2026-10-06T14:59:54.235Z",
+      "sent_at": "2026-10-06T14:59:55.723Z"
+    }
+  ],
   "whatsapp_configs": [
     {
-      "id": "wa-1",
+      "id": "579e81aa-e050-41ce-b3b6-c9229dc24559",
       "target_group_jid": "120363412393589816@g.us",
       "target_group_name": "Mention",
       "is_connected": true,
-      "updated_at": "2026-09-19T04:33:01.752Z",
-      "phone_number": "628211904959"
+      "phone_number": "628211904959",
+      "last_connected_at": null,
+      "created_at": "2026-09-19T07:25:08.055299+00:00",
+      "updated_at": "2026-10-06T14:58:36.574+00:00"
     }
   ],
   "overdue_reminders": []

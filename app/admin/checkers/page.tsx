@@ -66,8 +66,8 @@ export default function AdminCheckersPage() {
       setModalError('Nama PIC wajib diisi.');
       return;
     }
-    if (!/^\d{6}$/.test(createPin.trim())) {
-      setModalError('PIN harus tepat 6 digit angka.');
+    if (!/^\d{6,8}$/.test(createPin.trim())) {
+      setModalError('PIN harus 6-8 digit angka.');
       return;
     }
 
@@ -105,8 +105,8 @@ export default function AdminCheckersPage() {
     if (!selectedChecker) return;
     setModalError('');
 
-    if (!/^\d{6}$/.test(newPin.trim())) {
-      setModalError('PIN baru harus tepat 6 digit angka.');
+    if (!/^\d{6,8}$/.test(newPin.trim())) {
+      setModalError('PIN baru harus 6-8 digit angka.');
       return;
     }
 
@@ -356,21 +356,21 @@ export default function AdminCheckersPage() {
 
                 <div>
                   <label className="block uppercase font-bold text-[10px] text-neutral-700 mb-1">
-                    PIN 6 DIGIT (ANGKA) <span className="text-red-500">*</span>
+                    PIN 6-8 DIGIT (ANGKA) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="password"
                     inputMode="numeric"
-                    pattern="[0-9]{6}"
-                    maxLength={6}
+                    pattern="[0-9]{6,8}"
+                    maxLength={8}
                     value={createPin}
                     onChange={(e) => setCreatePin(e.target.value.replace(/\D/g, ''))}
-                    placeholder="123456"
+                    placeholder="6-8 digit PIN"
                     required
                     className="w-full h-12 text-center text-2xl font-mono tracking-widest rounded-lg border border-neutral-300 bg-neutral-50 text-black font-bold focus:ring-2 focus:ring-black focus:outline-none"
                   />
                   <p className="text-[11px] text-neutral-500 mt-1">
-                    Harus tepat 6 digit angka (default: 123456).
+                    6 hingga 8 digit angka.
                   </p>
                 </div>
 
@@ -384,7 +384,7 @@ export default function AdminCheckersPage() {
                   </button>
                   <button
                     type="submit"
-                    disabled={saving || createPin.length !== 6}
+                    disabled={saving || createPin.length < 6 || createPin.length > 8}
                     className="px-5 py-2 rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200"
                   >
                     {saving ? 'Menyimpan...' : 'Simpan PIC'}
@@ -421,16 +421,16 @@ export default function AdminCheckersPage() {
               <form onSubmit={handleResetPin} className="space-y-4 text-xs">
                 <div>
                   <label className="block text-center uppercase font-bold text-[10px] text-neutral-700 mb-2">
-                    MASUKKAN PIN 6 DIGIT BARU
+                    MASUKKAN PIN 6-8 DIGIT BARU
                   </label>
                   <input
                     type="password"
                     inputMode="numeric"
-                    pattern="[0-9]{6}"
-                    maxLength={6}
+                    pattern="[0-9]{6,8}"
+                    maxLength={8}
                     value={newPin}
                     onChange={(e) => setNewPin(e.target.value.replace(/\D/g, ''))}
-                    placeholder="123456"
+                    placeholder="6-8 digit PIN"
                     required
                     autoFocus
                     className="w-full h-12 text-center text-2xl font-mono tracking-widest rounded-lg border-2 border-neutral-300 bg-neutral-50 text-black font-bold focus:border-black focus:outline-none"
@@ -450,7 +450,7 @@ export default function AdminCheckersPage() {
                   </button>
                   <button
                     type="submit"
-                    disabled={saving || newPin.length !== 6}
+                    disabled={saving || newPin.length < 6 || newPin.length > 8}
                     className="px-5 py-2 rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200"
                   >
                     {saving ? 'Menyimpan...' : 'Perbarui PIN'}

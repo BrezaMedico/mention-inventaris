@@ -180,16 +180,19 @@ export async function saveGeneration(name: string, order_index: number): Promise
       .insert([{ id, name, order_index, is_active: true }])
       .select()
       .single();
-    if (!error && data) {
+    if (error) {
+      console.error('Supabase saveGeneration error:', error);
+      throw new Error(`Gagal menyimpan angkatan: ${error.message}`);
+    }
+    if (data) {
       const db = readLocalDb();
       db.generations.push(data as Generation);
       writeLocalDb(db);
       return data as Generation;
-    } else if (error) {
-      console.error('Supabase saveGeneration error:', error);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Supabase saveGeneration catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
@@ -325,16 +328,19 @@ export async function saveMember(generation_id: string, name: string, phone?: st
       .insert([{ id, generation_id, name, phone, is_active: true }])
       .select('*, generation:generations(*)')
       .single();
-    if (!error && data) {
+    if (error) {
+      console.error('Supabase saveMember error:', error);
+      throw new Error(`Gagal menyimpan anggota: ${error.message}`);
+    }
+    if (data) {
       const db = readLocalDb();
       db.members.push(data as Member);
       writeLocalDb(db);
       return data as Member;
-    } else if (error) {
-      console.error('Supabase saveMember error:', error);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Supabase saveMember catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
@@ -344,17 +350,22 @@ export async function saveMember(generation_id: string, name: string, phone?: st
 }
 
 export async function updateMember(id: string, updates: Partial<Member>): Promise<boolean> {
+  const now = new Date().toISOString();
   try {
-    const { error } = await supabase.from('members').update(updates).eq('id', id);
-    if (error) console.error('Supabase updateMember error:', error);
-  } catch (err) {
+    const { error } = await supabase.from('members').update({ ...updates, updated_at: now }).eq('id', id);
+    if (error) {
+      console.error('Supabase updateMember error:', error);
+      throw new Error(`Gagal memperbarui anggota: ${error.message}`);
+    }
+  } catch (err: any) {
     console.error('Supabase updateMember catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
   const mem = db.members.find((m) => m.id === id);
   if (mem) {
-    Object.assign(mem, updates);
+    Object.assign(mem, updates, { updated_at: now });
     writeLocalDb(db);
     return true;
   }
@@ -363,11 +374,26 @@ export async function updateMember(id: string, updates: Partial<Member>): Promis
 
 export async function deleteGeneration(id: string): Promise<{ success: boolean; error?: string }> {
   try {
+    const { data: genMembers } = await supabase.from('members').select('id').eq('generation_id', id);
+    if (genMembers && genMembers.length > 0) {
+      const memberIds = genMembers.map((m) => m.id);
+      const { data: loans } = await supabase
+        .from('loans')
+        .select('id')
+        .in('member_id', memberIds)
+        .in('status', ['ACTIVE', 'PARTIALLY_RETURNED']);
+      if (loans && loans.length > 0) {
+        return { success: false, error: 'Angkatan ini memiliki anggota dengan peminjaman aktif.' };
+      }
+    }
     await supabase.from('members').delete().eq('generation_id', id);
     const { error } = await supabase.from('generations').delete().eq('id', id);
-    if (error) console.error('Supabase deleteGeneration error:', error);
-  } catch (err) {
-    console.error('Supabase deleteGeneration catch:', err);
+    if (error) {
+      console.error('Supabase deleteGeneration error:', error);
+      return { success: false, error: 'Angkatan tidak dapat dihapus: ' + error.message };
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Gagal menghapus angkatan.' };
   }
 
   const db = readLocalDb();
@@ -406,9 +432,12 @@ export async function deleteMember(id: string): Promise<{ success: boolean; erro
       }
     }
     const { error } = await supabase.from('members').delete().eq('id', id);
-    if (error) console.error('Supabase deleteMember error:', error);
-  } catch (err) {
-    console.error('Supabase deleteMember catch:', err);
+    if (error) {
+      console.error('Supabase deleteMember error:', error);
+      return { success: false, error: 'Anggota tidak dapat dihapus: ' + error.message };
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Gagal menghapus anggota.' };
   }
 
   const db = readLocalDb();
@@ -456,8 +485,8 @@ export async function getAllCheckersAdmin(): Promise<Omit<Checker, 'pin_hash'>[]
 }
 
 export async function verifyCheckerPin(checkerId: string, pin: string): Promise<{ success: boolean; checkerName?: string; error?: string }> {
-  if (!/^\d{6}$/.test(pin)) {
-    return { success: false, error: 'PIN PIC harus 6 digit angka.' };
+  if (!/^\d{6,8}$/.test(pin)) {
+    return { success: false, error: 'PIN PIC harus 6-8 digit angka.' };
   }
 
   let checker: Checker | undefined;
@@ -493,20 +522,24 @@ export async function verifyCheckerPin(checkerId: string, pin: string): Promise<
   return { success: true, checkerName: checker.name };
 }
 
-export async function saveChecker(name: string, pin6Digit: string): Promise<boolean> {
-  if (!/^\d{6}$/.test(pin6Digit)) {
-    throw new Error('PIN harus tepat 6 digit angka');
+export async function saveChecker(name: string, pinNumeric: string): Promise<boolean> {
+  if (!/^\d{6,8}$/.test(pinNumeric)) {
+    throw new Error('PIN harus 6-8 digit angka');
   }
 
-  const pin_hash = await bcrypt.hash(pin6Digit, 10);
+  const pin_hash = await bcrypt.hash(pinNumeric, 10);
   const id = crypto.randomUUID();
   const now = new Date().toISOString();
 
   try {
     const { error } = await supabase.from('checkers').insert([{ id, name, pin_hash, is_active: true }]);
-    if (error) console.error('Supabase saveChecker error:', error);
+    if (error) {
+      console.error('Supabase saveChecker error:', error);
+      throw new Error(`Gagal menyimpan PIC ke database: ${error.message}`);
+    }
   } catch (err) {
     console.error('Supabase saveChecker catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
@@ -515,17 +548,22 @@ export async function saveChecker(name: string, pin6Digit: string): Promise<bool
   return true;
 }
 
-export async function updateCheckerPin(id: string, newPin6Digit: string): Promise<boolean> {
-  if (!/^\d{6}$/.test(newPin6Digit)) {
-    throw new Error('PIN harus tepat 6 digit angka');
+export async function updateCheckerPin(id: string, newPinNumeric: string): Promise<boolean> {
+  if (!/^\d{6,8}$/.test(newPinNumeric)) {
+    throw new Error('PIN harus 6-8 digit angka');
   }
-  const pin_hash = await bcrypt.hash(newPin6Digit, 10);
+  const pin_hash = await bcrypt.hash(newPinNumeric, 10);
+  const now = new Date().toISOString();
 
   try {
-    const { error } = await supabase.from('checkers').update({ pin_hash }).eq('id', id);
-    if (error) console.error('Supabase updateCheckerPin error:', error);
+    const { error } = await supabase.from('checkers').update({ pin_hash, updated_at: now }).eq('id', id);
+    if (error) {
+      console.error('Supabase updateCheckerPin error:', error);
+      throw new Error(`Gagal memperbarui PIN PIC di database: ${error.message}`);
+    }
   } catch (err) {
     console.error('Supabase updateCheckerPin catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
@@ -578,9 +616,12 @@ export async function deleteChecker(id: string): Promise<{ success: boolean; err
 
   try {
     const { error } = await supabase.from('checkers').delete().eq('id', id);
-    if (error) console.error('Supabase deleteChecker error:', error);
-  } catch (err) {
-    console.error('Supabase deleteChecker catch:', err);
+    if (error) {
+      console.error('Supabase deleteChecker error:', error);
+      return { success: false, error: 'PIC Checker memiliki riwayat transaksi peminjaman dan tidak dapat dihapus permanen. Silakan nonaktifkan akun PIC tersebut.' };
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Gagal menghapus PIC.' };
   }
 
   const db = readLocalDb();
@@ -663,6 +704,7 @@ export async function saveItem(
     const { data: itemInsert, error } = await supabase.from('items').insert([newItem]).select().single();
     if (error) {
       console.error('Supabase saveItem error:', error);
+      throw new Error(`Gagal menyimpan barang ke database: ${error.message}`);
     } else if (itemInsert) {
       if (createdAccessories.length > 0) {
         const accInserts = createdAccessories.map((acc) => ({
@@ -675,8 +717,9 @@ export async function saveItem(
         if (accErr) console.error('Supabase item_accessories insert error:', accErr);
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Supabase saveItem catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
@@ -692,9 +735,13 @@ export async function updateItem(
   itemData: { name: string; code?: string; description?: string; status: ItemStatus },
   accessories?: string[]
 ): Promise<boolean> {
+  const now = new Date().toISOString();
   try {
-    const { error: itemErr } = await supabase.from('items').update(itemData).eq('id', id);
-    if (itemErr) console.error('Supabase updateItem error:', itemErr);
+    const { error: itemErr } = await supabase.from('items').update({ ...itemData, updated_at: now }).eq('id', id);
+    if (itemErr) {
+      console.error('Supabase updateItem error:', itemErr);
+      throw new Error(`Gagal memperbarui barang: ${itemErr.message}`);
+    }
 
     if (accessories) {
       await supabase.from('item_accessories').delete().eq('item_id', id);
@@ -708,14 +755,15 @@ export async function updateItem(
         await supabase.from('item_accessories').insert(accInserts);
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Supabase updateItem catch:', err);
+    throw err;
   }
 
   const db = readLocalDb();
   const existing = db.items.find((i) => i.id === id);
   if (existing) {
-    Object.assign(existing, itemData);
+    Object.assign(existing, itemData, { updated_at: now });
     if (accessories) {
       db.item_accessories = db.item_accessories.filter((a) => a.item_id !== id);
       accessories.forEach((accName) => {
@@ -753,9 +801,12 @@ export async function deleteItem(id: string): Promise<{ success: boolean; error?
     await supabase.from('item_accessories').delete().eq('item_id', id);
     await supabase.from('loan_items').delete().eq('item_id', id);
     const { error } = await supabase.from('items').delete().eq('id', id);
-    if (error) console.error('Supabase deleteItem error:', error);
-  } catch (err) {
-    console.error('Supabase deleteItem catch:', err);
+    if (error) {
+      console.error('Supabase deleteItem error:', error);
+      return { success: false, error: 'Gagal menghapus barang: ' + error.message };
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Gagal menghapus barang.' };
   }
 
   const db = readLocalDb();
@@ -917,7 +968,20 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
   const now = new Date().toISOString();
 
   let member = db.members.find((m) => m.id === finalMemberId);
+  if (!member) {
+    try {
+      const { data } = await supabase.from('members').select('*, generation:generations(*)').eq('id', finalMemberId).maybeSingle();
+      if (data) member = data as Member;
+    } catch {}
+  }
+
   let checker = db.checkers.find((c) => c.id === input.checkerId);
+  if (!checker) {
+    try {
+      const { data } = await supabase.from('checkers').select('*').eq('id', input.checkerId).maybeSingle();
+      if (data) checker = data as Checker;
+    } catch {}
+  }
 
   const newLoan: Loan = {
     id: loanId,
@@ -931,9 +995,21 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
     created_at: now,
   };
 
-  const newLoanItems: LoanItem[] = input.items.map((itemInput) => {
-    const itemRecord = db.items.find((i) => i.id === itemInput.itemId);
-    return {
+  const newLoanItems: LoanItem[] = [];
+  const resolvedItemNames: string[] = [];
+
+  for (const itemInput of input.items) {
+    let itemRecord = db.items.find((i) => i.id === itemInput.itemId);
+    if (!itemRecord) {
+      try {
+        const { data } = await supabase.from('items').select('*').eq('id', itemInput.itemId).maybeSingle();
+        if (data) itemRecord = data as Item;
+      } catch {}
+    }
+    const itemName = itemRecord?.name || 'Barang';
+    resolvedItemNames.push(itemName);
+
+    newLoanItems.push({
       id: crypto.randomUUID(),
       loan_id: loanId,
       item_id: itemInput.itemId,
@@ -943,8 +1019,8 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
       initial_notes: itemInput.initialNotes || '',
       created_at: now,
       item: itemRecord,
-    };
-  });
+    });
+  }
 
   // 3. Atomically update items to BORROWED in Supabase & Local
   try {
@@ -971,7 +1047,7 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
         initial_notes: li.initial_notes,
       }]);
       if (liErr) console.error('Supabase loan_items insert error:', liErr);
-      await supabase.from('items').update({ status: 'BORROWED' }).eq('id', li.item_id);
+      await supabase.from('items').update({ status: 'BORROWED', updated_at: now }).eq('id', li.item_id);
     }
   } catch (err) {
     console.error('Supabase loan transaction catch:', err);
@@ -989,12 +1065,20 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
   db.loan_items.push(...newLoanItems);
 
   // 4. Create WhatsApp Notification Event
-  const generation = member ? db.generations.find((g) => g.id === member.generation_id) : undefined;
-  const itemsText = newLoanItems
-    .map((li) => `- ${li.item?.name || 'Barang'}`)
-    .join('\n');
+  let generation = member?.generation || (member ? db.generations.find((g) => g.id === member.generation_id) : undefined);
+  if (!generation && member?.generation_id) {
+    try {
+      const { data } = await supabase.from('generations').select('*').eq('id', member.generation_id).maybeSingle();
+      if (data) generation = data as Generation;
+    } catch {}
+  }
 
-  const waMessage = `[PEMINJAMAN BARANG]\n\nNama:\n${member?.name || '-'}\n\nAngkatan:\n${generation?.name || '-'}\n\nBarang:\n${itemsText}\n\nTanggal Peminjaman:\n${input.borrowDate}\n\nTanggal Pengembalian:\n${input.expectedReturnDate}\n\nPIC Checker:\n${checker?.name || '-'}\n\nStatus:\nSedang Dipinjam`;
+  const memberName = member?.name || '-';
+  const genName = generation?.name || '-';
+  const checkerName = checker?.name || '-';
+  const itemsText = resolvedItemNames.map((name) => `- ${name}`).join('\n');
+
+  const waMessage = `[PEMINJAMAN BARANG]\n\nNama:\n${memberName}\n\nAngkatan:\n${genName}\n\nBarang:\n${itemsText}\n\nTanggal Peminjaman:\n${input.borrowDate}\n\nTanggal Pengembalian:\n${input.expectedReturnDate}\n\nPIC Checker:\n${checkerName}\n\nStatus:\nSedang Dipinjam`;
 
   const notificationEvent: NotificationEvent = {
     id: crypto.randomUUID(),
@@ -1112,24 +1196,47 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
   const now = new Date().toISOString();
   const today = now.slice(0, 10);
   const returnedItemNames: string[] = [];
+  const returnConditionsArr: string[] = [];
+  const returnNotesArr: string[] = [];
 
   // 1. Supabase Return Processing
   try {
     for (const itemReturn of input.items) {
+      const notes = itemReturn.returnNotes || (itemReturn as any).notes || '';
+      const cond = itemReturn.returnCondition || 'Aman';
+      returnConditionsArr.push(cond);
+      if (notes) returnNotesArr.push(notes);
+
       await supabase.from('loan_items').update({
         status: 'RETURNED',
-        return_condition: itemReturn.returnCondition,
-        return_accessories: itemReturn.returnAccessories,
-        return_notes: itemReturn.returnNotes || '',
+        return_condition: cond,
+        return_accessories: itemReturn.returnAccessories || [],
+        return_notes: notes,
         returned_at: now,
+        updated_at: now,
       }).eq('id', itemReturn.loanItemId);
 
       const { data: liData } = await supabase.from('loan_items').select('item_id, item:items(name)').eq('id', itemReturn.loanItemId).maybeSingle();
-      if (liData?.item_id) {
-        const targetStatus = itemReturn.returnCondition === 'Rusak' ? 'MAINTENANCE' : 'AVAILABLE';
-        await supabase.from('items').update({ status: targetStatus, updated_at: now }).eq('id', liData.item_id);
-        const itemName = Array.isArray(liData.item) ? (liData.item[0] as any)?.name : (liData.item as any)?.name;
-        if (itemName) returnedItemNames.push(itemName);
+      const itemId = liData?.item_id;
+      let itemName = (liData?.item as any)?.name;
+
+      if (!itemName && itemId) {
+        const { data: iData } = await supabase.from('items').select('name').eq('id', itemId).maybeSingle();
+        if (iData?.name) itemName = iData.name;
+      }
+      if (!itemName) {
+        const localLi = db.loan_items.find((l) => l.id === itemReturn.loanItemId);
+        const localItem = db.items.find((i) => i.id === (itemId || localLi?.item_id));
+        if (localItem) itemName = localItem.name;
+      }
+
+      if (itemName && !returnedItemNames.includes(itemName)) {
+        returnedItemNames.push(itemName);
+      }
+
+      if (itemId) {
+        const targetStatus = cond === 'Rusak' ? 'MAINTENANCE' : 'AVAILABLE';
+        await supabase.from('items').update({ status: targetStatus, updated_at: now }).eq('id', itemId);
       }
     }
 
@@ -1152,18 +1259,41 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
     console.error('Supabase processReturnTransaction catch:', err);
   }
 
-  // 2. Local DB Sync
+  // 2. Fetch full updated loan from Supabase (if available)
+  let fullLoan: any = null;
+  try {
+    const { data } = await supabase
+      .from('loans')
+      .select(`
+        *,
+        member:members(*, generation:generations(*)),
+        initial_checker:checkers!loans_initial_checker_id_fkey(*),
+        return_checker:checkers!loans_return_checker_id_fkey(*),
+        items:loan_items(*, item:items(*))
+      `)
+      .eq('id', input.loanId)
+      .maybeSingle();
+    if (data) fullLoan = data;
+  } catch (err) {
+    console.error('Supabase fetch returned loan error:', err);
+  }
+
+  // 3. Local DB Sync
   const loan = db.loans.find((l) => l.id === input.loanId);
-  const checker = db.checkers.find((c) => c.id === input.checkerId);
+  let checker = db.checkers.find((c) => c.id === input.checkerId);
+  if (!checker && fullLoan?.return_checker) {
+    checker = fullLoan.return_checker;
+  }
 
   for (const itemReturn of input.items) {
     const loanItem = db.loan_items.find((li) => li.id === itemReturn.loanItemId && li.loan_id === input.loanId);
     if (!loanItem) continue;
 
+    const notes = itemReturn.returnNotes || (itemReturn as any).notes || '';
     loanItem.status = 'RETURNED';
     loanItem.return_condition = itemReturn.returnCondition;
-    loanItem.return_accessories = itemReturn.returnAccessories;
-    loanItem.return_notes = itemReturn.returnNotes || '';
+    loanItem.return_accessories = itemReturn.returnAccessories || [];
+    loanItem.return_notes = notes;
     loanItem.returned_at = now;
 
     const item = db.items.find((i) => i.id === loanItem.item_id);
@@ -1174,26 +1304,39 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
     }
   }
 
+  const remainingBorrowedItems = db.loan_items.filter((li) => li.loan_id === input.loanId && li.status === 'BORROWED');
+  const localNewStatus = remainingBorrowedItems.length === 0 ? 'RETURNED' : 'PARTIALLY_RETURNED';
+  const localReturnDate = localNewStatus === 'RETURNED' ? today : undefined;
+
   if (loan) {
-    const remainingBorrowedItems = db.loan_items.filter((li) => li.loan_id === input.loanId && li.status === 'BORROWED');
-    if (remainingBorrowedItems.length === 0) {
-      loan.status = 'RETURNED';
-      loan.actual_return_date = today;
-    } else {
-      loan.status = 'PARTIALLY_RETURNED';
-    }
+    loan.status = localNewStatus;
+    loan.actual_return_date = localReturnDate;
     loan.return_checker_id = input.checkerId;
     loan.updated_at = now;
   }
 
-  // WhatsApp Notification for Return
-  const member = loan ? db.members.find((m) => m.id === loan.member_id) : undefined;
-  const generation = member ? db.generations.find((g) => g.id === member.generation_id) : undefined;
-  const itemsText = returnedItemNames.map((n) => `- ${n}`).join('\n');
-  const returnConditions = input.items.map((i) => i.returnCondition).join(', ');
-  const notesText = input.items.map((i) => i.returnNotes).filter(Boolean).join('; ');
+  // 4. WhatsApp Notification for Return
+  const finalStatus = fullLoan?.status || localNewStatus;
+  const member = fullLoan?.member || (loan ? db.members.find((m) => m.id === loan.member_id) : undefined);
+  let generation = member?.generation;
+  if (!generation && member?.generation_id) {
+    generation = db.generations.find((g) => g.id === member.generation_id);
+  }
+  if (!checker) {
+    try {
+      const { data: cData } = await supabase.from('checkers').select('name').eq('id', input.checkerId).maybeSingle();
+      if (cData) checker = cData as Checker;
+    } catch {}
+  }
 
-  const waMessage = `[PENGEMBALIAN BARANG]\n\nNama:\n${member?.name || '-'}\n\nAngkatan:\n${generation?.name || '-'}\n\nBarang Dikembalikan:\n${itemsText}\n\nTanggal Pengembalian:\n${today}\n\nPIC Checker:\n${checker?.name || '-'}\n\nKondisi:\n${returnConditions}${notesText ? `\n\nCatatan:\n${notesText}` : ''}\n\nStatus:\nBerhasil Dikembalikan`;
+  const memberName = member?.name || '-';
+  const genName = generation?.name || '-';
+  const checkerName = checker?.name || fullLoan?.return_checker?.name || '-';
+  const itemsText = returnedItemNames.length > 0 ? returnedItemNames.map((n) => `- ${n}`).join('\n') : '- Barang';
+  const returnConditions = Array.from(new Set(returnConditionsArr)).join(', ') || 'Aman';
+  const notesText = returnNotesArr.filter(Boolean).join('; ');
+
+  const waMessage = `[PENGEMBALIAN BARANG]\n\nNama:\n${memberName}\n\nAngkatan:\n${genName}\n\nBarang Dikembalikan:\n${itemsText}\n\nTanggal Pengembalian:\n${today}\n\nPIC Checker:\n${checkerName}\n\nKondisi:\n${returnConditions}${notesText ? `\n\nCatatan:\n${notesText}` : ''}\n\nStatus:\n${finalStatus === 'RETURNED' ? 'Berhasil Dikembalikan' : 'Dikembalikan Sebagian'}`;
 
   const notificationEvent: NotificationEvent = {
     id: crypto.randomUUID(),
@@ -1217,7 +1360,15 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
 
   writeLocalDb(db);
 
-  return { success: true, loan: loan || undefined };
+  return {
+    success: true,
+    loan: fullLoan || loan || ({
+      id: input.loanId,
+      status: finalStatus,
+      actual_return_date: localReturnDate,
+      return_checker_id: input.checkerId,
+    } as any),
+  };
 }
 
 // ====================================================================
