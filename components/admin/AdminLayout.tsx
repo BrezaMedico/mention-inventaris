@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   History,
   MessageSquare,
+  Calendar,
   LogOut,
   Menu,
   X,
@@ -24,6 +25,7 @@ interface AdminLayoutProps {
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { label: 'Kalender & Tugas', href: '/admin/calendar', icon: Calendar },
   { label: 'Aktivitas', href: '/admin/activity', icon: Activity },
   { label: 'Barang & Inventaris', href: '/admin/items', icon: Package },
   { label: 'Angkatan & Anggota', href: '/admin/members', icon: Users },

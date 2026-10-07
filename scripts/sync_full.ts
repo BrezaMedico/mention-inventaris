@@ -17,6 +17,7 @@ async function syncAll() {
     { data: notification_events, error: notifErr },
     { data: whatsapp_configs, error: waErr },
     { data: overdue_reminders, error: ovErr },
+    { data: tasks, error: taskErr },
   ] = await Promise.all([
     supabase.from('admins').select('*'),
     supabase.from('generations').select('*'),
@@ -29,7 +30,15 @@ async function syncAll() {
     supabase.from('notification_events').select('*'),
     supabase.from('whatsapp_configs').select('*'),
     supabase.from('overdue_reminders').select('*'),
+    supabase.from('tasks').select('*'),
   ]);
+
+  // Read existing tasks from local DB in case table does not exist yet on remote Supabase
+  let existingTasks: any[] = [];
+  try {
+    const existingDb = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'data', 'local_db.json'), 'utf-8'));
+    if (existingDb.tasks) existingTasks = existingDb.tasks;
+  } catch {}
 
   const localDb = {
     admins: admins || [],
@@ -43,6 +52,7 @@ async function syncAll() {
     notification_events: notification_events || [],
     whatsapp_configs: whatsapp_configs || [],
     overdue_reminders: overdue_reminders || [],
+    tasks: tasks && tasks.length > 0 ? tasks : existingTasks,
   };
 
   const dbPath = path.join(process.cwd(), 'data', 'local_db.json');

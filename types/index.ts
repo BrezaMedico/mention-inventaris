@@ -130,3 +130,17 @@ export interface WhatsAppGroup {
   name: string;
   participantsCount?: number;
 }
+
+export type TaskPriority = 'LOW' | 'MEDIUM' | 'HIGH';
+
+export interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  pic: string;
+  priority: TaskPriority;
+  due_date: string; // YYYY-MM-DD
+  created_at?: string;
+  updated_at?: string;
+}
+

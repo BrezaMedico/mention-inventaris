@@ -148,6 +148,18 @@ CREATE TABLE overdue_reminders (
     UNIQUE(loan_id, week_key)
 );
 
+-- 12. TASKS TABLE (Kalender & Deadline Tugas)
+CREATE TABLE tasks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    pic TEXT NOT NULL,
+    priority TEXT NOT NULL DEFAULT 'MEDIUM', -- LOW, MEDIUM, HIGH
+    due_date DATE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
 -- INDEXES FOR PERFORMANCE
 CREATE INDEX idx_members_generation ON members(generation_id);
 CREATE INDEX idx_items_status ON items(status);
@@ -172,6 +184,7 @@ ALTER TABLE loan_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notification_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE whatsapp_configs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE overdue_reminders ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to active data for the frontend user flows
 CREATE POLICY "Allow public read generations" ON generations FOR SELECT USING (true);
@@ -182,6 +195,7 @@ CREATE POLICY "Allow public read item_accessories" ON item_accessories FOR SELEC
 CREATE POLICY "Allow public read loans" ON loans FOR SELECT USING (true);
 CREATE POLICY "Allow public read loan_items" ON loan_items FOR SELECT USING (true);
 CREATE POLICY "Allow public read whatsapp_configs" ON whatsapp_configs FOR SELECT USING (true);
+CREATE POLICY "Allow public read tasks" ON tasks FOR SELECT USING (true);
 
 -- Allow full public operations via anon key for now (Next.js server-side handles validation and admin authorization)
 CREATE POLICY "Allow public write loans" ON loans FOR ALL USING (true) WITH CHECK (true);
@@ -195,6 +209,7 @@ CREATE POLICY "Allow public write notification_events" ON notification_events FO
 CREATE POLICY "Allow public write whatsapp_configs" ON whatsapp_configs FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow public write overdue_reminders" ON overdue_reminders FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow public write admins" ON admins FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow public write tasks" ON tasks FOR ALL USING (true) WITH CHECK (true);
 
 -- ====================================================================
 -- SEED DATA

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Logo from './Logo';
-import { Shield } from 'lucide-react';
+import { Shield, Calendar } from 'lucide-react';
 
 interface NavbarProps {
   showHomeLink?: boolean;
@@ -14,7 +14,7 @@ export default function Navbar({ showHomeLink = false }: NavbarProps) {
           <Logo height={32} />
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           {showHomeLink && (
             <Link
               href="/"
@@ -23,6 +23,14 @@ export default function Navbar({ showHomeLink = false }: NavbarProps) {
               Beranda
             </Link>
           )}
+
+          <Link
+            href="/calendar"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-neutral-800 bg-neutral-900 text-neutral-300 hover:border-mention-yellow hover:text-mention-yellow transition-all"
+          >
+            <Calendar className="w-3.5 h-3.5" />
+            Kalender
+          </Link>
 
           <Link
             href="/admin"

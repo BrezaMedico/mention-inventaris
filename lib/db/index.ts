@@ -18,6 +18,8 @@ import {
   LoanStatus,
   InitialCondition,
   ReturnCondition,
+  Task,
+  TaskPriority,
 } from '@/types';
 
 function getDbFilePath(): string {
@@ -46,6 +48,7 @@ interface LocalDatabase {
   notification_events: NotificationEvent[];
   whatsapp_configs: WhatsAppConfig[];
   overdue_reminders: { id: string; loan_id: string; week_key: string; sent_at: string }[];
+  tasks: Task[];
 }
 
 function readLocalDb(): LocalDatabase {
@@ -60,7 +63,9 @@ function readLocalDb(): LocalDatabase {
       throw new Error('Local DB not found');
     }
     const raw = fs.readFileSync(dbPath, 'utf-8');
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!parsed.tasks) parsed.tasks = [];
+    return parsed;
   } catch (err) {
     console.error('Error reading local db:', err);
     return {
@@ -75,6 +80,7 @@ function readLocalDb(): LocalDatabase {
       notification_events: [],
       whatsapp_configs: [],
       overdue_reminders: [],
+      tasks: [],
     };
   }
 }
@@ -1781,3 +1787,147 @@ export async function checkAndCreateWeeklyOverdueReminders(): Promise<Notificati
 
   return newEvents;
 }
+
+// ====================================================================
+// TASKS & CALENDAR DEADLINES
+// ====================================================================
+export async function getAllTasks(): Promise<Task[]> {
+  try {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .order('due_date', { ascending: true });
+
+    if (!error && data) {
+      // Keep local DB in sync
+      const db = readLocalDb();
+      db.tasks = data as Task[];
+      writeLocalDb(db);
+      return data as Task[];
+    }
+  } catch (err) {
+    console.error('Supabase getAllTasks catch:', err);
+  }
+
+  const db = readLocalDb();
+  return (db.tasks || []).sort((a, b) => a.due_date.localeCompare(b.due_date));
+}
+
+export async function getTaskById(id: string): Promise<Task | null> {
+  try {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle();
+
+    if (!error && data) {
+      return data as Task;
+    }
+  } catch (err) {
+    console.error('Supabase getTaskById catch:', err);
+  }
+
+  const db = readLocalDb();
+  return (db.tasks || []).find((t) => t.id === id) || null;
+}
+
+export async function createTask(input: {
+  title: string;
+  description?: string;
+  pic: string;
+  priority: TaskPriority;
+  due_date: string;
+}): Promise<Task> {
+  const id = crypto.randomUUID();
+  const now = new Date().toISOString();
+
+  const newTask: Task = {
+    id,
+    title: input.title.trim(),
+    description: input.description?.trim() || '',
+    pic: input.pic.trim(),
+    priority: input.priority,
+    due_date: input.due_date,
+    created_at: now,
+    updated_at: now,
+  };
+
+  try {
+    const { error } = await supabase.from('tasks').insert([newTask]);
+    if (error) {
+      console.error('Supabase createTask error:', error);
+    }
+  } catch (err) {
+    console.error('Supabase createTask catch:', err);
+  }
+
+  const db = readLocalDb();
+  if (!db.tasks) db.tasks = [];
+  db.tasks.push(newTask);
+  writeLocalDb(db);
+
+  return newTask;
+}
+
+export async function updateTask(
+  id: string,
+  input: {
+    title?: string;
+    description?: string;
+    pic?: string;
+    priority?: TaskPriority;
+    due_date?: string;
+  }
+): Promise<Task | null> {
+  const now = new Date().toISOString();
+  const updateData: Partial<Task> = {
+    updated_at: now,
+  };
+
+  if (input.title !== undefined) updateData.title = input.title.trim();
+  if (input.description !== undefined) updateData.description = input.description.trim();
+  if (input.pic !== undefined) updateData.pic = input.pic.trim();
+  if (input.priority !== undefined) updateData.priority = input.priority;
+  if (input.due_date !== undefined) updateData.due_date = input.due_date;
+
+  try {
+    const { error } = await supabase.from('tasks').update(updateData).eq('id', id);
+    if (error) {
+      console.error('Supabase updateTask error:', error);
+    }
+  } catch (err) {
+    console.error('Supabase updateTask catch:', err);
+  }
+
+  const db = readLocalDb();
+  if (!db.tasks) db.tasks = [];
+  const index = db.tasks.findIndex((t) => t.id === id);
+  if (index !== -1) {
+    db.tasks[index] = { ...db.tasks[index], ...updateData };
+    writeLocalDb(db);
+    return db.tasks[index];
+  }
+
+  return null;
+}
+
+export async function deleteTask(id: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await supabase.from('tasks').delete().eq('id', id);
+    if (error) {
+      console.error('Supabase deleteTask error:', error);
+    }
+  } catch (err: any) {
+    console.error('Supabase deleteTask catch:', err);
+  }
+
+  const db = readLocalDb();
+  if (db.tasks) {
+    db.tasks = db.tasks.filter((t) => t.id !== id);
+    writeLocalDb(db);
+  }
+
+  return { success: true };
+}
+

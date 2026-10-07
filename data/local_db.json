@@ -1624,5 +1624,47 @@
       "updated_at": "2026-10-06T14:58:36.574+00:00"
     }
   ],
-  "overdue_reminders": []
+  "overdue_reminders": [],
+  "tasks": [
+    {
+      "id": "e1f10111-2222-4333-8444-555566667771",
+      "title": "Membuat Laporan PKL",
+      "description": "Menyusun draft bab 1 sampai bab 4 laporan praktik kerja lapangan.",
+      "pic": "Breza",
+      "priority": "HIGH",
+      "due_date": "2026-10-15",
+      "created_at": "2026-10-07T08:00:00.000Z",
+      "updated_at": "2026-10-07T08:00:00.000Z"
+    },
+    {
+      "id": "e1f10111-2222-4333-8444-555566667772",
+      "title": "Presentasi Project",
+      "description": "Uji kelayakan dan demo sistem di depan pembimbing teknis.",
+      "pic": "Fatih",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-15",
+      "created_at": "2026-10-07T08:00:00.000Z",
+      "updated_at": "2026-10-07T08:00:00.000Z"
+    },
+    {
+      "id": "e1f10111-2222-4333-8444-555566667773",
+      "title": "Pengumpulan Dokumentasi",
+      "description": "Upload foto dan video dokumentasi kegiatan ke Google Drive Mention.",
+      "pic": "Dzurunnafis",
+      "priority": "LOW",
+      "due_date": "2026-10-20",
+      "created_at": "2026-10-07T08:00:00.000Z",
+      "updated_at": "2026-10-07T08:00:00.000Z"
+    },
+    {
+      "id": "e1f10111-2222-4333-8444-555566667774",
+      "title": "Briefing Pra-Produksi",
+      "description": "Koordinasi teknis peralatan kamera dan audio untuk event mendatang.",
+      "pic": "Breza",
+      "priority": "HIGH",
+      "due_date": "2026-10-08",
+      "created_at": "2026-10-07T08:00:00.000Z",
+      "updated_at": "2026-10-07T08:00:00.000Z"
+    }
+  ]
 }
