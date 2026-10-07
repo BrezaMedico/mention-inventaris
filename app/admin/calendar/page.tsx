@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Task, TaskPriority } from '@/types';
-import { formatDueDateIndo, getTaskUrgency } from '@/lib/calendar';
+import { formatDueDateIndo, getTaskUrgency, getLocalTodayStr } from '@/lib/calendar';
 import TaskFormModal from '@/components/calendar/TaskFormModal';
 import {
   Calendar as CalendarIcon,
@@ -52,7 +52,11 @@ export default function AdminCalendarPage() {
   const [reminderMessage, setReminderMessage] = useState('');
   const [reminderError, setReminderError] = useState('');
 
-  const today = useMemo(() => new Date(), []);
+  const today = useMemo(() => {
+    const todayStr = getLocalTodayStr();
+    const [y, m, d] = todayStr.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }, []);
 
   const loadTasks = async () => {
     try {

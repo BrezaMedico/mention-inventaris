@@ -74,15 +74,9 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
 
   const [y, m, d] = dueDateStr.split('-').map(Number);
   const targetDate = new Date(y, m - 1, d, 0, 0, 0, 0);
-  const today = new Date(
-    referenceDate.getFullYear(),
-    referenceDate.getMonth(),
-    referenceDate.getDate(),
-    0,
-    0,
-    0,
-    0
-  );
+  const todayStr = getLocalTodayStr(referenceDate);
+  const [ty, tm, td] = todayStr.split('-').map(Number);
+  const today = new Date(ty, tm - 1, td, 0, 0, 0, 0);
 
   const diffTime = targetDate.getTime() - today.getTime();
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
@@ -176,6 +170,27 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
   };
 }
 
+/**
+ * Mendapatkan string tanggal hari ini (YYYY-MM-DD) dalam waktu lokal / Asia/Jakarta (WIB).
+ * Penting: Jangan gunakan toISOString().slice(0, 10) karena toISOString() berbasis UTC (selisih 7 jam dari WIB),
+ * yang menyebabkan sebelum pukul 07:00 pagi WIB tanggalnya masih terbaca kemarin.
+ */
+export function getLocalTodayStr(referenceDate: Date = new Date()): string {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Jakarta',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(referenceDate);
+  } catch {
+    const y = referenceDate.getFullYear();
+    const m = String(referenceDate.getMonth() + 1).padStart(2, '0');
+    const d = String(referenceDate.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+}
+
 export interface CalendarDay {
   date: string; // 'YYYY-MM-DD'
   dayNumber: number;
@@ -183,10 +198,10 @@ export interface CalendarDay {
   isToday: boolean;
 }
 
-export function generateCalendarDays(year: number, month: number): CalendarDay[] {
+export function generateCalendarDays(year: number, month: number, customTodayStr?: string): CalendarDay[] {
   const result: CalendarDay[] = [];
 
-  const todayStr = new Date().toISOString().slice(0, 10);
+  const todayStr = customTodayStr || getLocalTodayStr();
 
   // First day of target month
   const firstDayOfMonth = new Date(year, month, 1);

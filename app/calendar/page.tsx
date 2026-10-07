@@ -10,6 +10,7 @@ import {
   getTaskUrgency,
   formatDueDateIndo,
   formatDueDateShort,
+  getLocalTodayStr,
 } from '@/lib/calendar';
 import TaskDetailModal from '@/components/calendar/TaskDetailModal';
 import TaskFormModal from '@/components/calendar/TaskFormModal';
@@ -35,17 +36,31 @@ export default function CalendarPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Month & Year state (defaults to today's local year & month)
-  const today = useMemo(() => new Date(), []);
-  const todayStr = useMemo(() => {
-    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-  }, [today]);
+  // Tanggal hari ini dalam waktu lokal / Asia/Jakarta (WIB)
+  const [todayStr, setTodayStr] = useState<string>(() => getLocalTodayStr());
 
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth()); // 0-indexed
+  // Pastikan sinkronisasi tanggal lokal saat komponen termuat di browser client
+  useEffect(() => {
+    const localToday = getLocalTodayStr();
+    setTodayStr(localToday);
+  }, []);
+
+  const today = useMemo(() => {
+    const [y, m, d] = todayStr.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }, [todayStr]);
+
+  const [currentYear, setCurrentYear] = useState<number>(() => {
+    const [y] = getLocalTodayStr().split('-').map(Number);
+    return y;
+  });
+  const [currentMonth, setCurrentMonth] = useState<number>(() => {
+    const [, m] = getLocalTodayStr().split('-').map(Number);
+    return m - 1; // 0-indexed
+  });
 
   // Selected date for mobile agenda view & active date highlight
-  const [selectedDate, setSelectedDate] = useState<string>(todayStr);
+  const [selectedDate, setSelectedDate] = useState<string>(() => getLocalTodayStr());
 
   // Sidebar filter category: 'UPCOMING' | 'OVERDUE'
   const [sidebarFilter, setSidebarFilter] = useState<'UPCOMING' | 'OVERDUE'>('UPCOMING');
@@ -109,15 +124,17 @@ export default function CalendarPage() {
   };
 
   const handleResetToday = () => {
-    setCurrentYear(today.getFullYear());
-    setCurrentMonth(today.getMonth());
-    setSelectedDate(todayStr);
+    const localNow = getLocalTodayStr();
+    const [y, m] = localNow.split('-').map(Number);
+    setCurrentYear(y);
+    setCurrentMonth(m - 1);
+    setSelectedDate(localNow);
   };
 
   // Generate calendar days for current month view
   const calendarDays = useMemo(() => {
-    return generateCalendarDays(currentYear, currentMonth);
-  }, [currentYear, currentMonth]);
+    return generateCalendarDays(currentYear, currentMonth, todayStr);
+  }, [currentYear, currentMonth, todayStr]);
 
   // Map tasks by date: { '2026-10-15': [task1, task2] }
   const tasksByDate = useMemo(() => {
@@ -175,7 +192,7 @@ export default function CalendarPage() {
   const handleFabClick = () => {
     if (isAdmin) {
       setTaskToEdit(null);
-      setFormInitialDate(today.toISOString().slice(0, 10));
+      setFormInitialDate(todayStr);
       setIsFormOpen(true);
     } else {
       setIsAdminRequiredOpen(true);
@@ -540,10 +557,12 @@ export default function CalendarPage() {
                     key={cell.date}
                     onClick={() => handleCellClick(cell.date, cell.isCurrentMonth, dayTasks)}
                     className={`min-h-[58px] sm:min-h-[118px] p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl border transition-all flex flex-col justify-between select-none cursor-pointer active:scale-95 ${
-                      isSelected
-                        ? '!bg-[#272a3a] !border-mention-yellow ring-2 ring-mention-yellow shadow-lg shadow-yellow-500/10'
-                        : cell.isToday
-                        ? '!bg-[#222533] !border-mention-yellow/80 ring-1 ring-mention-yellow/50'
+                      cell.isToday
+                        ? isSelected
+                          ? '!bg-[#272a3a] !border-mention-yellow ring-2 ring-mention-yellow shadow-lg shadow-yellow-500/20'
+                          : '!bg-mention-yellow/10 !border-mention-yellow ring-1 ring-mention-yellow/60 shadow-md shadow-yellow-500/10'
+                        : isSelected
+                        ? '!bg-[#272a3a] !border-white/80 ring-2 ring-white/50 shadow-md'
                         : cell.isCurrentMonth
                         ? 'bg-[#1a1c25] border-neutral-700/70 hover:border-neutral-500/80 hover:bg-[#20232f] shadow-sm'
                         : 'bg-[#101117]/50 border-neutral-800/50 text-neutral-600 opacity-40 hover:opacity-70'
@@ -551,11 +570,13 @@ export default function CalendarPage() {
                   >
                     {/* Date Number + Penanda Hari Ini */}
                     <div className="flex items-start justify-between">
-                      <div className="flex flex-col items-center">
+                      <div className="flex items-center gap-1.5 sm:flex-col sm:items-start">
                         <span
                           className={`text-xs sm:text-sm font-bold ${
-                            isSelected || cell.isToday
+                            cell.isToday
                               ? 'text-mention-yellow font-black'
+                              : isSelected
+                              ? 'text-white font-bold'
                               : cell.isCurrentMonth
                               ? 'text-white'
                               : 'text-neutral-500'
@@ -565,11 +586,13 @@ export default function CalendarPage() {
                         </span>
 
                         {/* Indikator Penanda Hari Ini */}
-                        {cell.isToday && !isSelected && (
+                        {cell.isToday && (
                           <span
                             title="Hari ini"
-                            className="w-1.5 h-1.5 rounded-full border border-mention-yellow bg-mention-yellow mt-0.5"
-                          />
+                            className="text-[8px] font-black uppercase tracking-tight text-mention-yellow bg-yellow-500/20 border border-yellow-500/30 px-1 py-0.2 rounded hidden sm:inline-block leading-tight"
+                          >
+                            Hari Ini
+                          </span>
                         )}
                       </div>
 
@@ -581,21 +604,19 @@ export default function CalendarPage() {
                       )}
                     </div>
 
-                    {/* Mobile Task Dots Indicator (< sm) */}
+                    {/* Mobile Task Dots Indicator (< sm) - Bulat Kuning */}
                     {hasTasks && (
-                      <div className="flex sm:hidden items-center justify-center gap-1 mt-1 flex-wrap">
-                        {dayTasks.slice(0, 3).map((t) => {
-                          const urgency = getTaskUrgency(t.due_date, today);
-                          return (
-                            <span
-                              key={t.id}
-                              className={`w-1.5 h-1.5 rounded-full ${urgency.dotColor} ring-1 ring-black/40`}
-                            />
-                          );
-                        })}
-                        {dayTasks.length > 3 && (
+                      <div className="flex sm:hidden items-center justify-center gap-1.5 mt-1 pb-0.5 flex-wrap">
+                        {dayTasks.slice(0, 4).map((t, idx) => (
+                          <span
+                            key={t.id || idx}
+                            title={t.title}
+                            className="w-2 h-2 rounded-full bg-mention-yellow shadow-sm shadow-yellow-500/60 ring-1 ring-black/40"
+                          />
+                        ))}
+                        {dayTasks.length > 4 && (
                           <span className="text-[8px] font-black text-mention-yellow leading-none">
-                            +{dayTasks.length - 3}
+                            +{dayTasks.length - 4}
                           </span>
                         )}
                       </div>

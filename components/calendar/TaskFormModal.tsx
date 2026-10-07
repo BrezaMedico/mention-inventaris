@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Task, TaskPriority } from '@/types';
 import { X, Calendar, User, FileText, AlertTriangle, Loader2, Save } from 'lucide-react';
+import { getLocalTodayStr } from '@/lib/calendar';
 
 interface TaskFormModalProps {
   isOpen: boolean;
@@ -39,7 +40,7 @@ export default function TaskFormModal({
       setDescription('');
       setPic('');
       setPriority('MEDIUM');
-      setDueDate(initialDate || new Date().toISOString().slice(0, 10));
+      setDueDate(initialDate || getLocalTodayStr());
     }
     setErrorMessage('');
   }, [taskToEdit, initialDate, isOpen]);
