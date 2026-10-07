@@ -288,7 +288,23 @@ setInterval(async () => {
   }
 }, 30 * 1000);
 
+// Anti-Sleep Self-Ping for Render: Render provides RENDER_EXTERNAL_URL automatically
+const externalUrl = process.env.RENDER_EXTERNAL_URL || process.env.SELF_URL;
+if (externalUrl) {
+  console.log(`[Anti-Sleep] Self-ping active targeting external URL: ${externalUrl}`);
+  setInterval(async () => {
+    try {
+      const pingUrl = `${externalUrl.replace(/\/$/, '')}/health`;
+      const res = await fetch(pingUrl);
+      console.log(`[Anti-Sleep] Pinged ${pingUrl} - Status: ${res.status}`);
+    } catch (err) {
+      console.warn(`[Anti-Sleep] Self-ping failed:`, err.message);
+    }
+  }, 10 * 60 * 1000); // Set to 10 minutes (Render sleeps after 15 minutes of inactivity)
+}
+
 app.listen(PORT, () => {
   console.log(`MENTION WhatsApp 24/7 Microservice running on http://localhost:${PORT}`);
   connectToWhatsApp();
 });
+
