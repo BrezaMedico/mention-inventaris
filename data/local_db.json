@@ -947,7 +947,7 @@
       "image_url": null,
       "status": "AVAILABLE",
       "created_at": "2026-09-19T08:58:23.638+00:00",
-      "updated_at": "2026-10-06T14:53:25.631Z"
+      "updated_at": "2026-10-07T14:58:41.197Z"
     },
     {
       "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
@@ -957,7 +957,7 @@
       "image_url": null,
       "status": "BORROWED",
       "created_at": "2026-09-19T07:30:25.004+00:00",
-      "updated_at": "2026-09-19T09:00:37.193+00:00"
+      "updated_at": "2026-10-07T15:05:40.591Z"
     }
   ],
   "item_accessories": [
@@ -1006,330 +1006,21 @@
   ],
   "loans": [
     {
-      "id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
-      "loan_code": "MNT-20260919-4083",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-19",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "Untuk Dokumentasi",
-      "created_at": "2026-09-19T07:46:16.224569+00:00",
-      "updated_at": "2026-09-19T07:48:05.493+00:00"
-    },
-    {
-      "id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
-      "loan_code": "MNT-20260919-4007",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-19",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "Dokum",
-      "created_at": "2026-09-19T07:49:17.635698+00:00",
-      "updated_at": "2026-09-19T07:49:42.137+00:00"
-    },
-    {
-      "id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
-      "loan_code": "MNT-20260919-9260",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-21",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-09-19T07:50:46.783419+00:00",
-      "updated_at": "2026-09-19T07:51:48.175+00:00"
-    },
-    {
-      "id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
-      "loan_code": "MNT-20260919-3506",
-      "member_id": "11758503-8747-4e39-8dd1-85160750992f",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-21",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-09-19T07:52:36.344488+00:00",
-      "updated_at": "2026-09-19T08:50:35.036+00:00"
-    },
-    {
-      "id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
-      "loan_code": "MNT-20260919-2800",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-19",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-09-19T08:51:44.409638+00:00",
-      "updated_at": "2026-09-19T09:00:37.193+00:00"
-    },
-    {
-      "id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
-      "loan_code": "MNT-20260919-3533",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-09-19",
-      "expected_return_date": "2026-09-19",
-      "actual_return_date": "2026-09-19",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-09-19T09:08:23.150726+00:00",
-      "updated_at": "2026-09-19T09:08:51.576+00:00"
-    },
-    {
-      "id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "loan_code": "MNT-20260925-2665",
-      "member_id": "767d2a6a-bd79-4036-9fd1-7a6cb72596e3",
-      "borrow_date": "2026-09-25",
-      "expected_return_date": "2027-01-01",
-      "actual_return_date": "2026-09-25",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "mau tahun baruan",
-      "created_at": "2026-09-25T09:10:53.513286+00:00",
-      "updated_at": "2026-09-25T09:14:37.259+00:00"
-    },
-    {
-      "id": "3393e55c-0547-4947-b124-6417c1711600",
-      "loan_code": "MNT-20261006-1715",
-      "member_id": "e340ae30-efb3-4c8d-87a4-41be151c4dd9",
-      "borrow_date": "2026-10-06",
-      "expected_return_date": "2026-10-08",
-      "actual_return_date": null,
+      "id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
+      "loan_code": "MNT-20261007-4310",
+      "member_id": "86f82c18-d01c-4310-94b7-f837ec0af63f",
+      "borrow_date": "2026-10-07",
+      "expected_return_date": "2026-10-07",
       "status": "ACTIVE",
       "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "return_checker_id": null,
       "notes": "",
-      "created_at": "2026-10-06T14:13:43.915814+00:00",
-      "updated_at": "2026-10-06T14:13:43.915814+00:00"
-    },
-    {
-      "id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
-      "loan_code": "MNT-20261006-3507",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-10-06",
-      "expected_return_date": "2026-10-06",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-10-06T14:52:54.688Z",
-      "actual_return_date": "2026-10-06",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "updated_at": "2026-10-06T14:53:25.631Z"
-    },
-    {
-      "id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
-      "loan_code": "MNT-20261006-9536",
-      "member_id": "b518a97f-6920-4398-aadc-f5f28a9d0df5",
-      "borrow_date": "2026-10-06",
-      "expected_return_date": "2026-10-08",
-      "status": "RETURNED",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-10-06T14:59:16.312Z",
-      "actual_return_date": "2026-10-06",
-      "return_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "updated_at": "2026-10-06T14:59:54.235Z"
+      "created_at": "2026-10-07T15:05:40.591Z"
     }
   ],
   "loan_items": [
     {
-      "id": "52e55aa9-e969-4a6d-a090-32748dde28eb",
-      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 1",
-        "Charger Case",
-        "SD Card"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T07:48:05.493+00:00",
-      "created_at": "2026-09-19T07:46:16.5724+00:00",
-      "updated_at": "2026-09-19T07:46:16.5724+00:00"
-    },
-    {
-      "id": "17d92a2a-9280-4b3b-9029-cd1393880b7f",
-      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T07:49:42.137+00:00",
-      "created_at": "2026-09-19T07:49:17.941241+00:00",
-      "updated_at": "2026-09-19T07:49:17.941241+00:00"
-    },
-    {
-      "id": "44de75ba-7c79-4e20-a822-9ab8cbac3bac",
-      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T07:51:48.175+00:00",
-      "created_at": "2026-09-19T07:50:47.080653+00:00",
-      "updated_at": "2026-09-19T07:50:47.080653+00:00"
-    },
-    {
-      "id": "8acaaaa5-74b7-430a-84dc-3801b50e997d",
-      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T08:50:35.036+00:00",
-      "created_at": "2026-09-19T07:52:36.654099+00:00",
-      "updated_at": "2026-09-19T07:52:36.654099+00:00"
-    },
-    {
-      "id": "69af8ca3-55fb-4b8c-8108-4f3fdb9b9ef7",
-      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T09:00:37.193+00:00",
-      "created_at": "2026-09-19T08:51:45.247152+00:00",
-      "updated_at": "2026-09-19T08:51:45.247152+00:00"
-    },
-    {
-      "id": "ba2ea6f1-a9cc-48a8-9587-367cc0f93175",
-      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
-      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Phone holder"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Phone holder"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-19T09:08:51.576+00:00",
-      "created_at": "2026-09-19T09:08:23.475887+00:00",
-      "updated_at": "2026-09-19T09:08:23.475887+00:00"
-    },
-    {
-      "id": "670b4842-7219-4d5a-ab66-e4c1b6a2a9f2",
-      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai DJI"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai DJI"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-25T09:14:37.259+00:00",
-      "created_at": "2026-09-25T09:10:53.851198+00:00",
-      "updated_at": "2026-09-25T09:10:53.851198+00:00"
-    },
-    {
-      "id": "09892ecd-ff27-4784-8ea9-42b86fb5ef07",
-      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Phone holder"
-      ],
-      "initial_notes": "",
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Phone holder"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-09-25T09:14:37.259+00:00",
-      "created_at": "2026-09-25T09:10:54.973433+00:00",
-      "updated_at": "2026-09-25T09:10:54.973433+00:00"
-    },
-    {
-      "id": "7d613099-678e-4846-8130-8e4744d05cec",
-      "loan_id": "3393e55c-0547-4947-b124-6417c1711600",
+      "id": "bbe92aa0-171e-4154-8126-a5d4ed2045c5",
+      "loan_id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
       "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
       "status": "BORROWED",
       "initial_condition": "Aman",
@@ -1340,276 +1031,28 @@
         "SD Card"
       ],
       "initial_notes": "",
-      "return_condition": null,
-      "return_accessories": [],
-      "return_notes": null,
-      "returned_at": null,
-      "created_at": "2026-10-06T14:13:44.119233+00:00",
-      "updated_at": "2026-10-06T14:13:44.119233+00:00"
-    },
-    {
-      "id": "40960e0c-d848-46d1-b179-066f1d43992f",
-      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
-      "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai DJI"
-      ],
-      "initial_notes": "",
-      "created_at": "2026-10-06T14:52:54.688Z",
+      "created_at": "2026-10-07T15:05:40.591Z",
       "item": {
-        "id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
-        "name": "DJI Osmo Nano",
-        "code": "ITM-3638",
-        "description": "",
+        "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+        "name": "Camera Canon",
+        "code": "ITM-5004",
+        "description": "Camera yayasan",
         "image_url": null,
         "status": "BORROWED",
-        "created_at": "2026-09-19T08:58:23.638+00:00",
-        "updated_at": "2026-10-06T14:52:54.688Z"
-      },
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Baterai DJI"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-10-06T14:53:25.631Z"
-    },
-    {
-      "id": "bb1773fd-601e-4c82-914c-915a6aee1aba",
-      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
-      "item_id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-      "status": "RETURNED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Phone holder"
-      ],
-      "initial_notes": "",
-      "created_at": "2026-10-06T14:59:16.312Z",
-      "item": {
-        "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-        "name": "Trippod",
-        "code": "ITM-8509",
-        "description": "Trippod Camera",
-        "image_url": null,
-        "status": "BORROWED",
-        "created_at": "2026-09-19T08:55:48.509+00:00",
-        "updated_at": "2026-10-06T14:59:16.312Z"
-      },
-      "return_condition": "Aman",
-      "return_accessories": [
-        "Phone holder"
-      ],
-      "return_notes": "",
-      "returned_at": "2026-10-06T14:59:54.235Z"
+        "created_at": "2026-09-19T07:30:25.004+00:00",
+        "updated_at": "2026-10-07T15:05:40.591Z"
+      }
     }
   ],
   "notification_events": [
     {
-      "id": "b70e2dff-28ab-4206-a544-1da931e722ce",
-      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
+      "id": "0d1224a4-cc53-48d1-a00d-040fde1291cd",
+      "loan_id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
       "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "FAILED",
-      "error_message": "This operation was aborted",
-      "sent_at": null,
-      "created_at": "2026-09-19T07:46:17.729151+00:00"
-    },
-    {
-      "id": "8fe41c80-ab35-42c3-9596-121770afd39d",
-      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
+      "message": "[PEMINJAMAN BARANG]\n\nNama:\nFarray Saleh Abdad\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- Camera Canon\n\nTanggal Peminjaman:\n2026-10-07\n\nTanggal Pengembalian:\n2026-10-07\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
       "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-19T07:48:36.984+00:00",
-      "created_at": "2026-09-19T07:48:08.251058+00:00"
-    },
-    {
-      "id": "acda68a3-582f-4200-83c8-9655f903e149",
-      "loan_id": "fc3a90d5-9b47-4fe0-bbac-739102cb9acc",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-19T07:48:38.509+00:00",
-      "created_at": "2026-09-19T07:47:58.664548+00:00"
-    },
-    {
-      "id": "0a9797ae-91f4-4ed2-9153-3cb60d7b923a",
-      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "FAILED",
-      "error_message": "This operation was aborted",
-      "sent_at": null,
-      "created_at": "2026-09-19T07:49:18.538038+00:00"
-    },
-    {
-      "id": "e7834d62-9007-4ddb-b5e3-f82757042126",
-      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-21\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-19T07:51:35.262+00:00",
-      "created_at": "2026-09-19T07:50:48.187663+00:00"
-    },
-    {
-      "id": "1fa9efb5-6b32-4d6c-9d88-d6f847308ed6",
-      "loan_id": "3445517f-64da-4da7-8512-efcba7c7c0cb",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "FAILED",
-      "error_message": "This operation was aborted",
-      "sent_at": null,
-      "created_at": "2026-09-19T07:49:44.766479+00:00"
-    },
-    {
-      "id": "0a858913-a970-4e46-88b1-e7d7558239eb",
-      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-21\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-19T08:00:34.187+00:00",
-      "created_at": "2026-09-19T07:52:37.785315+00:00"
-    },
-    {
-      "id": "1054a604-5484-443d-9bec-92fba24d4b16",
-      "loan_id": "948ee4f8-95a5-4cca-b07a-b97cfd3120ed",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-19T08:00:35.576+00:00",
-      "created_at": "2026-09-19T07:51:50.337759+00:00"
-    },
-    {
-      "id": "c4c6e299-4dfb-4636-8278-b1f3da4c895e",
-      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n- Trippod\n\nTanggal Pengembalian:\n2026-09-25\n\nPIC Checker:\n-\n\nKondisi:\nAman, Aman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:52.252+00:00",
-      "created_at": "2026-09-25T09:14:40.971375+00:00"
-    },
-    {
-      "id": "b9843727-1c78-4e15-a2e1-a32df03fe911",
-      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n- Trippod\n\nTanggal Pengembalian:\n2026-09-25\n\nPIC Checker:\n-\n\nKondisi:\nAman, Aman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:53.152+00:00",
-      "created_at": "2026-09-25T09:14:31.766756+00:00"
-    },
-    {
-      "id": "769485a4-2251-4cbb-9467-dea5ee8e04cc",
-      "loan_id": "222a8e07-0d51-434f-ab20-260d361497db",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n- Barang\n\nTanggal Peminjaman:\n2026-09-25\n\nTanggal Pengembalian:\n2027-01-01\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:54.148+00:00",
-      "created_at": "2026-09-25T09:10:56.081247+00:00"
-    },
-    {
-      "id": "64076e79-75d0-4c81-a28b-192d9f916403",
-      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Trippod\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:56.769+00:00",
-      "created_at": "2026-09-19T09:08:54.70725+00:00"
-    },
-    {
-      "id": "8196bc6a-9f2d-41bc-b47b-556eaf5be300",
-      "loan_id": "4d978534-b26f-4648-9b73-2b07e9c88ed3",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:57.772+00:00",
-      "created_at": "2026-09-19T09:08:24.577758+00:00"
-    },
-    {
-      "id": "ccd4d140-3f92-4c91-94b1-9291303d6b23",
-      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:58.78+00:00",
-      "created_at": "2026-09-19T09:00:41.061116+00:00"
-    },
-    {
-      "id": "6b9a459e-7d3f-4128-8962-9e3331d9cae1",
-      "loan_id": "22c4fd95-ee9d-49c1-b73c-7478a97bb073",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-09-19\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:15:59.645+00:00",
-      "created_at": "2026-09-19T08:51:46.395761+00:00"
-    },
-    {
-      "id": "2e144996-f55e-403a-b14d-1efa349dec8d",
-      "loan_id": "580f4508-7f2a-45ca-8be6-b6824e94253a",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang Dikembalikan:\n- Camera Canon\n\nTanggal Pengembalian:\n2026-09-19\n\nPIC Checker:\n-\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-09-25T09:16:00.544+00:00",
-      "created_at": "2026-09-19T08:50:38.25628+00:00"
-    },
-    {
-      "id": "82a68019-5908-4b44-b01c-7a3b9d8ef265",
-      "loan_id": "3393e55c-0547-4947-b124-6417c1711600",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\n-\n\nAngkatan:\n-\n\nBarang:\n- Barang\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-08\n\nPIC Checker:\n-\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "error_message": null,
-      "sent_at": "2026-10-06T14:59:18.392Z",
-      "created_at": "2026-10-06T14:13:44.294323+00:00"
-    },
-    {
-      "id": "e5dea46c-c85e-4aae-95e4-05dd4ab0f0e8",
-      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- DJI Osmo Nano\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "created_at": "2026-10-06T14:52:54.688Z",
-      "sent_at": "2026-10-06T14:59:18.003Z"
-    },
-    {
-      "id": "45e785e2-1223-40c2-a8a1-09e177fd7b63",
-      "loan_id": "b5bd02f6-002e-44e2-89d1-341cbe54735e",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang Dikembalikan:\n- DJI Osmo Nano\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "created_at": "2026-10-06T14:53:25.631Z",
-      "sent_at": "2026-10-06T14:59:17.601Z"
-    },
-    {
-      "id": "1d0bd781-ccdd-4816-82f4-e97c19f077c4",
-      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- Trippod\n\nTanggal Peminjaman:\n2026-10-06\n\nTanggal Pengembalian:\n2026-10-08\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "created_at": "2026-10-06T14:59:16.312Z",
-      "sent_at": "2026-10-06T14:59:17.215Z"
-    },
-    {
-      "id": "6dc04502-2b1a-4498-bf3b-eaa39c6e93f5",
-      "loan_id": "8aea37bd-bf9c-41b7-83a0-b5f08c115581",
-      "type": "RETURN",
-      "message": "[PENGEMBALIAN BARANG]\n\nNama:\nBreza Artha Medico\n\nAngkatan:\nAngkatan 4\n\nBarang Dikembalikan:\n- Trippod\n\nTanggal Pengembalian:\n2026-10-06\n\nPIC Checker:\nBreza Artha Medico\n\nKondisi:\nAman\n\nStatus:\nBerhasil Dikembalikan",
-      "status": "SENT",
-      "created_at": "2026-10-06T14:59:54.235Z",
-      "sent_at": "2026-10-06T14:59:55.723Z"
+      "created_at": "2026-10-07T15:05:40.591Z",
+      "sent_at": "2026-10-07T15:05:41.575Z"
     }
   ],
   "whatsapp_configs": [
@@ -1621,7 +1064,7 @@
       "phone_number": "628211904959",
       "last_connected_at": null,
       "created_at": "2026-09-19T07:25:08.055299+00:00",
-      "updated_at": "2026-10-06T14:58:36.574+00:00"
+      "updated_at": "2026-10-07T15:01:01.543+00:00"
     }
   ],
   "overdue_reminders": [],
@@ -1638,13 +1081,14 @@
     },
     {
       "id": "db7354e7-6a52-47f3-b975-4e8d01d0ef0d",
-      "title": "p",
+      "title": "ini adalah sebuah cerita",
       "description": "",
       "pic": "pop",
       "priority": "HIGH",
       "due_date": "2026-10-07",
       "created_at": "2026-10-07T10:57:19.574Z",
-      "updated_at": "2026-10-07T10:57:19.574Z"
+      "updated_at": "2026-10-07T14:42:26.789Z"
     }
-  ]
+  ],
+  "task_reminders": []
 }

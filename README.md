@@ -44,11 +44,11 @@ Service berjalan pada port `3001`. Admin dapat membuka menu **WhatsApp** di Admi
 - **Username**: `mention`
 - **Password**: `Mention_123!*`
 
-### PIC Checker PIN (8-Digit Numeric)
-- **Rian (Divisi Logistik)**: `12345678`
-- **Siti (Koordinator Aset)**: `87654321`
+### PIC Checker PIN (6-Digit Numeric)
+- **Rian (Divisi Logistik)**: `123456`
+- **Siti (Koordinator Aset)**: `654321`
 
-*(Admin dapat menambahkan PIC baru atau mereset PIN 8-digit kapan saja melalui menu PIC Checker di Admin Portal).*
+*(Admin dapat menambahkan PIC baru atau mereset PIN 6-digit kapan saja melalui menu PIC Checker di Admin Portal).*
 
 ---
 
@@ -73,7 +73,7 @@ Untuk mengaktifkan sinkronisasi langsung dengan Supabase Cloud:
   - Filter otomatis Angkatan & Anggota.
   - Multi-item selection dengan pencegahan duplikasi & race condition.
   - Checklist kelengkapan bawaan tiap barang.
-  - Verifikasi kode 8-digit PIC Checker di sisi server.
+  - Verifikasi kode 6-digit PIC Checker di sisi server.
   - Pemeriksaan kondisi awal & pencatatan catatan kondisi.
   - Pengiriman notifikasi otomatis ke WhatsApp Group organisasi.
 
@@ -81,7 +81,7 @@ Untuk mengaktifkan sinkronisasi langsung dengan Supabase Cloud:
   - Deteksi transaksi aktif peminjam.
   - Dukungan pengembalian parsial (sebagian barang).
   - Perhitungan otomatis keterlambatan (overdue).
-  - Verifikasi kode 8-digit PIC Checker & pencatatan kondisi pengembalian.
+  - Verifikasi kode 6-digit PIC Checker & pencatatan kondisi pengembalian.
   - Update status otomatis barang (`AVAILABLE` atau `MAINTENANCE` jika rusak).
   - Pengiriman notifikasi pengembalian ke WhatsApp Group.
 
@@ -90,7 +90,7 @@ Untuk mengaktifkan sinkronisasi langsung dengan Supabase Cloud:
   - Monitoring transaksi aktif & detail inspeksi barang.
   - Manajemen Barang & Kelengkapan inventaris.
   - Manajemen Angkatan & Anggota organisasi.
-  - Manajemen PIC Checker & reset PIN 8-digit.
+  - Manajemen PIC Checker & reset PIN 6-digit.
   - Audit Trail / History lengkap semua transaksi.
   - Integrasi WhatsApp Web (QR scan, pemilihan target group, test message, log notifikasi).
   - Background scheduler pengingat keterlambatan (maksimal 1 reminder/minggu).

@@ -21,6 +21,8 @@ import {
   CheckCircle2,
   CalendarDays,
   Filter,
+  Bell,
+  X,
 } from 'lucide-react';
 
 export default function AdminCalendarPage() {
@@ -38,6 +40,11 @@ export default function AdminCalendarPage() {
   const [deleteConfirmTask, setDeleteConfirmTask] = useState<Task | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+
+  // Reminder trigger state
+  const [triggeringReminder, setTriggeringReminder] = useState(false);
+  const [reminderMessage, setReminderMessage] = useState('');
+  const [reminderError, setReminderError] = useState('');
 
   const today = useMemo(() => new Date(), []);
 
@@ -145,6 +152,32 @@ export default function AdminCalendarPage() {
     }
   };
 
+  const handleTriggerTaskReminder = async () => {
+    try {
+      setTriggeringReminder(true);
+      setReminderMessage('');
+      setReminderError('');
+      const res = await fetch('/api/cron/task-reminder', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!data.success) {
+        setReminderError(data.error || 'Gagal mengirim pengingat tugas.');
+        return;
+      }
+      setReminderMessage(
+        data.message ||
+          `Pengingat tugas selesai. ${data.remindersCreated || 0} pesan terkirim, ${data.skippedDueToDuplicate || 0} dilewati (anti-spam).`
+      );
+      loadTasks();
+      setTimeout(() => setReminderMessage(''), 8000);
+    } catch (err: any) {
+      setReminderError(err.message || 'Terjadi kesalahan koneksi.');
+    } finally {
+      setTriggeringReminder(false);
+    }
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -165,7 +198,22 @@ export default function AdminCalendarPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Tombol Cek & Kirim Pengingat WA H-1 */}
+            <button
+              onClick={handleTriggerTaskReminder}
+              disabled={triggeringReminder}
+              className="px-3.5 py-2.5 rounded-xl border border-emerald-700/70 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 font-bold text-xs transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+              title="Cek tugas H-1 besok & kirim pengingat ke grup WhatsApp (Anti-Spam: Tidak double)"
+            >
+              {triggeringReminder ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-400" />
+              ) : (
+                <Bell className="w-3.5 h-3.5 text-emerald-400" />
+              )}
+              <span>Kirim Pengingat H-1 (WA)</span>
+            </button>
+
             <Link
               href="/calendar"
               target="_blank"
@@ -184,6 +232,31 @@ export default function AdminCalendarPage() {
             </button>
           </div>
         </div>
+
+        {/* Feedback Banners */}
+        {reminderMessage && (
+          <div className="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-700/80 text-emerald-200 text-xs font-semibold flex items-center justify-between gap-3 animate-in fade-in">
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>{reminderMessage}</span>
+            </div>
+            <button onClick={() => setReminderMessage('')} className="text-emerald-400 hover:text-white p-1">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {reminderError && (
+          <div className="p-3.5 rounded-2xl bg-red-950/60 border border-red-700/80 text-red-200 text-xs font-semibold flex items-center justify-between gap-3 animate-in fade-in">
+            <div className="flex items-center gap-2.5">
+              <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+              <span>{reminderError}</span>
+            </div>
+            <button onClick={() => setReminderError('')} className="text-red-400 hover:text-white p-1">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -327,8 +400,8 @@ export default function AdminCalendarPage() {
                           )}
                         </td>
                         <td className="py-3.5 px-4">
-                          <div className="flex items-center gap-1.5 font-medium text-neutral-200">
-                            <User className="w-3.5 h-3.5 text-neutral-500" />
+                          <div className="flex items-center gap-1.5 text-neutral-200 font-medium text-xs">
+                            <User className="w-3.5 h-3.5 text-neutral-400" />
                             <span>{task.pic}</span>
                           </div>
                         </td>

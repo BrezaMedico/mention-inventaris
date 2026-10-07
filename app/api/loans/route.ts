@@ -48,8 +48,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'PIC Checker harus dipilih.' }, { status: 400 });
     }
 
-    if (!pin || !/^\d{6,8}$/.test(pin.trim())) {
-      return NextResponse.json({ success: false, error: 'PIN PIC harus 6-8 digit angka.' }, { status: 400 });
+    if (!pin || !/^\d{6}$/.test(pin.trim())) {
+      return NextResponse.json({ success: false, error: 'PIN PIC harus 6 digit angka.' }, { status: 400 });
     }
 
     // 2. Re-verify PIC PIN on server

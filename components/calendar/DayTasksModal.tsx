@@ -22,22 +22,22 @@ export default function DayTasksModal({
   if (!isOpen || !date) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="w-full max-w-md rounded-2xl bg-neutral-900 border border-neutral-800 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
+        className="w-full max-w-md rounded-2xl bg-[#14151c] border border-neutral-700 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-neutral-800 bg-neutral-950/60">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-700/80 bg-[#1c1e27]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center text-mention-yellow">
+            <div className="w-8 h-8 rounded-lg bg-[#272a38] border border-neutral-600/80 flex items-center justify-center text-mention-yellow shrink-0">
               <Calendar className="w-4 h-4" />
             </div>
             <div>
               <h3 className="text-base font-bold text-white">
                 Daftar Tugas Tanggal
               </h3>
-              <p className="text-xs text-neutral-400 font-medium">
+              <p className="text-xs text-neutral-300 font-medium">
                 {formatDueDateIndo(date)} ({tasks.length} Tugas)
               </p>
             </div>
@@ -70,8 +70,8 @@ export default function DayTasksModal({
                     >
                       {urgency.shortLabel}
                     </span>
-                    <span className="text-[11px] text-neutral-400 flex items-center gap-1 truncate">
-                      <User className="w-3 h-3 text-neutral-500 shrink-0" />
+                    <span className="text-[11px] text-neutral-300 flex items-center gap-1 truncate">
+                      <User className="w-3 h-3 text-neutral-400 shrink-0" />
                       <span>PIC: {task.pic}</span>
                     </span>
                   </div>
@@ -88,10 +88,10 @@ export default function DayTasksModal({
           })}
         </div>
 
-        <div className="p-4 border-t border-neutral-800 bg-neutral-950/80 text-right">
+        <div className="p-4 border-t border-neutral-700/80 bg-[#1c1e27] text-right">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-bold transition-colors"
+            className="px-4 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white text-xs font-bold transition-colors"
           >
             Tutup
           </button>

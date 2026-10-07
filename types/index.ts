@@ -6,7 +6,7 @@ export type InitialCondition = 'Aman' | 'Ada Catatan' | 'Tidak Aman';
 
 export type ReturnCondition = 'Aman' | 'Rusak' | 'Tidak Lengkap';
 
-export type NotificationType = 'BORROW' | 'RETURN' | 'OVERDUE' | 'TEST';
+export type NotificationType = 'BORROW' | 'RETURN' | 'OVERDUE' | 'TEST' | 'TASK_REMINDER';
 
 export type NotificationStatus = 'PENDING' | 'SENT' | 'FAILED';
 
@@ -140,7 +140,16 @@ export interface Task {
   pic: string;
   priority: TaskPriority;
   due_date: string; // YYYY-MM-DD
+  h1_reminder_sent_at?: string;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface TaskReminder {
+  id: string;
+  task_id: string;
+  reminder_type: string;
+  due_date: string;
+  sent_at: string;
 }
 

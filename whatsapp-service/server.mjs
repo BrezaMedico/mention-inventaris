@@ -188,7 +188,17 @@ app.post('/trigger-cron', async (req, res) => {
   }
 });
 
+app.post('/trigger-task-reminder', async (req, res) => {
+  try {
+    await triggerTaskReminderCron();
+    res.json({ success: true, message: 'Task H-1 reminder check triggered manually' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 let lastOverdueRunDay = '';
+let lastTaskReminderRunDay = '';
 
 async function triggerOverdueCron() {
   try {
@@ -205,14 +215,62 @@ async function triggerOverdueCron() {
   }
 }
 
-// Check every 60 seconds: Triggers at 08:00 AM daily for overdue items (and weekly recurrence)
+async function triggerTaskReminderCron() {
+  try {
+    const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
+    console.log('[07:00 AM Cron] Dispatching task H-1 reminders at', new Date().toISOString());
+    const res = await fetch(`${nextApiUrl}/api/cron/task-reminder`, {
+      method: 'POST',
+      headers: { 'x-cron-secret': SERVICE_SECRET },
+    });
+    const result = await res.json();
+    console.log('[07:00 AM Cron] Result:', result);
+  } catch (err) {
+    console.warn('[07:00 AM Cron] Failed to trigger Next.js task reminder cron API:', err.message);
+  }
+}
+
+// Check every 60 seconds:
+// 1. Triggers at 07:00 AM daily for Task H-1 deadlines (anti-spam, strictly 1 non-duplicate message)
+// 2. Triggers at 08:00 AM daily for overdue item reminders
 setInterval(() => {
   const now = new Date();
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
-  const todayStr = now.toISOString().slice(0, 10);
+  
+  // Ambil jam & menit dalam zona waktu Asia/Jakarta (WIB)
+  let currentHour = now.getHours();
+  let currentMinute = now.getMinutes();
+  let todayStr = now.toISOString().slice(0, 10);
+  
+  try {
+    const wibFormatter = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Jakarta',
+      hour: '2-digit',
+      minute: '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour12: false,
+    });
+    const parts = wibFormatter.formatToParts(now);
+    const hPart = parts.find((p) => p.type === 'hour')?.value;
+    const mPart = parts.find((p) => p.type === 'minute')?.value;
+    const yPart = parts.find((p) => p.type === 'year')?.value;
+    const moPart = parts.find((p) => p.type === 'month')?.value;
+    const dPart = parts.find((p) => p.type === 'day')?.value;
+    if (hPart && mPart) {
+      currentHour = parseInt(hPart, 10);
+      currentMinute = parseInt(mPart, 10);
+      todayStr = `${yPart}-${moPart}-${dPart}`;
+    }
+  } catch {}
 
-  // Exact 08:00 AM trigger once per calendar day
+  // 1. Tepat jam 07:00 pagi WIB untuk pengingat kalender H-1 (hanya sekali per hari kalender)
+  if (currentHour === 7 && currentMinute === 0 && lastTaskReminderRunDay !== todayStr) {
+    lastTaskReminderRunDay = todayStr;
+    triggerTaskReminderCron();
+  }
+
+  // 2. Tepat jam 08:00 pagi WIB untuk overdue barang
   if (currentHour === 8 && currentMinute === 0 && lastOverdueRunDay !== todayStr) {
     lastOverdueRunDay = todayStr;
     triggerOverdueCron();

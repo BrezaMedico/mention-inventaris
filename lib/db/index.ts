@@ -20,7 +20,9 @@ import {
   ReturnCondition,
   Task,
   TaskPriority,
+  TaskReminder,
 } from '@/types';
+import { formatDueDateIndo } from '@/lib/calendar';
 
 function getDbFilePath(): string {
   const defaultPath = path.join(process.cwd(), 'data', 'local_db.json');
@@ -49,6 +51,7 @@ interface LocalDatabase {
   whatsapp_configs: WhatsAppConfig[];
   overdue_reminders: { id: string; loan_id: string; week_key: string; sent_at: string }[];
   tasks: Task[];
+  task_reminders?: TaskReminder[];
 }
 
 function readLocalDb(): LocalDatabase {
@@ -65,6 +68,7 @@ function readLocalDb(): LocalDatabase {
     const raw = fs.readFileSync(dbPath, 'utf-8');
     const parsed = JSON.parse(raw);
     if (!parsed.tasks) parsed.tasks = [];
+    if (!parsed.task_reminders) parsed.task_reminders = [];
     return parsed;
   } catch (err) {
     console.error('Error reading local db:', err);
@@ -81,6 +85,7 @@ function readLocalDb(): LocalDatabase {
       whatsapp_configs: [],
       overdue_reminders: [],
       tasks: [],
+      task_reminders: [],
     };
   }
 }
@@ -491,8 +496,8 @@ export async function getAllCheckersAdmin(): Promise<Omit<Checker, 'pin_hash'>[]
 }
 
 export async function verifyCheckerPin(checkerId: string, pin: string): Promise<{ success: boolean; checkerName?: string; error?: string }> {
-  if (!/^\d{6,8}$/.test(pin)) {
-    return { success: false, error: 'PIN PIC harus 6-8 digit angka.' };
+  if (!/^\d{6}$/.test(pin)) {
+    return { success: false, error: 'PIN PIC harus 6 digit angka.' };
   }
 
   let checker: Checker | undefined;
@@ -529,8 +534,8 @@ export async function verifyCheckerPin(checkerId: string, pin: string): Promise<
 }
 
 export async function saveChecker(name: string, pinNumeric: string): Promise<boolean> {
-  if (!/^\d{6,8}$/.test(pinNumeric)) {
-    throw new Error('PIN harus 6-8 digit angka');
+  if (!/^\d{6}$/.test(pinNumeric)) {
+    throw new Error('PIN harus 6 digit angka');
   }
 
   const pin_hash = await bcrypt.hash(pinNumeric, 10);
@@ -555,8 +560,8 @@ export async function saveChecker(name: string, pinNumeric: string): Promise<boo
 }
 
 export async function updateCheckerPin(id: string, newPinNumeric: string): Promise<boolean> {
-  if (!/^\d{6,8}$/.test(newPinNumeric)) {
-    throw new Error('PIN harus 6-8 digit angka');
+  if (!/^\d{6}$/.test(newPinNumeric)) {
+    throw new Error('PIN harus 6 digit angka');
   }
   const pin_hash = await bcrypt.hash(newPinNumeric, 10);
   const now = new Date().toISOString();
@@ -1553,6 +1558,79 @@ export async function deleteLoan(id: string): Promise<{ success: boolean; error?
   return { success: true };
 }
 
+export async function deleteLoansHistory(mode: 'ALL' | 'EXCEPT_THIS_MONTH'): Promise<{ success: boolean; deletedCount: number; error?: string }> {
+  try {
+    const now = new Date();
+    // Gunakan tanggal WIB (Asia/Jakarta) untuk penentuan bulan ini
+    const currentYearMonth = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Jakarta',
+      year: 'numeric',
+      month: '2-digit',
+    }).format(now); // e.g. "2026-10"
+
+    const db = readLocalDb();
+    let targetLoans: Loan[] = [];
+
+    if (mode === 'ALL') {
+      targetLoans = [...db.loans];
+    } else {
+      // Hapus riwayat sebelum bulan ini (pertahankan bulan ini)
+      targetLoans = db.loans.filter((l) => {
+        const dateStr = l.borrow_date || (l.created_at ? l.created_at.slice(0, 7) : '');
+        return !dateStr.startsWith(currentYearMonth);
+      });
+    }
+
+    if (targetLoans.length === 0) {
+      return { success: true, deletedCount: 0 };
+    }
+
+    const targetIds = targetLoans.map((l) => l.id);
+
+    // 1. Supabase deletion (jika online)
+    try {
+      const { data: lItems } = await supabase.from('loan_items').select('item_id, status').in('loan_id', targetIds);
+      if (lItems) {
+        for (const li of lItems) {
+          if (li.status === 'BORROWED') {
+            await supabase.from('items').update({ status: 'AVAILABLE' }).eq('id', li.item_id);
+          }
+        }
+      }
+      await supabase.from('loan_items').delete().in('loan_id', targetIds);
+      await supabase.from('notification_events').delete().in('loan_id', targetIds);
+      await supabase.from('overdue_reminders').delete().in('loan_id', targetIds);
+      await supabase.from('loans').delete().in('id', targetIds);
+    } catch (err) {
+      console.error('Supabase deleteLoansHistory catch:', err);
+    }
+
+    // 2. Local DB deletion
+    for (const loan of targetLoans) {
+      const loanItems = db.loan_items.filter((li) => li.loan_id === loan.id);
+      for (const li of loanItems) {
+        if (li.status === 'BORROWED') {
+          const item = db.items.find((i) => i.id === li.item_id);
+          if (item && item.status === 'BORROWED') {
+            item.status = 'AVAILABLE';
+          }
+        }
+      }
+    }
+
+    db.loan_items = db.loan_items.filter((li) => !targetIds.includes(li.loan_id));
+    db.notification_events = db.notification_events.filter((ne) => !ne.loan_id || !targetIds.includes(ne.loan_id));
+    db.overdue_reminders = db.overdue_reminders.filter((or) => !targetIds.includes(or.loan_id));
+    db.loans = db.loans.filter((l) => !targetIds.includes(l.id));
+
+    writeLocalDb(db);
+    return { success: true, deletedCount: targetLoans.length };
+  } catch (err: any) {
+    console.error('deleteLoansHistory error:', err);
+    return { success: false, deletedCount: 0, error: err.message };
+  }
+}
+
 export async function getCurrentlyBorrowedItems(): Promise<{
   item: Item;
   borrower: Member | undefined;
@@ -1929,5 +2007,158 @@ export async function deleteTask(id: string): Promise<{ success: boolean; error?
   }
 
   return { success: true };
+}
+
+/**
+ * Pengingat Kalender H-1 (Pukul 07:00 Pagi)
+ * Anti-Spam: Mencegah pesan dobel dengan pengecekan ganda di level task.h1_reminder_sent_at,
+ * tabel task_reminders, dan event notification_events.
+ */
+export async function checkAndCreateTaskH1Reminders(): Promise<{ newEvents: NotificationEvent[]; skippedCount: number; targetDate: string }> {
+  const db = readLocalDb();
+  if (!db.tasks) db.tasks = [];
+  if (!db.task_reminders) db.task_reminders = [];
+
+  // Hitung tanggal besok (H-1) dalam zona waktu Asia/Jakarta (WIB)
+  const now = new Date();
+  const jakartaToday = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jakarta',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(now); // "YYYY-MM-DD"
+
+  // Tambahkan 1 hari (24 jam)
+  const tomorrowTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+  const jakartaTomorrow = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jakarta',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(tomorrowTime); // "YYYY-MM-DD"
+
+  // Ambil semua tasks
+  let tasksList: Task[] = [];
+  try {
+    const { data, error } = await supabase.from('tasks').select('*');
+    if (!error && data !== null && data.length > 0) {
+      tasksList = data as Task[];
+    }
+  } catch {}
+  if (tasksList.length === 0) {
+    tasksList = db.tasks;
+  }
+
+  // Target task adalah yang tenggatnya BESOK (artinya hari ini tepat H-1 sebelum deadline)
+  const h1Tasks = tasksList.filter((t) => t.due_date === jakartaTomorrow);
+  const newEvents: NotificationEvent[] = [];
+  let skippedCount = 0;
+
+  for (const task of h1Tasks) {
+    // ANTI-SPAM & DEDUPLICATION:
+    // 1. Cek apakah task sudah ditandai terkirim
+    if (task.h1_reminder_sent_at) {
+      skippedCount++;
+      continue;
+    }
+
+    // 2. Cek apakah sudah tercatat di db.task_reminders untuk task ini & due_date ini
+    const alreadySentInLog = db.task_reminders.some(
+      (r) => r.task_id === task.id && r.due_date === task.due_date && r.reminder_type === 'H-1'
+    );
+    if (alreadySentInLog) {
+      skippedCount++;
+      continue;
+    }
+
+    // 3. Cek apakah ada notification_event (PENDING atau SENT) dengan identifier task ini
+    const alreadyInEvents = db.notification_events.some(
+      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}]`)
+    );
+    if (alreadyInEvents) {
+      skippedCount++;
+      continue;
+    }
+
+    // Format prioritas tugas
+    const priorityLabels: Record<string, string> = {
+      HIGH: 'Tinggi (High)',
+      MEDIUM: 'Sedang (Medium)',
+      LOW: 'Rendah (Low)',
+    };
+    const priorityText = priorityLabels[task.priority] || task.priority;
+
+    // Susun pesan WhatsApp yang rapi dan terstruktur
+    const message = `[PENGINGAT TENGGAT TUGAS (H-1)]
+
+Halo Tim Mention, terdapat tugas inventaris/organisasi yang akan mencapai batas tenggat waktu besok:
+
+📌 Judul Tugas:
+${task.title}
+
+📝 Deskripsi:
+${task.description?.trim() ? task.description.trim() : '-'}
+
+👤 PIC (Penanggung Jawab):
+${task.pic}
+
+📅 Tenggat Waktu:
+${formatDueDateIndo(task.due_date)}
+
+⚡ Prioritas:
+${priorityText}
+
+Mohon untuk dipastikan dan diselesaikan tepat waktu. Terima kasih!
+[REF:${task.id}]`;
+
+    const nowIso = new Date().toISOString();
+    const event: NotificationEvent = {
+      id: crypto.randomUUID(),
+      type: 'TASK_REMINDER',
+      message,
+      status: 'PENDING',
+      created_at: nowIso,
+    };
+
+    newEvents.push(event);
+    db.notification_events.push(event);
+
+    // Catat ke db.task_reminders
+    db.task_reminders.push({
+      id: crypto.randomUUID(),
+      task_id: task.id,
+      reminder_type: 'H-1',
+      due_date: task.due_date,
+      sent_at: nowIso,
+    });
+
+    // Update task status di db
+    task.h1_reminder_sent_at = nowIso;
+    const localTask = db.tasks.find((t) => t.id === task.id);
+    if (localTask) {
+      localTask.h1_reminder_sent_at = nowIso;
+      localTask.updated_at = nowIso;
+    }
+
+    // Sync ke Supabase jika ada
+    try {
+      await supabase.from('notification_events').insert([{
+        id: event.id,
+        type: 'TASK_REMINDER',
+        message: event.message,
+        status: 'PENDING',
+      }]);
+      await supabase.from('tasks').update({
+        h1_reminder_sent_at: nowIso,
+        updated_at: nowIso,
+      }).eq('id', task.id);
+    } catch {}
+  }
+
+  if (newEvents.length > 0) {
+    writeLocalDb(db);
+  }
+
+  return { newEvents, skippedCount, targetDate: jakartaTomorrow };
 }
 

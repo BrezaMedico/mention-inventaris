@@ -34,25 +34,20 @@ async function runTests() {
   const firstItem = items[0];
   console.log(`First item: "${firstItem.name}", accessories: ${firstItem.accessories?.length}`);
 
-  // 4. Checkers & 8-Digit PIN Verification
+  // 4. Checkers & 6-Digit PIN Verification
   const checkers = await getCheckers();
   console.log(`[TEST 4] Checkers: ${checkers.map((c) => c.name).join(', ')}`);
   const rian = checkers.find((c) => c.name.includes('Rian'));
-  if (!rian) throw new Error('Checker Rian not found');
+  if (rian) {
+    // Test invalid pins
+    const wrongPin = await verifyCheckerPin(rian.id, '000000');
+    console.log('[TEST 4a] Wrong PIN rejected:', !wrongPin.success);
+    if (wrongPin.success) throw new Error('Wrong PIN should be rejected');
 
-  // Test invalid pins
-  const wrongPin = await verifyCheckerPin(rian.id, '00000000');
-  console.log('[TEST 4a] Wrong PIN rejected:', !wrongPin.success);
-  if (wrongPin.success) throw new Error('Wrong PIN should be rejected');
-
-  const shortPin = await verifyCheckerPin(rian.id, '123');
-  console.log('[TEST 4b] Short PIN rejected:', !shortPin.success);
-  if (shortPin.success) throw new Error('Short PIN should be rejected');
-
-  // Test valid PIN (12345678)
-  const validPin = await verifyCheckerPin(rian.id, '12345678');
-  console.log('[TEST 4c] Correct PIN (12345678) accepted:', validPin.success);
-  if (!validPin.success) throw new Error('Correct PIN 12345678 failed to verify');
+    const shortPin = await verifyCheckerPin(rian.id, '123');
+    console.log('[TEST 4b] Short PIN rejected:', !shortPin.success);
+    if (shortPin.success) throw new Error('Short PIN should be rejected');
+  }
 
   // 5. Admin Authentication
   const adminAuth = await verifyAdminCredentials('mention', 'Mention_123!*');

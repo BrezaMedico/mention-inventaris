@@ -14,10 +14,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Kode verifikasi harus diisi.' }, { status: 400 });
     }
 
-    // Check 6-8 numeric digits
-    if (!/^\d{6,8}$/.test(pin.trim())) {
+    // Check 6 numeric digits
+    if (!/^\d{6}$/.test(pin.trim())) {
       return NextResponse.json(
-        { success: false, error: 'PIN PIC harus 6-8 digit angka.' },
+        { success: false, error: 'PIN PIC harus 6 digit angka.' },
         { status: 400 }
       );
     }

@@ -200,8 +200,8 @@ export default function ReturnPage() {
     e.preventDefault();
     setErrorMessage('');
 
-    if (!/^\d{6,8}$/.test(pinInput.trim())) {
-      setErrorMessage('PIN harus 6-8 digit angka.');
+    if (!/^\d{6}$/.test(pinInput.trim())) {
+      setErrorMessage('PIN harus 6 digit angka.');
       return;
     }
 
@@ -531,22 +531,22 @@ export default function ReturnPage() {
             <form onSubmit={handleVerifyPin} className="space-y-5">
               <div>
                 <label className="block text-xs font-semibold text-neutral-600 mb-2">
-                  Masukkan PIN (6-8 Digit)
+                  Masukkan PIN PIC (6 Digit)
                 </label>
                 <input
                   type="password"
                   inputMode="numeric"
-                  pattern="[0-9]{6,8}"
-                  maxLength={8}
+                  pattern="[0-9]{6}"
+                  maxLength={6}
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value.replace(/\D/g, ''))}
-                  placeholder="6-8 digit PIN"
+                  placeholder="6 digit PIN"
                   autoFocus
                   required
                   className="w-full text-center text-2xl sm:text-3xl font-mono tracking-widest sm:tracking-[0.3em] h-13 sm:h-14 rounded-xl border-2 border-neutral-300 bg-neutral-50 text-neutral-900 font-bold focus:border-black focus:bg-white focus:outline-none transition-all"
                 />
                 <p className="text-[11px] text-neutral-400 mt-2">
-                  PIN Checker 6 hingga 8 digit angka
+                  PIN Checker tepat 6 digit angka
                 </p>
               </div>
 
@@ -564,7 +564,7 @@ export default function ReturnPage() {
 
                 <button
                   type="submit"
-                  disabled={pinInput.length < 6 || pinInput.length > 8 || verifyingPin}
+                  disabled={pinInput.length !== 6 || verifyingPin}
                   className="flex-1 h-11 rounded-xl bg-black text-white font-bold text-xs uppercase tracking-wider hover:bg-neutral-800 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-40"
                 >
                   {verifyingPin ? (

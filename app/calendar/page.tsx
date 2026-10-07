@@ -36,8 +36,15 @@ export default function CalendarPage() {
 
   // Month & Year state (defaults to today's local year & month)
   const today = useMemo(() => new Date(), []);
+  const todayStr = useMemo(() => {
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  }, [today]);
+
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth()); // 0-indexed
+
+  // Selected date for mobile agenda view & active date highlight
+  const [selectedDate, setSelectedDate] = useState<string>(todayStr);
 
   // Sidebar filter category: 'UPCOMING' | 'OVERDUE'
   const [sidebarFilter, setSidebarFilter] = useState<'UPCOMING' | 'OVERDUE'>('UPCOMING');
@@ -99,6 +106,7 @@ export default function CalendarPage() {
   const handleResetToday = () => {
     setCurrentYear(today.getFullYear());
     setCurrentMonth(today.getMonth());
+    setSelectedDate(todayStr);
   };
 
   // Generate calendar days for current month view
@@ -206,21 +214,51 @@ export default function CalendarPage() {
     setIsDayModalOpen(true);
   };
 
+  // Tasks on currently selected date (for mobile agenda view)
+  const selectedDateTasks = useMemo(() => {
+    return tasksByDate[selectedDate] || [];
+  }, [tasksByDate, selectedDate]);
+
+  // Click on calendar day cell
+  const handleCellClick = (cellDate: string, isCurrentMonth: boolean, dayTasks: Task[]) => {
+    setSelectedDate(cellDate);
+
+    // If day from different month is clicked, switch view to that month
+    const [cYear, cMonth] = cellDate.split('-').map(Number);
+    if (cYear !== currentYear || cMonth - 1 !== currentMonth) {
+      setCurrentYear(cYear);
+      setCurrentMonth(cMonth - 1);
+    }
+
+    // On desktop/tablet screens (sm and up), maintain immediate modal opening
+    if (typeof window !== 'undefined' && window.innerWidth >= 640) {
+      if (dayTasks.length === 1) {
+        handleOpenDetail(dayTasks[0]);
+      } else if (dayTasks.length > 1) {
+        handleOpenDayModal(cellDate, dayTasks);
+      } else if (isAdmin) {
+        setTaskToEdit(null);
+        setFormInitialDate(cellDate);
+        setIsFormOpen(true);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-transparent text-white">
       <Navbar showHomeLink />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8 w-full">
         {/* Page Title & Subtitle */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-8">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-mention-yellow" />
-              <span className="text-[11px] font-bold uppercase tracking-widest text-mention-yellow">
+              <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-mention-yellow">
                 Jadwal & Deadline
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            <h1 className="text-xl sm:text-3xl font-black tracking-tight text-white">
               Kalender <span className="text-mention-yellow">Tugas</span>
             </h1>
             <p className="text-neutral-400 text-xs sm:text-sm mt-0.5">
@@ -230,69 +268,106 @@ export default function CalendarPage() {
 
           {/* Quick status bar */}
           <div className="flex items-center gap-2 text-xs">
-            <div className="px-3 py-1.5 rounded-xl bg-neutral-900/80 border border-neutral-800 flex items-center gap-2">
+            <div className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#14151c] border border-neutral-700/80 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-mention-yellow" />
-              <span className="text-neutral-300 font-medium">
+              <span className="text-neutral-200 font-medium text-[11px] sm:text-xs">
                 {upcomingTasks.length} Mendatang
               </span>
             </div>
             {overdueTasks.length > 0 && (
-              <div className="px-3 py-1.5 rounded-xl bg-rose-950/40 border border-rose-900/50 flex items-center gap-2 text-rose-300">
+              <div className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-rose-950/60 border border-rose-800/70 flex items-center gap-2 text-rose-300">
                 <span className="w-2 h-2 rounded-full bg-rose-500" />
-                <span className="font-semibold">{overdueTasks.length} Telat</span>
+                <span className="font-semibold text-[11px] sm:text-xs">{overdueTasks.length} Telat</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Main Grid: Sidebar (Kiri) & Kalender (Tengah/Kanan) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[310px_1fr] xl:grid-cols-[330px_1fr] gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[310px_1fr] xl:grid-cols-[330px_1fr] gap-4 sm:gap-6 items-start">
           {/* ========================================================= */}
           {/* 1. SIDEBAR DAFTAR TUGAS (SEBELAH KIRI)                    */}
           {/* ========================================================= */}
-          <aside className="w-full rounded-2xl bg-neutral-900/85 backdrop-blur-md border border-neutral-800/80 p-4 sm:p-5 shadow-xl flex flex-col order-2 lg:order-1">
-            {/* Header & Filter Dropdown */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-neutral-800/80 gap-2">
-              <div className="flex items-center gap-2">
-                <CalendarDays className="w-4 h-4 text-mention-yellow" />
-                <h2 className="text-sm font-bold text-white">Daftar Tugas</h2>
+          <aside className="w-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-3.5 sm:p-5 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-2 lg:order-1 lg:sticky lg:top-20 transition-all">
+            {/* Header: Title + Subtitle + Total Pill */}
+            <div className="flex items-center justify-between pb-3.5 border-b border-neutral-700/80">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-mention-yellow/15 border border-mention-yellow/30 flex items-center justify-center text-mention-yellow shadow-sm shadow-yellow-500/10">
+                  <CalendarDays className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-xs sm:text-sm font-bold text-white leading-tight">Daftar Tugas</h2>
+                  <p className="text-[10px] text-neutral-400">Tenggat & Prioritas Tim</p>
+                </div>
               </div>
 
-              {/* Dropdown Kategori: Tugas Mendatang / Telat */}
-              <div className="relative">
-                <select
-                  value={sidebarFilter}
-                  onChange={(e) =>
-                    setSidebarFilter(e.target.value as 'UPCOMING' | 'OVERDUE')
-                  }
-                  className="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-neutral-700 bg-neutral-950 text-neutral-200 focus:border-mention-yellow focus:outline-none transition-colors cursor-pointer"
+              {/* Total count badge */}
+              <span className="text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#1c1e27] border border-neutral-700 text-neutral-300 shadow-inner">
+                {tasks.length} Total
+              </span>
+            </div>
+
+            {/* Segmented Filter Tabs: [Mendatang] [Telat] */}
+            <div className="mt-3.5 p-1 rounded-xl bg-[#161822] border border-neutral-700/80 grid grid-cols-2 gap-1">
+              <button
+                type="button"
+                onClick={() => setSidebarFilter('UPCOMING')}
+                className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                  sidebarFilter === 'UPCOMING'
+                    ? 'bg-[#252836] text-mention-yellow shadow-md border border-neutral-600/90'
+                    : 'text-neutral-400 hover:text-white hover:bg-neutral-800/40'
+                }`}
+              >
+                <span>Mendatang</span>
+                <span
+                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full font-bold transition-colors ${
+                    sidebarFilter === 'UPCOMING'
+                      ? 'bg-mention-yellow text-black'
+                      : 'bg-neutral-800 text-neutral-400'
+                  }`}
                 >
-                  <option value="UPCOMING">
-                    Tugas Mendatang ({upcomingTasks.length})
-                  </option>
-                  <option value="OVERDUE">
-                    Telat ({overdueTasks.length})
-                  </option>
-                </select>
-              </div>
+                  {upcomingTasks.length}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSidebarFilter('OVERDUE')}
+                className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                  sidebarFilter === 'OVERDUE'
+                    ? 'bg-rose-950/80 text-rose-200 shadow-md border border-rose-800/80'
+                    : 'text-neutral-400 hover:text-rose-300 hover:bg-rose-950/30'
+                }`}
+              >
+                <span>Telat</span>
+                <span
+                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full font-bold transition-colors ${
+                    sidebarFilter === 'OVERDUE'
+                      ? 'bg-rose-500 text-white'
+                      : 'bg-neutral-800 text-neutral-400'
+                  }`}
+                >
+                  {overdueTasks.length}
+                </span>
+              </button>
             </div>
 
             {/* Task Items List */}
-            <div className="mt-4 space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+            <div className="mt-3.5 space-y-2.5 max-h-[400px] lg:max-h-[580px] overflow-y-auto pr-1">
               {loading ? (
-                <div className="py-12 text-center text-neutral-500 space-y-2">
+                <div className="py-12 text-center text-neutral-400 space-y-2">
                   <Loader2 className="w-5 h-5 animate-spin mx-auto text-mention-yellow" />
                   <p className="text-xs">Memuat tugas...</p>
                 </div>
               ) : displayedSidebarTasks.length === 0 ? (
-                <div className="py-12 px-4 text-center rounded-xl border border-dashed border-neutral-800 bg-neutral-950/40">
-                  <CheckCircle2 className="w-6 h-6 text-neutral-600 mx-auto mb-2" />
-                  <p className="text-xs font-semibold text-neutral-400">
+                <div className="py-10 px-4 text-center rounded-xl border border-dashed border-neutral-700/80 bg-[#181a23]/60">
+                  <CheckCircle2 className="w-6 h-6 text-neutral-500 mx-auto mb-2" />
+                  <p className="text-xs font-semibold text-neutral-300">
                     {sidebarFilter === 'UPCOMING'
                       ? 'Tidak ada tugas mendatang.'
                       : 'Hebat! Tidak ada tugas yang telat.'}
                   </p>
-                  <p className="text-[11px] text-neutral-500 mt-1">
+                  <p className="text-[11px] text-neutral-400 mt-1">
                     {sidebarFilter === 'UPCOMING'
                       ? 'Semua jadwal tugas telah selesai.'
                       : 'Semua deadline tugas berjalan tepat waktu.'}
@@ -306,12 +381,12 @@ export default function CalendarPage() {
                     <div
                       key={task.id}
                       onClick={() => handleOpenDetail(task)}
-                      className={`p-3.5 rounded-xl border transition-all cursor-pointer group hover:scale-[1.01] ${urgency.cardBg} ${urgency.cardBorder}`}
+                      className={`group relative p-3 sm:p-3.5 rounded-xl border transition-all duration-200 ease-out cursor-pointer hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/40 hover:border-neutral-500 active:scale-[0.98] active:translate-y-0 ${urgency.cardBg} ${urgency.cardBorder}`}
                     >
                       {/* Top Badges: Urgensi & Prioritas */}
                       <div className="flex items-center justify-between gap-2 mb-1.5">
                         <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md border flex items-center gap-1.5 ${urgency.badgeBg}`}
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md border flex items-center gap-1.5 transition-colors ${urgency.badgeBg}`}
                         >
                           <span
                             className={`w-1.5 h-1.5 rounded-full ${urgency.dotColor}`}
@@ -319,28 +394,42 @@ export default function CalendarPage() {
                           {urgency.label}
                         </span>
 
-                        <span className="text-[10px] font-semibold text-neutral-400 bg-neutral-950/60 px-2 py-0.5 rounded-md border border-neutral-800">
+                        <span
+                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${
+                            task.priority === 'HIGH'
+                              ? 'bg-rose-950/60 text-rose-300 border-rose-800/60'
+                              : task.priority === 'LOW'
+                              ? 'bg-blue-950/60 text-blue-300 border-blue-800/60'
+                              : 'bg-amber-950/60 text-amber-300 border-amber-800/60'
+                          }`}
+                        >
                           {task.priority === 'HIGH'
-                            ? 'Tinggi'
+                            ? 'Prioritas Tinggi'
                             : task.priority === 'LOW'
-                            ? 'Rendah'
-                            : 'Sedang'}
+                            ? 'Prioritas Rendah'
+                            : 'Prioritas Sedang'}
                         </span>
                       </div>
 
-                      {/* Judul Tugas */}
-                      <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-mention-yellow transition-colors line-clamp-2 leading-snug">
-                        {task.title}
-                      </h3>
+                      {/* Judul Tugas + Panah Hover Indikator */}
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-mention-yellow transition-colors duration-150 line-clamp-2 leading-snug flex-1">
+                          {task.title}
+                        </h3>
+                        <div className="w-6 h-6 rounded-lg bg-neutral-800/60 group-hover:bg-mention-yellow group-hover:text-black text-neutral-400 flex items-center justify-center transition-all duration-200 shrink-0 mt-0.5">
+                          <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </div>
 
                       {/* PIC & Tanggal */}
-                      <div className="mt-2 pt-2 border-t border-neutral-800/60 flex items-center justify-between text-[11px] text-neutral-400">
-                        <div className="flex items-center gap-1 truncate max-w-[150px]">
-                          <User className="w-3 h-3 text-neutral-500 shrink-0" />
-                          <span className="truncate">PIC: {task.pic}</span>
+                      <div className="mt-2.5 pt-2 border-t border-neutral-700/60 flex items-center justify-between text-[11px] text-neutral-400">
+                        <div className="flex items-center gap-1.5 truncate max-w-[150px]">
+                          <User className="w-3.5 h-3.5 text-neutral-400 shrink-0 group-hover:text-mention-yellow transition-colors" />
+                          <span className="truncate text-neutral-300 font-medium">PIC: {task.pic}</span>
                         </div>
-                        <div className="font-mono text-neutral-300 font-medium shrink-0">
-                          {formatDueDateShort(task.due_date)}
+                        <div className="flex items-center gap-1 font-mono text-neutral-300 text-[11px] font-medium shrink-0 group-hover:text-white transition-colors">
+                          <Clock className="w-3 h-3 text-neutral-400 shrink-0" />
+                          <span>{formatDueDateShort(task.due_date)}</span>
                         </div>
                       </div>
                     </div>
@@ -353,23 +442,23 @@ export default function CalendarPage() {
           {/* ========================================================= */}
           {/* 2. KALENDER BULANAN (BAGIAN TENGAH / KANAN)              */}
           {/* ========================================================= */}
-          <section className="w-full rounded-2xl bg-neutral-900/85 backdrop-blur-md border border-neutral-800/80 p-4 sm:p-6 shadow-xl flex flex-col order-1 lg:order-2">
+          <section className="w-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-3 sm:p-6 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-1 lg:order-2">
             {/* Calendar Controls Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-neutral-800/80">
+            <div className="flex items-center justify-between gap-1.5 sm:gap-3 pb-3 sm:pb-5 border-b border-neutral-700/80">
               {/* Navigation: ← Bulan Sebelumnya | Nama Bulan + Tahun | Bulan Berikutnya → */}
-              <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+              <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-initial">
                 <button
                   type="button"
                   onClick={handlePrevMonth}
                   title="Bulan Sebelumnya"
-                  className="p-2 sm:px-3 sm:py-2 rounded-xl border border-neutral-800 bg-neutral-950 hover:bg-neutral-800 text-neutral-300 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold"
+                  className="p-1.5 sm:px-3 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Sebelumnya</span>
                 </button>
 
-                <div className="px-4 py-2 rounded-xl bg-neutral-950/90 border border-neutral-800/80 text-center flex-1 sm:flex-initial min-w-[170px]">
-                  <span className="text-sm sm:text-base font-extrabold text-white tracking-wide">
+                <div className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#1c1e27] border border-neutral-700/80 text-center flex-1 sm:flex-initial sm:min-w-[170px] shadow-inner">
+                  <span className="text-xs sm:text-base font-extrabold text-white tracking-wide whitespace-nowrap">
                     {INDONESIAN_MONTHS[currentMonth]} {currentYear}
                   </span>
                 </div>
@@ -378,7 +467,7 @@ export default function CalendarPage() {
                   type="button"
                   onClick={handleNextMonth}
                   title="Bulan Berikutnya"
-                  className="p-2 sm:px-3 sm:py-2 rounded-xl border border-neutral-800 bg-neutral-950 hover:bg-neutral-800 text-neutral-300 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold"
+                  className="p-1.5 sm:px-3 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <span className="hidden sm:inline">Berikutnya</span>
                   <ChevronRight className="w-4 h-4" />
@@ -389,19 +478,21 @@ export default function CalendarPage() {
               <button
                 type="button"
                 onClick={handleResetToday}
-                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-neutral-800 bg-neutral-950 text-neutral-400 hover:text-white hover:border-mention-yellow transition-all self-end sm:self-auto"
+                className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] text-neutral-300 hover:text-white hover:border-mention-yellow hover:bg-[#252834] active:scale-95 transition-all shrink-0"
               >
                 Hari Ini
               </button>
             </div>
 
             {/* Days of Week Header */}
-            <div className="grid grid-cols-7 gap-1 sm:gap-2 pt-4 pb-2 text-center">
+            <div className="grid grid-cols-7 gap-1 sm:gap-2 pt-3 sm:pt-4 pb-2 text-center">
               {INDONESIAN_DAYS.map((dayName, idx) => (
                 <div
                   key={dayName}
-                  className={`text-[11px] sm:text-xs font-bold uppercase tracking-wider py-1 ${
-                    idx >= 5 ? 'text-rose-400/80' : 'text-neutral-400'
+                  className={`text-[10px] sm:text-xs font-bold uppercase tracking-normal sm:tracking-wider py-1 sm:py-1.5 rounded-md sm:rounded-lg ${
+                    idx >= 5
+                      ? 'text-rose-400 bg-rose-500/10 border border-rose-500/20'
+                      : 'text-neutral-300 bg-[#1a1c24] border border-neutral-700/40'
                   }`}
                 >
                   {dayName}
@@ -414,31 +505,20 @@ export default function CalendarPage() {
               {calendarDays.map((cell) => {
                 const dayTasks = tasksByDate[cell.date] || [];
                 const hasTasks = dayTasks.length > 0;
+                const isSelected = selectedDate === cell.date;
 
                 return (
                   <div
                     key={cell.date}
-                    onClick={() => {
-                      if (hasTasks) {
-                        if (dayTasks.length === 1) {
-                          handleOpenDetail(dayTasks[0]);
-                        } else {
-                          handleOpenDayModal(cell.date, dayTasks);
-                        }
-                      } else if (isAdmin) {
-                        setTaskToEdit(null);
-                        setFormInitialDate(cell.date);
-                        setIsFormOpen(true);
-                      }
-                    }}
-                    className={`min-h-[92px] sm:min-h-[115px] p-1.5 sm:p-2 rounded-xl border transition-all flex flex-col justify-between select-none ${
-                      cell.isCurrentMonth
-                        ? 'bg-neutral-950/70 border-neutral-800/80 hover:border-neutral-700 hover:bg-neutral-950'
-                        : 'bg-neutral-950/25 border-neutral-900/50 text-neutral-600 opacity-40'
-                    } ${
-                      cell.isToday
-                        ? 'ring-1 ring-mention-yellow/50 bg-neutral-900/90'
-                        : ''
+                    onClick={() => handleCellClick(cell.date, cell.isCurrentMonth, dayTasks)}
+                    className={`min-h-[58px] sm:min-h-[118px] p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl border transition-all flex flex-col justify-between select-none cursor-pointer active:scale-95 ${
+                      isSelected
+                        ? '!bg-[#272a3a] !border-mention-yellow ring-2 ring-mention-yellow shadow-lg shadow-yellow-500/10'
+                        : cell.isToday
+                        ? '!bg-[#222533] !border-mention-yellow/80 ring-1 ring-mention-yellow/50'
+                        : cell.isCurrentMonth
+                        ? 'bg-[#1a1c25] border-neutral-700/70 hover:border-neutral-500/80 hover:bg-[#20232f] shadow-sm'
+                        : 'bg-[#101117]/50 border-neutral-800/50 text-neutral-600 opacity-40 hover:opacity-70'
                     }`}
                   >
                     {/* Date Number + Penanda Hari Ini */}
@@ -446,18 +526,18 @@ export default function CalendarPage() {
                       <div className="flex flex-col items-center">
                         <span
                           className={`text-xs sm:text-sm font-bold ${
-                            cell.isToday
-                              ? 'text-mention-yellow'
+                            isSelected || cell.isToday
+                              ? 'text-mention-yellow font-black'
                               : cell.isCurrentMonth
-                              ? 'text-neutral-200'
-                              : 'text-neutral-600'
+                              ? 'text-white'
+                              : 'text-neutral-500'
                           }`}
                         >
                           {cell.dayNumber}
                         </span>
 
-                        {/* Indikator Penanda Hari Ini: Lingkaran kecil di bawah angka tanggal */}
-                        {cell.isToday && (
+                        {/* Indikator Penanda Hari Ini */}
+                        {cell.isToday && !isSelected && (
                           <span
                             title="Hari ini"
                             className="w-1.5 h-1.5 rounded-full border border-mention-yellow bg-mention-yellow mt-0.5"
@@ -465,16 +545,36 @@ export default function CalendarPage() {
                         )}
                       </div>
 
-                      {/* Small task count pill if date has tasks */}
+                      {/* Small task count pill if date has tasks (desktop only) */}
                       {hasTasks && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700/60 hidden sm:inline-block">
+                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-[#272a38] text-neutral-200 border border-neutral-600/70 hidden sm:inline-block">
                           {dayTasks.length}
                         </span>
                       )}
                     </div>
 
-                    {/* Task Pills inside Date Cell */}
-                    <div className="mt-1 space-y-1 flex-1 flex flex-col justify-end">
+                    {/* Mobile Task Dots Indicator (< sm) */}
+                    {hasTasks && (
+                      <div className="flex sm:hidden items-center justify-center gap-1 mt-1 flex-wrap">
+                        {dayTasks.slice(0, 3).map((t) => {
+                          const urgency = getTaskUrgency(t.due_date, today);
+                          return (
+                            <span
+                              key={t.id}
+                              className={`w-1.5 h-1.5 rounded-full ${urgency.dotColor} ring-1 ring-black/40`}
+                            />
+                          );
+                        })}
+                        {dayTasks.length > 3 && (
+                          <span className="text-[8px] font-black text-mention-yellow leading-none">
+                            +{dayTasks.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Desktop Task Cards (sm:) */}
+                    <div className="hidden sm:flex mt-1 space-y-1 flex-1 flex-col justify-end">
                       {/* Show first 2 tasks */}
                       {dayTasks.slice(0, 2).map((t) => {
                         const urgency = getTaskUrgency(t.due_date, today);
@@ -492,7 +592,7 @@ export default function CalendarPage() {
                             <div className="font-semibold truncate text-white">
                               {t.title}
                             </div>
-                            <div className="text-[9px] text-neutral-300/80 truncate">
+                            <div className="text-[9px] text-neutral-200/90 truncate">
                               PIC: {t.pic}
                             </div>
                           </div>
@@ -507,7 +607,7 @@ export default function CalendarPage() {
                             e.stopPropagation();
                             handleOpenDayModal(cell.date, dayTasks);
                           }}
-                          className="w-full text-center text-[9px] font-bold py-0.5 rounded bg-neutral-800/90 hover:bg-neutral-750 text-mention-yellow border border-neutral-700 transition-colors"
+                          className="w-full text-center text-[9px] font-bold py-0.5 rounded bg-[#272a38] hover:bg-[#323647] text-mention-yellow border border-neutral-600/70 shadow-sm transition-colors"
                         >
                           +{dayTasks.length - 2} tugas lainnya
                         </button>
@@ -516,6 +616,85 @@ export default function CalendarPage() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* ========================================================= */}
+            {/* MOBILE-ONLY: AGENDA TANGGAL TERPILIH                      */}
+            {/* Ditampilkan tepat di bawah grid kalender pada HP          */}
+            {/* ========================================================= */}
+            <div className="block lg:hidden mt-4 pt-4 border-t border-neutral-700/80">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-mention-yellow" />
+                  <h3 className="text-xs sm:text-sm font-bold text-white">
+                    Agenda: <span className="text-mention-yellow">{formatDueDateIndo(selectedDate)}</span>
+                  </h3>
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-[#1c1e27] border border-neutral-700 text-neutral-300">
+                  {selectedDateTasks.length} Tugas
+                </span>
+              </div>
+
+              {selectedDateTasks.length === 0 ? (
+                <div className="p-3.5 rounded-xl border border-dashed border-neutral-700/70 bg-[#161822]/60 text-center flex items-center justify-between gap-2">
+                  <p className="text-xs text-neutral-400 text-left">
+                    Tidak ada tugas pada tanggal ini.
+                  </p>
+                  {isAdmin ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTaskToEdit(null);
+                        setFormInitialDate(selectedDate);
+                        setIsFormOpen(true);
+                      }}
+                      className="text-xs font-bold text-black bg-mention-yellow hover:bg-yellow-400 px-2.5 py-1.5 rounded-lg flex items-center gap-1 shrink-0 transition-colors shadow-sm"
+                    >
+                      <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Tambah</span>
+                    </button>
+                  ) : (
+                    <span className="text-[11px] text-neutral-500 italic shrink-0">Bebas Tugas</span>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {selectedDateTasks.map((task) => {
+                    const urgency = getTaskUrgency(task.due_date, today);
+                    return (
+                      <div
+                        key={task.id}
+                        onClick={() => handleOpenDetail(task)}
+                        className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${urgency.cardBg} ${urgency.cardBorder} active:scale-[0.99]`}
+                      >
+                        <div className="min-w-0 flex-1 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded-md border flex items-center gap-1 ${urgency.badgeBg}`}
+                            >
+                              <span className={`w-1.5 h-1.5 rounded-full ${urgency.dotColor}`} />
+                              {urgency.label}
+                            </span>
+                            <span className="text-[10px] font-semibold text-neutral-300 bg-[#151720] px-2 py-0.5 rounded-md border border-neutral-700">
+                              {task.priority === 'HIGH' ? 'Tinggi' : task.priority === 'LOW' ? 'Rendah' : 'Sedang'}
+                            </span>
+                          </div>
+                          <h4 className="text-xs sm:text-sm font-bold text-white truncate">
+                            {task.title}
+                          </h4>
+                          <div className="text-[11px] text-neutral-400 flex items-center gap-1">
+                            <User className="w-3 h-3 text-neutral-400" />
+                            <span className="truncate">PIC: {task.pic}</span>
+                          </div>
+                        </div>
+                        <div className="w-7 h-7 rounded-lg bg-neutral-800/90 text-neutral-300 flex items-center justify-center shrink-0">
+                          <ChevronRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </section>
         </div>
@@ -528,9 +707,9 @@ export default function CalendarPage() {
         type="button"
         onClick={handleFabClick}
         title={isAdmin ? 'Tambah Tugas Baru' : 'Login Admin untuk Tambah Tugas'}
-        className="fixed bottom-6 right-6 z-40 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-mention-yellow text-black hover:bg-yellow-400 font-bold shadow-2xl shadow-yellow-500/20 flex items-center justify-center transition-all hover:scale-105 active:scale-95 border-2 border-yellow-300"
+        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-mention-yellow text-black hover:bg-yellow-400 font-bold shadow-2xl shadow-yellow-500/20 flex items-center justify-center transition-all hover:scale-105 active:scale-95 border-2 border-yellow-300"
       >
-        <Plus className="w-7 h-7 stroke-[2.8]" />
+        <Plus className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.8]" />
       </button>
 
       {/* Footer */}

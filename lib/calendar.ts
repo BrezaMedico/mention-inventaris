@@ -64,11 +64,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       label: 'Tanpa tenggat',
       shortLabel: '-',
       diffDays: 999,
-      cardBg: 'bg-neutral-900/80 hover:bg-neutral-850',
-      cardBorder: 'border-neutral-800 hover:border-neutral-700',
-      badgeBg: 'bg-neutral-800 text-neutral-300 border-neutral-700',
+      cardBg: 'bg-[#252836] hover:bg-[#2d3142]',
+      cardBorder: 'border-neutral-700 hover:border-neutral-600',
+      badgeBg: 'bg-[#323648] text-neutral-200 border-neutral-600',
       dotColor: 'bg-neutral-400',
-      textColor: 'text-neutral-300',
+      textColor: 'text-neutral-200',
     };
   }
 
@@ -94,11 +94,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       label: `Telat ${daysLate} hari`,
       shortLabel: 'Telat',
       diffDays,
-      cardBg: 'bg-rose-950/45 hover:bg-rose-950/65',
-      cardBorder: 'border-rose-900/60 hover:border-rose-800/80',
-      badgeBg: 'bg-rose-950/80 text-rose-300 border-rose-800/70',
-      dotColor: 'bg-rose-500',
-      textColor: 'text-rose-300',
+      cardBg: 'bg-rose-950/70 hover:bg-rose-900/70',
+      cardBorder: 'border-rose-700/80 hover:border-rose-600',
+      badgeBg: 'bg-rose-900/80 text-rose-200 border-rose-700/80',
+      dotColor: 'bg-rose-400',
+      textColor: 'text-rose-200',
     };
   }
 
@@ -109,11 +109,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       shortLabel: 'Hari H',
       diffDays,
       // Merah lebih kuat dibanding H-1, tapi tidak neon/terang
-      cardBg: 'bg-red-950/50 hover:bg-red-950/70',
-      cardBorder: 'border-red-700/65 hover:border-red-600/80',
-      badgeBg: 'bg-red-900/70 text-red-200 border-red-700/80',
+      cardBg: 'bg-red-950/75 hover:bg-red-900/80',
+      cardBorder: 'border-red-600/85 hover:border-red-500',
+      badgeBg: 'bg-red-900/85 text-red-100 border-red-600/90',
       dotColor: 'bg-red-400',
-      textColor: 'text-red-200',
+      textColor: 'text-red-100',
     };
   }
 
@@ -124,11 +124,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       shortLabel: 'H-1',
       diffDays,
       // Merah agak terlihat tapi tetap lembut
-      cardBg: 'bg-rose-950/35 hover:bg-rose-950/55',
-      cardBorder: 'border-rose-800/50 hover:border-rose-700/65',
-      badgeBg: 'bg-rose-950/70 text-rose-300 border-rose-800/60',
+      cardBg: 'bg-rose-950/60 hover:bg-rose-900/70',
+      cardBorder: 'border-rose-700/70 hover:border-rose-600/80',
+      badgeBg: 'bg-rose-900/75 text-rose-200 border-rose-700/80',
       dotColor: 'bg-rose-400',
-      textColor: 'text-rose-300',
+      textColor: 'text-rose-200',
     };
   }
 
@@ -139,11 +139,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       shortLabel: 'H-2',
       diffDays,
       // Merah pudar / subtle warm red
-      cardBg: 'bg-orange-950/30 hover:bg-orange-950/50',
-      cardBorder: 'border-orange-800/40 hover:border-orange-700/55',
-      badgeBg: 'bg-orange-950/60 text-orange-300 border-orange-800/50',
+      cardBg: 'bg-orange-950/60 hover:bg-orange-900/70',
+      cardBorder: 'border-orange-700/70 hover:border-orange-600/80',
+      badgeBg: 'bg-orange-900/75 text-orange-200 border-orange-700/80',
       dotColor: 'bg-orange-400',
-      textColor: 'text-orange-300',
+      textColor: 'text-orange-200',
     };
   }
 
@@ -154,11 +154,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
       shortLabel: 'H-3',
       diffDays,
       // Sedikit bernuansa merah / warm amber-red
-      cardBg: 'bg-amber-950/25 hover:bg-amber-950/40',
-      cardBorder: 'border-amber-800/35 hover:border-amber-700/50',
-      badgeBg: 'bg-amber-950/50 text-amber-300 border-amber-800/40',
+      cardBg: 'bg-amber-950/55 hover:bg-amber-900/65',
+      cardBorder: 'border-amber-700/70 hover:border-amber-600/80',
+      badgeBg: 'bg-amber-900/75 text-amber-200 border-amber-700/80',
       dotColor: 'bg-amber-400',
-      textColor: 'text-amber-300',
+      textColor: 'text-amber-200',
     };
   }
 
@@ -168,11 +168,11 @@ export function getTaskUrgency(dueDateStr: string, referenceDate: Date = new Dat
     label: `${diffDays} hari lagi`,
     shortLabel: `${diffDays}h`,
     diffDays,
-    cardBg: 'bg-neutral-900/80 hover:bg-neutral-850',
-    cardBorder: 'border-neutral-800 hover:border-neutral-700',
-    badgeBg: 'bg-neutral-800/80 text-neutral-300 border-neutral-700',
-    dotColor: 'bg-neutral-400',
-    textColor: 'text-neutral-300',
+    cardBg: 'bg-[#252836] hover:bg-[#2d3142]',
+    cardBorder: 'border-neutral-700 hover:border-neutral-600',
+    badgeBg: 'bg-[#323648] text-neutral-200 border-neutral-600',
+    dotColor: 'bg-neutral-300',
+    textColor: 'text-neutral-200',
   };
 }
 

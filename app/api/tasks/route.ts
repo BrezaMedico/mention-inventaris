@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     if (!pic || !pic.trim()) {
       return NextResponse.json(
-        { success: false, error: 'PIC tugas wajib diisi.' },
+        { success: false, error: 'PIC (Penanggung Jawab) tugas wajib diisi.' },
         { status: 400 }
       );
     }
@@ -105,7 +105,7 @@ export async function PUT(request: NextRequest) {
 
     if (pic !== undefined && !pic.trim()) {
       return NextResponse.json(
-        { success: false, error: 'PIC tugas tidak boleh kosong.' },
+        { success: false, error: 'PIC (Penanggung Jawab) tugas tidak boleh kosong.' },
         { status: 400 }
       );
     }
