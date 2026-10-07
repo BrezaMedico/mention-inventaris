@@ -1,17 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/auth/session';
-import { getAllTasks, createTask, updateTask, deleteTask } from '@/lib/db';
+import { getAllTasks, createTask, updateTask, deleteTask, isTasksTableReady } from '@/lib/db';
 import { TaskPriority } from '@/types';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   try {
     const session = await getAdminSession();
+    const isSupabaseReady = await isTasksTableReady();
     const tasks = await getAllTasks();
-    return NextResponse.json({
-      success: true,
-      data: tasks,
-      isAdmin: Boolean(session),
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: tasks,
+        isAdmin: Boolean(session),
+        isSupabaseReady,
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        },
+      }
+    );
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }

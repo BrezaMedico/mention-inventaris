@@ -1064,31 +1064,10 @@
       "phone_number": "628211904959",
       "last_connected_at": null,
       "created_at": "2026-09-19T07:25:08.055299+00:00",
-      "updated_at": "2026-10-07T15:01:01.543+00:00"
+      "updated_at": "2026-10-07T15:35:43.56+00:00"
     }
   ],
   "overdue_reminders": [],
-  "tasks": [
-    {
-      "id": "791cc999-0047-490b-811f-5c130d5428f7",
-      "title": "barakallah VIOLET",
-      "description": "mengerjakan tugas",
-      "pic": "Breza",
-      "priority": "HIGH",
-      "due_date": "2026-10-30",
-      "created_at": "2026-10-07T10:55:35.388Z",
-      "updated_at": "2026-10-07T10:55:35.388Z"
-    },
-    {
-      "id": "db7354e7-6a52-47f3-b975-4e8d01d0ef0d",
-      "title": "ini adalah sebuah cerita",
-      "description": "",
-      "pic": "pop",
-      "priority": "HIGH",
-      "due_date": "2026-10-07",
-      "created_at": "2026-10-07T10:57:19.574Z",
-      "updated_at": "2026-10-07T14:42:26.789Z"
-    }
-  ],
+  "tasks": [],
   "task_reminders": []
 }

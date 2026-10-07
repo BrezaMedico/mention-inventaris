@@ -1869,6 +1869,15 @@ export async function checkAndCreateWeeklyOverdueReminders(): Promise<Notificati
 // ====================================================================
 // TASKS & CALENDAR DEADLINES
 // ====================================================================
+export async function isTasksTableReady(): Promise<boolean> {
+  try {
+    const { error } = await supabase.from('tasks').select('id').limit(1);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
 export async function getAllTasks(): Promise<Task[]> {
   try {
     const { data, error } = await supabase
@@ -1876,7 +1885,7 @@ export async function getAllTasks(): Promise<Task[]> {
       .select('*')
       .order('due_date', { ascending: true });
 
-    if (!error && data) {
+    if (!error && data !== null) {
       // Keep local DB in sync
       const db = readLocalDb();
       db.tasks = data as Task[];

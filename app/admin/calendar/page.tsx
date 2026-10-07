@@ -23,11 +23,17 @@ import {
   Filter,
   Bell,
   X,
+  Database,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 export default function AdminCalendarPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSupabaseReady, setIsSupabaseReady] = useState(true);
+  const [isSqlModalOpen, setIsSqlModalOpen] = useState(false);
+  const [sqlCopied, setSqlCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [priorityFilter, setPriorityFilter] = useState<'ALL' | TaskPriority>('ALL');
   const [urgencyFilter, setUrgencyFilter] = useState<'ALL' | 'UPCOMING' | 'OVERDUE'>('ALL');
@@ -51,10 +57,13 @@ export default function AdminCalendarPage() {
   const loadTasks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/tasks');
+      const res = await fetch('/api/tasks', { cache: 'no-store' });
       const data = await res.json();
       if (data.success) {
         setTasks(data.data || []);
+        if (data.isSupabaseReady !== undefined) {
+          setIsSupabaseReady(data.isSupabaseReady);
+        }
       }
     } catch (err) {
       console.error('Error fetching tasks:', err);
@@ -254,6 +263,32 @@ export default function AdminCalendarPage() {
             </div>
             <button onClick={() => setReminderError('')} className="text-red-400 hover:text-white p-1">
               <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* Banner Peringatan Supabase Belum Dimigrate */}
+        {!isSupabaseReady && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-950/50 border border-amber-500/60 text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl shadow-amber-950/20 animate-in fade-in">
+            <div className="flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
+                <Database className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-amber-300 text-sm flex items-center gap-2">
+                  Tabel Database Kalender Belum Ada di Supabase Cloud
+                </p>
+                <p className="text-amber-200/80 text-xs leading-relaxed max-w-2xl">
+                  Tabel <code>tasks</code> dan <code>task_reminders</code> belum dibuat di Supabase Cloud. Di hosting serverless (seperti Vercel), data kalender tidak tersimpan permanen dan akan kembali ke awal saat halaman di-refresh. Silakan salin & jalankan SQL migrasi di Supabase SQL Editor.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsSqlModalOpen(true)}
+              className="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs shrink-0 transition-colors shadow-md flex items-center justify-center gap-1.5"
+            >
+              <Database className="w-3.5 h-3.5" />
+              <span>Buka SQL Migrasi</span>
             </button>
           </div>
         )}
@@ -521,6 +556,191 @@ export default function AdminCalendarPage() {
                   ) : (
                     <span>Ya, Hapus</span>
                   )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal SQL Migrasi Supabase */}
+        {isSqlModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-150">
+            <div
+              className="w-full max-w-2xl rounded-2xl bg-[#14151c] border border-amber-600/60 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-700/80 bg-[#1c1e27]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                    <Database className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-white">SQL Migrasi Tabel Kalender Supabase</h3>
+                    <p className="text-[11px] text-neutral-400">Jalankan di dashboard Supabase agar data kalender tersimpan permanen</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsSqlModalOpen(false)}
+                  className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 text-xs">
+                <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-800/60 text-amber-200/90 leading-relaxed space-y-1">
+                  <div className="font-bold text-amber-300">Cara Mengaktifkan:</div>
+                  <ol className="list-decimal list-inside space-y-1 text-xs">
+                    <li>Klik tombol <strong>Salin Script SQL</strong> di bawah.</li>
+                    <li>Buka <a href="https://qaaslumawvoykqyohclh.supabase.co" target="_blank" rel="noreferrer" className="text-amber-400 underline font-semibold">Dashboard Supabase &rarr; SQL Editor</a>.</li>
+                    <li>Klik <strong>New query</strong>, tempel (Paste) script ini, lalu klik <strong>Run</strong>.</li>
+                    <li>Setelah selesai, refresh halaman ini. Data kalender akan otomatis tersimpan permanen!</li>
+                  </ol>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+                      Script SQL Migrasi (Aman & Tidak Menghapus Data Lain)
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const sql = `-- 1. Buat Tabel tasks (Kalender Tugas & Deadline)
+CREATE TABLE IF NOT EXISTS tasks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    pic TEXT NOT NULL,
+    priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
+    due_date DATE NOT NULL,
+    h1_reminder_sent_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. Buat Tabel task_reminders (Log Pengingat Tugas H-1)
+CREATE TABLE IF NOT EXISTS task_reminders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+    due_date DATE NOT NULL,
+    reminder_type TEXT NOT NULL DEFAULT 'H-1',
+    sent_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(task_id, due_date, reminder_type)
+);
+
+-- 3. Indexes
+CREATE INDEX IF NOT EXISTS idx_tasks_due_date ON tasks(due_date);
+CREATE INDEX IF NOT EXISTS idx_tasks_priority ON tasks(priority);
+CREATE INDEX IF NOT EXISTS idx_task_reminders_task_id ON task_reminders(task_id);
+
+-- 4. Row Level Security
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE task_reminders ENABLE ROW LEVEL SECURITY;
+
+-- 5. Policies
+DROP POLICY IF EXISTS "Allow public read tasks" ON tasks;
+CREATE POLICY "Allow public read tasks" ON tasks FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public write tasks" ON tasks;
+CREATE POLICY "Allow public write tasks" ON tasks FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public read task_reminders" ON task_reminders;
+CREATE POLICY "Allow public read task_reminders" ON task_reminders FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public write task_reminders" ON task_reminders;
+CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USING (true) WITH CHECK (true);`;
+                        navigator.clipboard.writeText(sql);
+                        setSqlCopied(true);
+                        setTimeout(() => setSqlCopied(false), 2500);
+                      }}
+                      className="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-[11px] transition-colors flex items-center gap-1.5"
+                    >
+                      {sqlCopied ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Berhasil Disalin!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>Salin Script SQL</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <pre className="p-3.5 rounded-xl bg-black/60 border border-neutral-800 text-[11px] text-neutral-300 font-mono overflow-x-auto max-h-64 whitespace-pre">
+{`-- 1. Buat Tabel tasks (Kalender Tugas & Deadline)
+CREATE TABLE IF NOT EXISTS tasks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    pic TEXT NOT NULL,
+    priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
+    due_date DATE NOT NULL,
+    h1_reminder_sent_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. Buat Tabel task_reminders (Log Pengingat Tugas H-1)
+CREATE TABLE IF NOT EXISTS task_reminders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+    due_date DATE NOT NULL,
+    reminder_type TEXT NOT NULL DEFAULT 'H-1',
+    sent_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(task_id, due_date, reminder_type)
+);
+
+-- 3. Indexes
+CREATE INDEX IF NOT EXISTS idx_tasks_due_date ON tasks(due_date);
+CREATE INDEX IF NOT EXISTS idx_tasks_priority ON tasks(priority);
+CREATE INDEX IF NOT EXISTS idx_task_reminders_task_id ON task_reminders(task_id);
+
+-- 4. Row Level Security
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE task_reminders ENABLE ROW LEVEL SECURITY;
+
+-- 5. Policies
+DROP POLICY IF EXISTS "Allow public read tasks" ON tasks;
+CREATE POLICY "Allow public read tasks" ON tasks FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public write tasks" ON tasks;
+CREATE POLICY "Allow public write tasks" ON tasks FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public read task_reminders" ON task_reminders;
+CREATE POLICY "Allow public read task_reminders" ON task_reminders FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public write task_reminders" ON task_reminders;
+CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USING (true) WITH CHECK (true);`}
+                  </pre>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-3.5 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] flex items-center justify-between gap-3">
+                <a
+                  href="https://qaaslumawvoykqyohclh.supabase.co"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-2 rounded-xl border border-neutral-700 hover:border-neutral-600 bg-neutral-800 hover:bg-neutral-750 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
+                  <span>Buka Supabase SQL Editor</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setIsSqlModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white font-bold text-xs transition-colors"
+                >
+                  Tutup
                 </button>
               </div>
             </div>

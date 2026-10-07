@@ -27,6 +27,7 @@ import {
   Loader2,
   CalendarDays,
   CheckCircle2,
+  Database,
 } from 'lucide-react';
 
 export default function CalendarPage() {
@@ -62,16 +63,20 @@ export default function CalendarPage() {
   const [isDayModalOpen, setIsDayModalOpen] = useState(false);
 
   const [isAdminRequiredOpen, setIsAdminRequiredOpen] = useState(false);
+  const [isSupabaseReady, setIsSupabaseReady] = useState(true);
 
   // Load tasks & auth status
   const loadTasks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/tasks');
+      const res = await fetch('/api/tasks', { cache: 'no-store' });
       const data = await res.json();
       if (data.success) {
         setTasks(data.data || []);
         setIsAdmin(Boolean(data.isAdmin));
+        if (data.isSupabaseReady !== undefined) {
+          setIsSupabaseReady(data.isSupabaseReady);
+        }
       }
     } catch (err) {
       console.error('Error fetching tasks:', err);
@@ -282,6 +287,29 @@ export default function CalendarPage() {
             )}
           </div>
         </div>
+
+        {/* Warning Banner untuk Admin jika Supabase belum dimigrate */}
+        {isAdmin && !isSupabaseReady && (
+          <div className="mb-6 p-4 rounded-2xl bg-amber-950/60 border border-amber-500/60 text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-lg animate-in fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+                <Database className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-amber-300">Sinkronisasi Cloud Supabase Belum Aktif: </span>
+                <span className="text-amber-200/80">
+                  Tabel <code>tasks</code> belum dibuat di Supabase Cloud. Di hosting (Vercel), perubahan data tidak tersimpan permanen saat refresh.
+                </span>
+              </div>
+            </div>
+            <a
+              href="/admin/calendar"
+              className="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs shrink-0 transition-colors text-center shadow-sm"
+            >
+              Lihat SQL Migrasi di Admin
+            </a>
+          </div>
+        )}
 
         {/* Main Grid: Sidebar (Kiri) & Kalender (Tengah/Kanan) */}
         <div className="grid grid-cols-1 lg:grid-cols-[310px_1fr] xl:grid-cols-[330px_1fr] gap-4 sm:gap-6 items-start">

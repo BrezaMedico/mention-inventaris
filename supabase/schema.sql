@@ -7,6 +7,8 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Drop existing tables if needed for clean reload
+DROP TABLE IF EXISTS task_reminders CASCADE;
+DROP TABLE IF EXISTS tasks CASCADE;
 DROP TABLE IF EXISTS overdue_reminders CASCADE;
 DROP TABLE IF EXISTS notification_events CASCADE;
 DROP TABLE IF EXISTS whatsapp_configs CASCADE;
@@ -154,10 +156,22 @@ CREATE TABLE tasks (
     title TEXT NOT NULL,
     description TEXT,
     pic TEXT NOT NULL,
-    priority TEXT NOT NULL DEFAULT 'MEDIUM', -- LOW, MEDIUM, HIGH
+    priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date DATE NOT NULL,
+    h1_reminder_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- 13. TASK REMINDERS TABLE (Log Pengingat Tugas H-1)
+CREATE TABLE task_reminders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+    due_date DATE NOT NULL,
+    reminder_type TEXT NOT NULL DEFAULT 'H-1',
+    sent_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(task_id, due_date, reminder_type)
 );
 
 -- INDEXES FOR PERFORMANCE
@@ -170,6 +184,9 @@ CREATE INDEX idx_loan_items_loan ON loan_items(loan_id);
 CREATE INDEX idx_loan_items_item ON loan_items(item_id);
 CREATE INDEX idx_loan_items_status ON loan_items(status);
 CREATE INDEX idx_notifications_status ON notification_events(status);
+CREATE INDEX idx_tasks_due_date ON tasks(due_date);
+CREATE INDEX idx_tasks_priority ON tasks(priority);
+CREATE INDEX idx_task_reminders_task_id ON task_reminders(task_id);
 
 -- ROW LEVEL SECURITY
 -- Enable RLS on all tables
@@ -185,6 +202,7 @@ ALTER TABLE notification_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE whatsapp_configs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE overdue_reminders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE task_reminders ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to active data for the frontend user flows
 CREATE POLICY "Allow public read generations" ON generations FOR SELECT USING (true);
@@ -196,6 +214,7 @@ CREATE POLICY "Allow public read loans" ON loans FOR SELECT USING (true);
 CREATE POLICY "Allow public read loan_items" ON loan_items FOR SELECT USING (true);
 CREATE POLICY "Allow public read whatsapp_configs" ON whatsapp_configs FOR SELECT USING (true);
 CREATE POLICY "Allow public read tasks" ON tasks FOR SELECT USING (true);
+CREATE POLICY "Allow public read task_reminders" ON task_reminders FOR SELECT USING (true);
 
 -- Allow full public operations via anon key for now (Next.js server-side handles validation and admin authorization)
 CREATE POLICY "Allow public write loans" ON loans FOR ALL USING (true) WITH CHECK (true);
@@ -210,6 +229,7 @@ CREATE POLICY "Allow public write whatsapp_configs" ON whatsapp_configs FOR ALL 
 CREATE POLICY "Allow public write overdue_reminders" ON overdue_reminders FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow public write admins" ON admins FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow public write tasks" ON tasks FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USING (true) WITH CHECK (true);
 
 -- ====================================================================
 -- SEED DATA
