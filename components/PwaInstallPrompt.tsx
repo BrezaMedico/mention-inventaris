@@ -83,9 +83,10 @@ export default function PwaInstallPrompt() {
       setShowIosGuide(true);
     } else {
       alert(
-        'Untuk memasang aplikasi MENTION di HP:\n\n' +
-        '1. Ketuk menu browser (titik tiga ⋮) di kanan atas.\n' +
-        '2. Pilih "Pasang aplikasi" atau "Tambahkan ke Layar Utama".'
+        'Untuk memasang aplikasi MENTION:\n\n' +
+        '• PC / Laptop (Desktop): Klik ikon "Pasang MENTION" (ikon monitor kecil) di bilah alamat browser (URL bar sebelah kanan).\n\n' +
+        '• HP Android: Ketuk menu browser (titik tiga ⋮) lalu pilih "Pasang aplikasi".\n\n' +
+        '• iPhone: Ketuk tombol Bagikan (Share) lalu pilih "Tambahkan ke Layar Utama".'
       );
     }
   };
@@ -107,7 +108,7 @@ export default function PwaInstallPrompt() {
           </div>
           <div className="text-xs">
             <div className="font-bold text-white">Aplikasi Berhasil Dipasang</div>
-            <div className="text-neutral-400">Buka langsung dari layar utama HP.</div>
+            <div className="text-neutral-400">Buka langsung dari Desktop PC atau layar utama HP.</div>
           </div>
         </div>
       )}
@@ -144,7 +145,7 @@ export default function PwaInstallPrompt() {
               </div>
 
               <p className="text-xs text-neutral-400 mt-0.5 leading-relaxed">
-                Tambahkan ke layar utama HP untuk akses cepat & layar penuh.
+                Pasang ke PC atau layar utama HP untuk akses cepat & layar penuh.
               </p>
 
               {/* Action Buttons */}
