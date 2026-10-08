@@ -650,16 +650,99 @@ export async function deleteChecker(id: string): Promise<{ success: boolean; err
 }
 
 // ====================================================================
+// RECONCILIATION & SELF-HEALING ENGINE
+// ====================================================================
+export async function reconcileItemStatuses(): Promise<void> {
+  const now = new Date().toISOString();
+  const db = readLocalDb();
+
+  try {
+    // 1. Ambil semua item_id yang sedang dipinjam secara aktif dari Supabase
+    const { data: supaActiveLoans, error: lErr } = await supabase
+      .from('loan_items')
+      .select('item_id, status, loan:loans!inner(id, status)')
+      .eq('status', 'BORROWED')
+      .in('loan.status', ['ACTIVE', 'PARTIALLY_RETURNED']);
+
+    if (!lErr && supaActiveLoans !== null) {
+      const activeBorrowedItemIds = new Set(supaActiveLoans.map((li: any) => li.item_id));
+
+      const { data: supaItems, error: iErr } = await supabase.from('items').select('*');
+      if (!iErr && supaItems) {
+        for (const item of supaItems) {
+          const isBorrowed = activeBorrowedItemIds.has(item.id);
+          if (isBorrowed && item.status !== 'BORROWED') {
+            await supabase.from('items').update({ status: 'BORROWED', updated_at: now }).eq('id', item.id);
+            item.status = 'BORROWED';
+          } else if (!isBorrowed && item.status === 'BORROWED') {
+            await supabase.from('items').update({ status: 'AVAILABLE', updated_at: now }).eq('id', item.id);
+            item.status = 'AVAILABLE';
+          }
+        }
+
+        // Sinkronkan ke local DB agar tidak ada perbedaan status
+        const { data: supaAccs } = await supabase.from('item_accessories').select('*');
+        db.items = supaItems;
+        if (supaAccs) db.item_accessories = supaAccs;
+        writeLocalDb(db);
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn('Supabase reconcileItemStatuses fallback to local:', err);
+  }
+
+  // Fallback ke local DB jika Supabase offline
+  const activeLocalBorrowedIds = new Set(
+    db.loan_items
+      .filter((li) => {
+        if (li.status !== 'BORROWED') return false;
+        const parentLoan = db.loans.find((l) => l.id === li.loan_id);
+        return parentLoan && (parentLoan.status === 'ACTIVE' || parentLoan.status === 'PARTIALLY_RETURNED');
+      })
+      .map((li) => li.item_id)
+  );
+
+  let localChanged = false;
+  for (const item of db.items) {
+    const isBorrowed = activeLocalBorrowedIds.has(item.id);
+    if (isBorrowed && item.status !== 'BORROWED') {
+      item.status = 'BORROWED';
+      item.updated_at = now;
+      localChanged = true;
+    } else if (!isBorrowed && item.status === 'BORROWED') {
+      item.status = 'AVAILABLE';
+      item.updated_at = now;
+      localChanged = true;
+    }
+  }
+
+  if (localChanged) {
+    writeLocalDb(db);
+  }
+}
+
+// ====================================================================
 // ITEMS & ACCESSORIES
 // ====================================================================
 export async function getItems(statusFilter?: ItemStatus | 'ALL'): Promise<Item[]> {
+  await reconcileItemStatuses();
+
   try {
     let query = supabase.from('items').select('*, accessories:item_accessories(*)');
     if (statusFilter && statusFilter !== 'ALL') {
       query = query.eq('status', statusFilter);
     }
     const { data, error } = await query.order('name', { ascending: true });
-    if (!error && data !== null) return data as Item[];
+    if (!error && data !== null) {
+      const db = readLocalDb();
+      db.items = data.map((d: any) => {
+        const { accessories, ...rest } = d;
+        return rest as Item;
+      });
+      writeLocalDb(db);
+      return data as Item[];
+    }
   } catch (err) {
     console.error('Supabase getItems error:', err);
   }
@@ -795,21 +878,35 @@ export async function updateItem(
       });
     }
     writeLocalDb(db);
-    return true;
   }
+  await reconcileItemStatuses();
   return true;
 }
 
 export async function deleteItem(id: string): Promise<{ success: boolean; error?: string }> {
+  await reconcileItemStatuses();
+
   let activeBorrowed = false;
   try {
     const { data: itemData } = await supabase.from('items').select('status').eq('id', id).maybeSingle();
     if (itemData?.status === 'BORROWED') activeBorrowed = true;
+
+    if (!activeBorrowed) {
+      const { data: liData } = await supabase
+        .from('loan_items')
+        .select('id, loan:loans!inner(status)')
+        .eq('item_id', id)
+        .eq('status', 'BORROWED')
+        .in('loan.status', ['ACTIVE', 'PARTIALLY_RETURNED'])
+        .limit(1);
+      if (liData && liData.length > 0) activeBorrowed = true;
+    }
   } catch {}
 
   if (!activeBorrowed) {
     const db = readLocalDb();
-    activeBorrowed = db.items.some((i) => i.id === id && i.status === 'BORROWED');
+    activeBorrowed = db.items.some((i) => i.id === id && i.status === 'BORROWED') ||
+      db.loan_items.some((li) => li.item_id === id && li.status === 'BORROWED');
   }
 
   if (activeBorrowed) {
@@ -956,29 +1053,63 @@ export async function createLoanTransaction(input: CreateLoanInput): Promise<{ s
     return { success: false, error: 'Barang yang sama tidak boleh dipilih lebih dari sekali.' };
   }
 
-  // Verify availability in Supabase if online
+  // Pastikan status barang sudah terekonsiliasi
+  await reconcileItemStatuses();
+
+  let isVerifiedViaSupabase = false;
   try {
-    const { data: dbItems } = await supabase.from('items').select('id, name, status').in('id', requestedItemIds);
-    if (dbItems) {
+    const { data: dbItems, error: itemsErr } = await supabase.from('items').select('id, name, status').in('id', requestedItemIds);
+    if (!itemsErr && dbItems && dbItems.length === requestedItemIds.length) {
+      isVerifiedViaSupabase = true;
       for (const reqId of requestedItemIds) {
         const itm = dbItems.find((i) => i.id === reqId);
-        if (itm && itm.status !== 'AVAILABLE') {
+        if (!itm || itm.status !== 'AVAILABLE') {
           return {
             success: false,
-            error: `Barang "${itm.name}" sedang dipinjam atau tidak tersedia. Silakan pilih barang lain.`,
+            error: `Barang "${itm?.name || 'terpilih'}" sedang dipinjam atau tidak tersedia. Silakan pilih barang lain.`,
           };
         }
+      }
+
+      // Verifikasi ganda: pastikan tidak ada loan_items aktif yang meminjam barang ini
+      const { data: activeBorrowedItems } = await supabase
+        .from('loan_items')
+        .select('item_id, item:items(name), loan:loans!inner(status)')
+        .in('item_id', requestedItemIds)
+        .eq('status', 'BORROWED')
+        .in('loan.status', ['ACTIVE', 'PARTIALLY_RETURNED']);
+
+      if (activeBorrowedItems && activeBorrowedItems.length > 0) {
+        const itemName = (activeBorrowedItems[0] as any).item?.name || 'Barang';
+        return {
+          success: false,
+          error: `Barang "${itemName}" sedang dalam peminjaman aktif. Silakan pilih barang lain.`,
+        };
       }
     }
   } catch {}
 
-  for (const itemId of requestedItemIds) {
-    const item = db.items.find((i) => i.id === itemId);
-    if (item && item.status !== 'AVAILABLE') {
-      return {
-        success: false,
-        error: `Barang "${item.name}" baru saja dipinjam atau tidak tersedia. Silakan pilih barang lain.`,
-      };
+  // Hanya periksa local DB jika Supabase tidak terhubung
+  if (!isVerifiedViaSupabase) {
+    for (const itemId of requestedItemIds) {
+      const item = db.items.find((i) => i.id === itemId);
+      if (!item || item.status !== 'AVAILABLE') {
+        return {
+          success: false,
+          error: `Barang "${item?.name || 'terpilih'}" baru saja dipinjam atau tidak tersedia. Silakan pilih barang lain.`,
+        };
+      }
+
+      const isLocalBorrowed = db.loan_items.some(
+        (li) => li.item_id === itemId && li.status === 'BORROWED' &&
+        db.loans.some((l) => l.id === li.loan_id && (l.status === 'ACTIVE' || l.status === 'PARTIALLY_RETURNED'))
+      );
+      if (isLocalBorrowed) {
+        return {
+          success: false,
+          error: `Barang "${item.name}" sedang dalam peminjaman aktif. Silakan pilih barang lain.`,
+        };
+      }
     }
   }
 
@@ -1378,6 +1509,7 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
   } catch {}
 
   writeLocalDb(db);
+  await reconcileItemStatuses();
 
   return {
     success: true,
@@ -1394,6 +1526,7 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
 // ADMIN DASHBOARD & ACTIVITY & HISTORY
 // ====================================================================
 export async function getDashboardStats() {
+  await reconcileItemStatuses();
   const today = getLocalTodayStr();
 
   try {
@@ -1564,6 +1697,7 @@ export async function deleteLoan(id: string): Promise<{ success: boolean; error?
   db.overdue_reminders = db.overdue_reminders.filter((or) => or.loan_id !== id);
   db.loans = db.loans.filter((l) => l.id !== id);
   writeLocalDb(db);
+  await reconcileItemStatuses();
 
   return { success: true };
 }
@@ -1635,6 +1769,7 @@ export async function deleteLoansHistory(mode: 'ALL' | 'EXCEPT_THIS_MONTH'): Pro
     db.loans = db.loans.filter((l) => !targetIds.includes(l.id));
 
     writeLocalDb(db);
+    await reconcileItemStatuses();
     return { success: true, deletedCount: targetLoans.length };
   } catch (err: any) {
     console.error('deleteLoansHistory error:', err);

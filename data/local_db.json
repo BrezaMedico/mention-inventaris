@@ -920,24 +920,14 @@
   ],
   "items": [
     {
-      "id": "bcd4083e-7b3e-441e-a410-84b2bee20893",
-      "name": "Lampu sorot",
-      "code": "ITM-7259",
-      "description": "Lampu sorot",
-      "image_url": null,
-      "status": "MAINTENANCE",
-      "created_at": "2026-09-19T08:59:07.259+00:00",
-      "updated_at": "2026-09-19T08:59:07.477072+00:00"
-    },
-    {
-      "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-      "name": "Trippod",
-      "code": "ITM-8509",
-      "description": "Trippod Camera",
+      "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
+      "name": "Camera Canon",
+      "code": "ITM-5004",
+      "description": "Camera yayasan",
       "image_url": null,
       "status": "AVAILABLE",
-      "created_at": "2026-09-19T08:55:48.509+00:00",
-      "updated_at": "2026-10-06T14:59:54.235Z"
+      "created_at": "2026-09-19T07:30:25.004+00:00",
+      "updated_at": "2026-10-07T15:05:40.591+00:00"
     },
     {
       "id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
@@ -947,17 +937,17 @@
       "image_url": null,
       "status": "AVAILABLE",
       "created_at": "2026-09-19T08:58:23.638+00:00",
-      "updated_at": "2026-10-08T01:24:27.151Z"
+      "updated_at": "2026-10-08T01:24:27.151+00:00"
     },
     {
-      "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "Camera Canon",
-      "code": "ITM-5004",
-      "description": "Camera yayasan",
+      "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "name": "Trippod",
+      "code": "ITM-8509",
+      "description": "Trippod Camera",
       "image_url": null,
-      "status": "BORROWED",
-      "created_at": "2026-09-19T07:30:25.004+00:00",
-      "updated_at": "2026-10-07T15:05:40.591Z"
+      "status": "AVAILABLE",
+      "created_at": "2026-09-19T08:55:48.509+00:00",
+      "updated_at": "2026-10-08T03:42:13.442+00:00"
     }
   ],
   "item_accessories": [
@@ -1004,57 +994,9 @@
       "created_at": "2026-09-19T09:01:53.307051+00:00"
     }
   ],
-  "loans": [
-    {
-      "id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
-      "loan_code": "MNT-20261007-4310",
-      "member_id": "86f82c18-d01c-4310-94b7-f837ec0af63f",
-      "borrow_date": "2026-10-07",
-      "expected_return_date": "2026-10-07",
-      "status": "ACTIVE",
-      "initial_checker_id": "fc82599e-4ba7-43a2-aefb-1d364f9d6607",
-      "notes": "",
-      "created_at": "2026-10-07T15:05:40.591Z"
-    }
-  ],
-  "loan_items": [
-    {
-      "id": "bbe92aa0-171e-4154-8126-a5d4ed2045c5",
-      "loan_id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "status": "BORROWED",
-      "initial_condition": "Aman",
-      "initial_accessories": [
-        "Baterai 1",
-        "Baterai 2",
-        "Charger Case",
-        "SD Card"
-      ],
-      "initial_notes": "",
-      "created_at": "2026-10-07T15:05:40.591Z",
-      "item": {
-        "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-        "name": "Camera Canon",
-        "code": "ITM-5004",
-        "description": "Camera yayasan",
-        "image_url": null,
-        "status": "BORROWED",
-        "created_at": "2026-09-19T07:30:25.004+00:00",
-        "updated_at": "2026-10-07T15:05:40.591Z"
-      }
-    }
-  ],
-  "notification_events": [
-    {
-      "id": "0d1224a4-cc53-48d1-a00d-040fde1291cd",
-      "loan_id": "8cab90f3-f8e4-464d-9835-ab67228364d4",
-      "type": "BORROW",
-      "message": "[PEMINJAMAN BARANG]\n\nNama:\nFarray Saleh Abdad\n\nAngkatan:\nAngkatan 4\n\nBarang:\n- Camera Canon\n\nTanggal Peminjaman:\n2026-10-07\n\nTanggal Pengembalian:\n2026-10-07\n\nPIC Checker:\nBreza Artha Medico\n\nStatus:\nSedang Dipinjam",
-      "status": "SENT",
-      "created_at": "2026-10-07T15:05:40.591Z",
-      "sent_at": "2026-10-07T15:05:41.575Z"
-    }
-  ],
+  "loans": [],
+  "loan_items": [],
+  "notification_events": [],
   "whatsapp_configs": [
     {
       "id": "579e81aa-e050-41ce-b3b6-c9229dc24559",
