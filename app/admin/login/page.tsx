@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
         </Link>
 
         {/* Login Container (Card in White) */}
-        <div className="bg-white text-black rounded-3xl p-8 sm:p-10 shadow-2xl border border-neutral-200">
+        <div className="bg-white text-black rounded-3xl p-6 sm:p-10 shadow-2xl border border-neutral-200">
           <div className="text-center mb-8">
             <div className="w-14 h-14 rounded-2xl bg-black text-mention-yellow flex items-center justify-center mx-auto mb-4 shadow-md">
               <Shield className="w-7 h-7" />

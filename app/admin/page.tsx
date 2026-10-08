@@ -106,67 +106,67 @@ export default function AdminDashboardPage() {
         )}
 
         {/* 4 Primary Metric Cards (clean, high readability) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {/* Active Loans */}
-          <div className="bg-white text-black p-5 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
+          <div className="bg-white text-black p-4 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between text-neutral-600 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Sedang Dipinjam</span>
-              <Package className="w-4 h-4 text-black" />
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider">Sedang Dipinjam</span>
+              <Package className="w-4 h-4 text-black shrink-0" />
             </div>
-            <div className="text-3xl sm:text-4xl font-black text-black">
+            <div className="text-2xl sm:text-4xl font-black text-black">
               {loading ? '-' : stats?.activeLoansCount || 0}
             </div>
-            <div className="mt-2 text-xs text-neutral-500 font-medium">Transaksi peminjaman aktif</div>
+            <div className="mt-1.5 text-[11px] sm:text-xs text-neutral-500 font-medium">Transaksi peminjaman aktif</div>
           </div>
 
           {/* Overdue */}
-          <div className="bg-white text-black p-5 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
+          <div className="bg-white text-black p-4 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between text-neutral-600 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-red-600">Terlambat</span>
-              <Clock className="w-4 h-4 text-red-600" />
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-red-600">Terlambat</span>
+              <Clock className="w-4 h-4 text-red-600 shrink-0" />
             </div>
-            <div className="text-3xl sm:text-4xl font-black text-red-600">
+            <div className="text-2xl sm:text-4xl font-black text-red-600">
               {loading ? '-' : stats?.overdueLoansCount || 0}
             </div>
-            <div className="mt-2 text-xs text-red-600/80 font-medium">Melewati target kembali</div>
+            <div className="mt-1.5 text-[11px] sm:text-xs text-red-600/80 font-medium">Melewati target kembali</div>
           </div>
 
           {/* Available Items */}
-          <div className="bg-white text-black p-5 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
+          <div className="bg-white text-black p-4 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between text-neutral-600 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider">Barang Tersedia</span>
-              <CheckCircle2 className="w-4 h-4 text-green-600" />
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider">Barang Tersedia</span>
+              <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
             </div>
-            <div className="text-3xl sm:text-4xl font-black text-black">
+            <div className="text-2xl sm:text-4xl font-black text-black">
               {loading ? '-' : stats?.availableItemsCount || 0}
             </div>
-            <div className="mt-2 text-xs text-neutral-500 font-medium">Siap untuk dipinjam</div>
+            <div className="mt-1.5 text-[11px] sm:text-xs text-neutral-500 font-medium">Siap untuk dipinjam</div>
           </div>
 
           {/* Maintenance */}
-          <div className="bg-white text-black p-5 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
+          <div className="bg-white text-black p-4 sm:p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
             <div className="flex items-center justify-between text-neutral-600 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-600">Maintenance</span>
-              <AlertTriangle className="w-4 h-4 text-amber-600" />
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-amber-600">Maintenance</span>
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
             </div>
-            <div className="text-3xl sm:text-4xl font-black text-amber-600">
+            <div className="text-2xl sm:text-4xl font-black text-amber-600">
               {loading ? '-' : stats?.maintenanceItemsCount || 0}
             </div>
-            <div className="mt-2 text-xs text-neutral-500 font-medium">Perbaikan / pengecekan</div>
+            <div className="mt-1.5 text-[11px] sm:text-xs text-neutral-500 font-medium">Perbaikan / pengecekan</div>
           </div>
         </div>
 
         {/* Activity Table Container (Card in White) */}
-        <div className="bg-white text-black rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-200">
-          <div className="flex items-center justify-between border-b border-neutral-200 pb-4 mb-6">
+        <div className="bg-white text-black rounded-2xl p-4 sm:p-8 shadow-xl border border-neutral-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-200 pb-4 mb-5">
             <div>
-              <h2 className="text-xl font-bold text-black">Aktivitas Peminjaman Aktif</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-black">Aktivitas Peminjaman Aktif</h2>
               <p className="text-xs text-neutral-500 mt-0.5">Daftar transaksi yang belum selesai dikembalikan.</p>
             </div>
 
             <Link
               href="/admin/activity"
-              className="flex items-center gap-1.5 text-xs font-bold text-black hover:text-mention-yellowDark transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-black hover:text-mention-yellowDark transition-colors self-start sm:self-auto"
             >
               <span>Lihat Semua Aktivitas</span>
               <ArrowRight className="w-4 h-4" />
@@ -183,8 +183,8 @@ export default function AdminDashboardPage() {
               Belum ada aktivitas peminjaman yang sedang aktif saat ini.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[580px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-3">Kode</th>
@@ -203,8 +203,8 @@ export default function AdminDashboardPage() {
                       <tr key={loan.id} className="hover:bg-neutral-50 transition-colors">
                         <td className="py-3.5 px-3 font-mono font-bold text-black">{loan.loan_code}</td>
                         <td className="py-3.5 px-3">
-                          <div className="font-bold text-black">{loan.member?.name}</div>
-                          <div className="text-[10px] text-neutral-500">{loan.member?.generation?.name}</div>
+                          <div className="font-bold text-black">{loan.member?.name || loan.custom_name || '-'}</div>
+                          <div className="text-[10px] text-neutral-500">{loan.member?.generation?.name || (loan.custom_name ? 'Lainnya' : '')}</div>
                         </td>
                         <td className="py-3.5 px-3">
                           <div className="font-medium text-neutral-800">

@@ -294,11 +294,11 @@ export default function AdminWhatsAppPage() {
             </div>
 
             {/* Action buttons */}
-            <div className="mt-6 pt-5 border-t border-neutral-200 flex flex-wrap items-center gap-3">
+            <div className="mt-6 pt-5 border-t border-neutral-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <button
                 onClick={handleReconnect}
                 disabled={actionLoading}
-                className="px-4 py-2.5 rounded-xl bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors flex items-center gap-1.5 disabled:bg-neutral-300"
+                className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors flex items-center justify-center gap-1.5 disabled:bg-neutral-300 active:scale-[0.98]"
               >
                 <Link2 className="w-4 h-4" />
                 <span>Hubungkan / Reconnect</span>
@@ -308,7 +308,7 @@ export default function AdminWhatsAppPage() {
                 <button
                   onClick={handleDisconnect}
                   disabled={actionLoading}
-                  className="px-4 py-2.5 rounded-xl border border-red-300 text-red-600 hover:bg-red-50 text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5"
+                  className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-red-300 text-red-600 hover:bg-red-50 text-xs font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 active:scale-[0.98]"
                 >
                   <Unlink className="w-4 h-4" />
                   <span>Putuskan Koneksi</span>
@@ -391,11 +391,11 @@ export default function AdminWhatsAppPage() {
               )}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <button
                 onClick={handleSaveTargetGroup}
                 disabled={!selectedGroupJid || actionLoading}
-                className="flex-1 h-11 rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-colors shadow-md flex items-center justify-center gap-1.5 disabled:bg-neutral-200 disabled:cursor-not-allowed"
+                className="flex-1 h-11 min-h-[44px] rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-colors shadow-md flex items-center justify-center gap-1.5 disabled:bg-neutral-200 disabled:cursor-not-allowed active:scale-[0.98]"
               >
                 <span>Simpan Target Group</span>
               </button>
@@ -403,7 +403,7 @@ export default function AdminWhatsAppPage() {
               <button
                 onClick={handleSendTestMessage}
                 disabled={!statusData?.isConnected || actionLoading}
-                className="px-4 h-11 rounded-xl bg-black text-white font-bold text-xs uppercase tracking-wider hover:bg-neutral-800 transition-colors shadow-md flex items-center justify-center gap-1.5 disabled:bg-neutral-200 disabled:text-neutral-400 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-5 h-11 min-h-[44px] rounded-xl bg-black text-white font-bold text-xs uppercase tracking-wider hover:bg-neutral-800 transition-colors shadow-md flex items-center justify-center gap-1.5 disabled:bg-neutral-200 disabled:text-neutral-400 disabled:cursor-not-allowed active:scale-[0.98]"
                 title="Kirim pesan test ke group yang tersimpan"
               >
                 <Send className="w-3.5 h-3.5" />
@@ -426,7 +426,7 @@ export default function AdminWhatsAppPage() {
             <button
               onClick={handleDispatchQueue}
               disabled={actionLoading || !statusData?.isConnected}
-              className="px-4 py-2 rounded-xl bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors self-start sm:self-auto disabled:bg-neutral-200 disabled:text-neutral-400"
+              className="w-full sm:w-auto px-4 py-2.5 min-h-[40px] rounded-xl bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors disabled:bg-neutral-200 disabled:text-neutral-400 active:scale-[0.98]"
             >
               Proses Antrian Sekarang
             </button>
@@ -437,8 +437,8 @@ export default function AdminWhatsAppPage() {
               Belum ada aktivitas pengiriman notifikasi.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[580px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-3">Tipe</th>

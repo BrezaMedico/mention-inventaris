@@ -947,7 +947,7 @@
       "image_url": null,
       "status": "AVAILABLE",
       "created_at": "2026-09-19T08:58:23.638+00:00",
-      "updated_at": "2026-10-07T14:58:41.197Z"
+      "updated_at": "2026-10-08T01:24:27.151Z"
     },
     {
       "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
@@ -1068,6 +1068,51 @@
     }
   ],
   "overdue_reminders": [],
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "9a057441-1523-4d58-9da5-91867663f3fc",
+      "title": "BIC:Konten",
+      "description": "",
+      "pic": "LUTPAN",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-08",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-07T16:53:55.262+00:00",
+      "updated_at": "2026-10-07T16:53:55.262+00:00"
+    },
+    {
+      "id": "ce8b3935-3a2b-463b-9810-07d57f764900",
+      "title": "Story Ngaji Jumat",
+      "description": "",
+      "pic": "Lutpan",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-09",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T00:23:44.719+00:00",
+      "updated_at": "2026-10-08T00:23:44.719+00:00"
+    },
+    {
+      "id": "03011bed-88dd-42fc-b298-e260432500f9",
+      "title": "Ngaji malam minggu",
+      "description": "",
+      "pic": "Pencot",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-10",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T00:24:08.179+00:00",
+      "updated_at": "2026-10-08T00:24:08.179+00:00"
+    },
+    {
+      "id": "5f9303f0-848b-4476-b27e-eb4c965bf67d",
+      "title": "Sistem Website Mention",
+      "description": "",
+      "pic": "Breza",
+      "priority": "HIGH",
+      "due_date": "2026-10-11",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T00:24:48.162+00:00",
+      "updated_at": "2026-10-08T00:24:48.162+00:00"
+    }
+  ],
   "task_reminders": []
 }

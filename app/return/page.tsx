@@ -90,7 +90,7 @@ export default function ReturnPage() {
     }
 
     const selectedGen = generations.find((g) => g.id === selectedGenId);
-    const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name.toLowerCase() === 'lainnya';
+    const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name?.toLowerCase() === 'lainnya';
 
     async function loadMembers() {
       try {
@@ -340,7 +340,7 @@ export default function ReturnPage() {
 
               {(() => {
                 const selectedGen = generations.find((g) => g.id === selectedGenId);
-                const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name.toLowerCase() === 'lainnya';
+                const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name?.toLowerCase() === 'lainnya';
 
                 return (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -431,8 +431,8 @@ export default function ReturnPage() {
                 <div className="space-y-4">
                   {activeLoans.map((loan) => (
                     <div key={loan.id} className="space-y-2">
-                      <div className="flex items-center justify-between text-xs text-neutral-500 px-1">
-                        <span>Kode: <strong className="text-black">{loan.loan_code}</strong></span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-neutral-500 px-1 gap-1">
+                        <span>Kode: <strong className="text-black font-mono">{loan.loan_code}</strong></span>
                         <span>Batas Kembali: <strong className="text-neutral-700">{loan.expected_return_date}</strong></span>
                       </div>
 
@@ -444,21 +444,21 @@ export default function ReturnPage() {
                             return (
                               <label
                                 key={li.id}
-                                className={`flex items-center justify-between p-3.5 rounded-xl border cursor-pointer select-none transition-all ${
+                                className={`flex items-center justify-between p-3.5 rounded-xl border cursor-pointer select-none transition-all gap-3 ${
                                   isSelected
                                     ? 'bg-neutral-50 border-black shadow-xs'
                                     : 'bg-white border-neutral-200 hover:border-neutral-400'
                                 }`}
                               >
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 min-w-0">
                                   <input
                                     type="checkbox"
                                     checked={isSelected}
                                     onChange={() => handleToggleItemSelection(loan.id, li.id)}
-                                    className="w-4 h-4 rounded text-black focus:ring-black"
+                                    className="w-4 h-4 rounded text-black focus:ring-black shrink-0"
                                   />
-                                  <div>
-                                    <span className="text-xs sm:text-sm font-bold text-black block">{li.item?.name}</span>
+                                  <div className="min-w-0">
+                                    <span className="text-xs sm:text-sm font-bold text-black block truncate">{li.item?.name}</span>
                                     {li.item?.code && (
                                       <span className="text-[10px] text-neutral-500 font-mono">
                                         {li.item?.code}
@@ -467,7 +467,7 @@ export default function ReturnPage() {
                                   </div>
                                 </div>
 
-                                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg ${
+                                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 ${
                                   isSelected ? 'bg-mention-yellow text-black' : 'bg-neutral-100 text-neutral-600'
                                 }`}>
                                   {isSelected ? '✓ Dikembalikan' : 'Pilih'}
@@ -616,28 +616,28 @@ export default function ReturnPage() {
                     {/* Accessories returned */}
                     {ri.initialAccessories && ri.initialAccessories.length > 0 && (
                       <div>
-                        <span className="block text-[11px] font-semibold text-neutral-600 mb-1.5">
+                        <span className="block text-[11px] font-semibold text-neutral-600 mb-2">
                           Kelengkapan yang Dikembalikan:
                         </span>
-                        <div className="grid grid-cols-2 gap-1.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {ri.initialAccessories.map((acc) => {
                             const isChecked = ri.returnAccessories.includes(acc);
                             return (
                               <label
                                 key={acc}
-                                className={`flex items-center gap-2 p-2 rounded-lg border text-xs cursor-pointer select-none transition-colors ${
+                                className={`flex items-center gap-2.5 p-2.5 min-h-[42px] rounded-xl border text-xs cursor-pointer select-none transition-all active:scale-[0.99] ${
                                   isChecked
                                     ? 'bg-white border-black text-black font-semibold shadow-xs'
-                                    : 'bg-neutral-100 border-neutral-200 text-neutral-400'
+                                    : 'bg-neutral-100 border-neutral-200 text-neutral-500'
                                 }`}
                               >
                                 <input
                                   type="checkbox"
                                   checked={isChecked}
                                   onChange={() => handleToggleReturnAccessory(ri.loanItemId, acc)}
-                                  className="rounded text-black focus:ring-black"
+                                  className="w-4 h-4 rounded text-black focus:ring-black"
                                 />
-                                <span>{acc}</span>
+                                <span className="leading-tight">{acc}</span>
                               </label>
                             );
                           })}
@@ -647,10 +647,10 @@ export default function ReturnPage() {
 
                     {/* Condition */}
                     <div>
-                      <span className="block text-[11px] font-semibold text-neutral-600 mb-1.5">
+                      <span className="block text-[11px] font-semibold text-neutral-600 mb-2">
                         Kondisi Akhir:
                       </span>
-                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                      <div className="grid grid-cols-3 gap-2">
                         {(['Aman', 'Rusak', 'Tidak Lengkap'] as ReturnCondition[]).map((cond) => {
                           const isActive = ri.returnCondition === cond;
                           return (
@@ -658,7 +658,7 @@ export default function ReturnPage() {
                               key={cond}
                               type="button"
                               onClick={() => handleSetReturnCondition(ri.loanItemId, cond)}
-                              className={`py-2 px-1 text-center rounded-lg text-[11px] sm:text-xs font-bold border transition-all ${
+                              className={`py-2.5 px-2 text-center rounded-xl text-xs font-bold border transition-all active:scale-[0.98] ${
                                 isActive
                                   ? cond === 'Aman'
                                     ? 'bg-green-600 text-white border-green-600 shadow-sm'
@@ -681,7 +681,7 @@ export default function ReturnPage() {
                       value={ri.notes}
                       onChange={(e) => handleSetReturnNotes(ri.loanItemId, e.target.value)}
                       placeholder="Catatan pengembalian (opsional)"
-                      className="w-full h-9 px-3 rounded-lg border border-neutral-300 bg-white text-neutral-900 text-xs focus:border-black focus:outline-none"
+                      className="w-full h-10 px-3.5 rounded-xl border border-neutral-300 bg-white text-neutral-900 text-sm focus:border-black focus:outline-none"
                     />
                   </div>
                 ))}

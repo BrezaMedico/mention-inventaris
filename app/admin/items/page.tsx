@@ -169,7 +169,7 @@ export default function AdminItemsPage() {
   // Filter items
   const filteredItems = items.filter((item) => {
     const matchesSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.name?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
       (item.code && item.code.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesStatus = statusFilter === 'ALL' || item.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -208,12 +208,12 @@ export default function AdminItemsPage() {
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
             {(['ALL', 'AVAILABLE', 'BORROWED', 'MAINTENANCE', 'INACTIVE'] as (ItemStatus | 'ALL')[]).map((st) => (
               <button
                 key={st}
                 onClick={() => setStatusFilter(st)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap active:scale-[0.98] ${
                   statusFilter === st
                     ? 'bg-white text-black'
                     : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
@@ -245,7 +245,7 @@ export default function AdminItemsPage() {
         </div>
 
         {/* Items Table Container (Card in White) */}
-        <div className="bg-white text-black rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-200">
+        <div className="bg-white text-black rounded-2xl p-4 sm:p-8 shadow-xl border border-neutral-200">
           {loading ? (
             <div className="py-12 text-center text-neutral-400 text-sm flex items-center justify-center gap-2">
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -256,8 +256,8 @@ export default function AdminItemsPage() {
               Belum ada data barang yang sesuai filter.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[650px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-3">Kode</th>
@@ -482,18 +482,18 @@ export default function AdminItemsPage() {
                 </div>
 
                 {/* Footer buttons */}
-                <div className="pt-4 border-t border-neutral-200 flex items-center justify-end gap-2">
+                <div className="pt-4 border-t border-neutral-200 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2.5 rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100"
+                    className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100 text-center"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={saving}
-                    className="px-6 py-2.5 rounded-xl bg-mention-yellow text-black font-extrabold uppercase tracking-wider hover:bg-mention-yellowDark shadow-md flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black font-extrabold uppercase tracking-wider hover:bg-mention-yellowDark shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
                   >
                     {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                     <span>{editingItem ? 'Simpan Perubahan' : 'Tambah Barang'}</span>
@@ -526,14 +526,14 @@ export default function AdminItemsPage() {
 
               <p className="text-sm text-neutral-700 mb-6">
                 Apakah Anda yakin ingin menghapus barang{' '}
-                <strong className="text-black font-bold">"{deleteConfirmItem.name}"</strong>? Data barang dan riwayat kelengkapannya akan dihapus.
+                <strong className="text-black font-bold">&ldquo;{deleteConfirmItem.name}&rdquo;</strong>? Data barang dan riwayat kelengkapannya akan dihapus.
               </p>
 
-              <div className="flex items-center justify-end gap-2">
+              <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setDeleteConfirmItem(null)}
-                  className="px-4 py-2 rounded-xl border border-neutral-300 text-neutral-700 font-bold text-xs hover:bg-neutral-100"
+                  className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-300 text-neutral-700 font-bold text-xs hover:bg-neutral-100 text-center"
                 >
                   Batal
                 </button>
@@ -541,7 +541,7 @@ export default function AdminItemsPage() {
                   type="button"
                   onClick={handleConfirmDelete}
                   disabled={deleting}
-                  className="px-5 py-2 rounded-xl bg-red-600 text-white font-bold text-xs hover:bg-red-700 transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                  className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-red-600 text-white font-bold text-xs hover:bg-red-700 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 active:scale-[0.98]"
                 >
                   {deleting ? (
                     <>

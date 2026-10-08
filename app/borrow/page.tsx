@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
+import { getLocalTodayStr } from '@/lib/calendar';
 import {
   Generation,
   Member,
@@ -45,11 +46,12 @@ export default function BorrowPage() {
   const [selectedGenId, setSelectedGenId] = useState('');
   const [selectedMemberId, setSelectedMemberId] = useState('');
   const [customMemberName, setCustomMemberName] = useState('');
-  const [borrowDate, setBorrowDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [borrowDate, setBorrowDate] = useState(() => getLocalTodayStr());
   const [expectedReturnDate, setExpectedReturnDate] = useState(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 2);
-    return d.toISOString().slice(0, 10);
+    const todayStr = getLocalTodayStr();
+    const [y, m, d] = todayStr.split('-').map(Number);
+    const dateObj = new Date(y, m - 1, d + 2);
+    return getLocalTodayStr(dateObj);
   });
   const [selectedCheckerId, setSelectedCheckerId] = useState('');
   const [loanNotes, setLoanNotes] = useState('');
@@ -166,7 +168,7 @@ export default function BorrowPage() {
     setErrorMessage('');
 
     const selectedGen = generations.find((g) => g.id === selectedGenId);
-    const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name.toLowerCase() === 'lainnya';
+    const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name?.toLowerCase() === 'lainnya';
 
     if (!selectedGenId) {
       setErrorMessage('Pilih angkatan.');
@@ -244,7 +246,7 @@ export default function BorrowPage() {
     try {
       setSubmittingLoan(true);
       const selectedGen = generations.find((g) => g.id === selectedGenId);
-      const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name.toLowerCase() === 'lainnya';
+      const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name?.toLowerCase() === 'lainnya';
 
       const payload = {
         generationId: selectedGenId,
@@ -360,7 +362,7 @@ export default function BorrowPage() {
 
                 {(() => {
                   const selectedGen = generations.find((g) => g.id === selectedGenId);
-                  const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name.toLowerCase() === 'lainnya';
+                  const isLainnya = selectedGenId === 'gen-other' || selectedGen?.name?.toLowerCase() === 'lainnya';
 
                   if (isLainnya) {
                     return (
@@ -663,28 +665,28 @@ export default function BorrowPage() {
                     {/* Accessories */}
                     {si.item.accessories && si.item.accessories.length > 0 && (
                       <div>
-                        <span className="block text-[11px] font-semibold text-neutral-600 mb-1.5">
+                        <span className="block text-[11px] font-semibold text-neutral-600 mb-2">
                           Kelengkapan:
                         </span>
-                        <div className="grid grid-cols-2 gap-1.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {si.item.accessories.map((acc) => {
                             const isChecked = si.checkedAccessories.includes(acc.name);
                             return (
                               <label
                                 key={acc.id}
-                                className={`flex items-center gap-2 p-2 rounded-lg border text-xs cursor-pointer select-none transition-colors ${
+                                className={`flex items-center gap-2.5 p-2.5 min-h-[42px] rounded-xl border text-xs cursor-pointer select-none transition-all active:scale-[0.99] ${
                                   isChecked
                                     ? 'bg-white border-black text-black font-semibold shadow-xs'
-                                    : 'bg-neutral-100 border-neutral-200 text-neutral-400'
+                                    : 'bg-neutral-100 border-neutral-200 text-neutral-500'
                                 }`}
                               >
                                 <input
                                   type="checkbox"
                                   checked={isChecked}
                                   onChange={() => handleToggleAccessory(si.item.id, acc.name)}
-                                  className="rounded text-black focus:ring-black"
+                                  className="w-4 h-4 rounded text-black focus:ring-black"
                                 />
-                                <span>{acc.name}</span>
+                                <span className="leading-tight">{acc.name}</span>
                               </label>
                             );
                           })}
@@ -694,10 +696,10 @@ export default function BorrowPage() {
 
                     {/* Condition */}
                     <div>
-                      <span className="block text-[11px] font-semibold text-neutral-600 mb-1.5">
+                      <span className="block text-[11px] font-semibold text-neutral-600 mb-2">
                         Kondisi:
                       </span>
-                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                      <div className="grid grid-cols-3 gap-2">
                         {(['Aman', 'Ada Catatan', 'Tidak Aman'] as InitialCondition[]).map((cond) => {
                           const isActive = si.condition === cond;
                           return (
@@ -705,7 +707,7 @@ export default function BorrowPage() {
                               key={cond}
                               type="button"
                               onClick={() => handleSetCondition(si.item.id, cond)}
-                              className={`py-2 px-1 text-center rounded-lg text-[11px] sm:text-xs font-bold border transition-all ${
+                              className={`py-2.5 px-2 text-center rounded-xl text-xs font-bold border transition-all active:scale-[0.98] ${
                                 isActive
                                   ? cond === 'Aman'
                                     ? 'bg-green-600 text-white border-green-600 shadow-sm'
@@ -728,7 +730,7 @@ export default function BorrowPage() {
                       value={si.notes}
                       onChange={(e) => handleSetItemNotes(si.item.id, e.target.value)}
                       placeholder="Catatan kondisi (opsional)"
-                      className="w-full h-9 px-3 rounded-lg border border-neutral-300 bg-white text-neutral-900 text-xs focus:border-black focus:outline-none"
+                      className="w-full h-10 px-3.5 rounded-xl border border-neutral-300 bg-white text-neutral-900 text-sm focus:border-black focus:outline-none"
                     />
                   </div>
                 ))}
@@ -827,7 +829,7 @@ export default function BorrowPage() {
                           type="button"
                           onClick={() => handleAddItem(item)}
                           disabled={isAlreadySelected}
-                          className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                          className={`min-h-[38px] px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.98] ${
                             isAlreadySelected
                               ? 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                               : 'bg-black text-white hover:bg-neutral-800'
@@ -841,11 +843,11 @@ export default function BorrowPage() {
                 )}
               </div>
 
-              <div className="p-3 border-t border-neutral-200 flex justify-end">
+              <div className="p-3.5 border-t border-neutral-200 flex justify-end">
                 <button
                   type="button"
                   onClick={() => setShowItemPickerModal(false)}
-                  className="px-4 py-1.5 rounded-lg border border-neutral-300 text-xs text-neutral-700 hover:bg-neutral-100 font-medium"
+                  className="min-h-[38px] px-4 py-2 rounded-xl border border-neutral-300 text-xs text-neutral-700 hover:bg-neutral-100 font-semibold active:scale-[0.98] transition-all"
                 >
                   Tutup
                 </button>

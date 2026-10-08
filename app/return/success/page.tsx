@@ -68,7 +68,7 @@ function ReturnSuccessContent() {
 
             <div className="flex justify-between items-center border-b border-neutral-800 pb-2">
               <span className="text-neutral-500">Peminjam</span>
-              <span className="font-bold text-white">{loan.member?.name}</span>
+              <span className="font-bold text-white">{loan.member?.name || (loan as any).custom_name || '-'}</span>
             </div>
 
             <div className="flex justify-between items-center border-b border-neutral-800 pb-2">

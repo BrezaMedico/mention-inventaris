@@ -215,16 +215,16 @@ export default function TaskDetailModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-3 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+        <div className="p-3.5 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           {isAdmin ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => {
                   onClose();
                   if (onEdit) onEdit(task);
                 }}
-                className="px-3 sm:px-3.5 py-2 rounded-xl border border-neutral-700 bg-neutral-800 text-neutral-200 hover:text-white hover:border-neutral-500 text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95"
+                className="flex-1 sm:flex-initial justify-center px-3.5 py-2.5 rounded-xl border border-neutral-700 bg-neutral-800 text-neutral-200 hover:text-white hover:border-neutral-500 text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95"
               >
                 <Edit2 className="w-3.5 h-3.5" />
                 <span>Edit Tugas</span>
@@ -234,7 +234,7 @@ export default function TaskDetailModal({
                 type="button"
                 onClick={() => setShowDeleteConfirm(true)}
                 disabled={showDeleteConfirm}
-                className="px-3 sm:px-3.5 py-2 rounded-xl border border-red-900/60 bg-red-950/40 text-red-300 hover:bg-red-900/60 text-xs font-bold transition-all flex items-center gap-1.5 disabled:opacity-50 active:scale-95"
+                className="flex-1 sm:flex-initial justify-center px-3.5 py-2.5 rounded-xl border border-red-900/60 bg-red-950/40 text-red-300 hover:bg-red-900/60 text-xs font-bold transition-all flex items-center gap-1.5 disabled:opacity-50 active:scale-95"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Hapus</span>
@@ -253,7 +253,7 @@ export default function TaskDetailModal({
               setShowDeleteConfirm(false);
               onClose();
             }}
-            className="px-4 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 active:scale-95 text-white text-xs font-bold transition-colors ml-auto"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-neutral-700 hover:bg-neutral-600 active:scale-95 text-white text-xs font-bold transition-colors text-center"
           >
             Tutup
           </button>

@@ -496,13 +496,13 @@ export default function CalendarPage() {
                   type="button"
                   onClick={handlePrevMonth}
                   title="Bulan Sebelumnya"
-                  className="p-1.5 sm:px-3 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold shrink-0"
+                  className="p-2 sm:px-3 sm:py-2 min-h-[38px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Sebelumnya</span>
                 </button>
 
-                <div className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#1c1e27] border border-neutral-700/80 text-center flex-1 sm:flex-initial sm:min-w-[170px] shadow-inner">
+                <div className="px-2 sm:px-4 py-2 min-h-[38px] rounded-xl bg-[#1c1e27] border border-neutral-700/80 text-center flex-1 sm:flex-initial sm:min-w-[170px] shadow-inner flex items-center justify-center">
                   <span className="text-xs sm:text-base font-extrabold text-white tracking-wide whitespace-nowrap">
                     {INDONESIAN_MONTHS[currentMonth]} {currentYear}
                   </span>
@@ -512,7 +512,7 @@ export default function CalendarPage() {
                   type="button"
                   onClick={handleNextMonth}
                   title="Bulan Berikutnya"
-                  className="p-1.5 sm:px-3 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center gap-1 text-xs font-semibold shrink-0"
+                  className="p-2 sm:px-3 sm:py-2 min-h-[38px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <span className="hidden sm:inline">Berikutnya</span>
                   <ChevronRight className="w-4 h-4" />
@@ -523,7 +523,7 @@ export default function CalendarPage() {
               <button
                 type="button"
                 onClick={handleResetToday}
-                className="text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-neutral-700/80 bg-[#1c1e27] text-neutral-300 hover:text-white hover:border-mention-yellow hover:bg-[#252834] active:scale-95 transition-all shrink-0"
+                className="text-xs font-semibold px-3 py-2 min-h-[38px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] text-neutral-300 hover:text-white hover:border-mention-yellow hover:bg-[#252834] active:scale-95 transition-all shrink-0 flex items-center justify-center"
               >
                 Hari Ini
               </button>

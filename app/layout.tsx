@@ -1,10 +1,17 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import AuroraBackground from '@/components/AuroraBackground';
 
 export const metadata: Metadata = {
   title: 'MENTION - Sistem Peminjaman & Pengembalian Barang',
   description: 'Sistem inventarisasi, peminjaman, dan pengembalian barang operasional organisasi MENTION.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#070708',
 };
 
 export default function RootLayout({

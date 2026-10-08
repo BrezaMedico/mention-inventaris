@@ -223,19 +223,19 @@ export default function TaskFormModal({
           </div>
 
           {/* Action Footer inside Form */}
-          <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-neutral-700/80">
+          <div className="pt-3 flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-2 sm:gap-2.5 border-t border-neutral-700/80">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="px-4 py-2.5 rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold transition-colors text-center"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2.5 rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 text-xs font-bold transition-all flex items-center gap-1.5 disabled:opacity-50 shadow-md shadow-yellow-500/10"
+              className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 text-xs font-bold transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 shadow-md shadow-yellow-500/10 active:scale-[0.98]"
             >
               {submitting ? (
                 <>

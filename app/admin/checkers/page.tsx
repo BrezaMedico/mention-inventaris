@@ -189,11 +189,11 @@ export default function AdminCheckersPage() {
             <h1 className="text-3xl font-black text-white tracking-tight">Kelola PIC Checker</h1>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
             <button
               onClick={loadCheckers}
               disabled={loading}
-              className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 hover:text-white"
+              className="p-2.5 min-h-[42px] min-w-[42px] flex items-center justify-center rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 hover:text-white"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
@@ -205,7 +205,7 @@ export default function AdminCheckersPage() {
                 setModalError('');
                 setIsCreateModalOpen(true);
               }}
-              className="px-4 py-2.5 rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-all shadow-md flex items-center gap-1.5"
+              className="flex-1 sm:flex-none px-4 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-[0.98]"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Tambah PIC Checker</span>
@@ -227,7 +227,7 @@ export default function AdminCheckersPage() {
         )}
 
         {/* Checkers Table (Card in White) */}
-        <div className="bg-white text-black rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-200">
+        <div className="bg-white text-black rounded-2xl p-4 sm:p-8 shadow-xl border border-neutral-200">
           <div className="border-b border-neutral-200 pb-4 mb-6">
             <h2 className="text-xl font-bold text-black">Daftar PIC Checker Terdaftar</h2>
             <p className="text-xs text-neutral-500 mt-0.5">
@@ -245,8 +245,8 @@ export default function AdminCheckersPage() {
               Belum ada PIC Checker yang terdaftar.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[500px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-3">Nama PIC</th>
@@ -374,18 +374,18 @@ export default function AdminCheckersPage() {
                   </p>
                 </div>
 
-                <div className="pt-3 flex justify-end gap-2">
+                <div className="pt-3 flex flex-col-reverse sm:flex-row justify-end gap-2.5">
                   <button
                     type="button"
                     onClick={() => setIsCreateModalOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100"
+                    className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100 active:scale-[0.98] transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={saving || createPin.length !== 6}
-                    className="px-5 py-2 rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200"
+                    className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200 active:scale-[0.98] transition-all"
                   >
                     {saving ? 'Menyimpan...' : 'Simpan PIC'}
                   </button>
@@ -440,18 +440,18 @@ export default function AdminCheckersPage() {
                   </p>
                 </div>
 
-                <div className="pt-3 flex justify-end gap-2">
+                <div className="pt-3 flex flex-col-reverse sm:flex-row justify-end gap-2.5">
                   <button
                     type="button"
                     onClick={() => setIsResetModalOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100"
+                    className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-300 font-bold text-neutral-600 hover:bg-neutral-100 active:scale-[0.98] transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={saving || newPin.length !== 6}
-                    className="px-5 py-2 rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200"
+                    className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black font-extrabold uppercase hover:bg-mention-yellowDark disabled:bg-neutral-200 active:scale-[0.98] transition-all"
                   >
                     {saving ? 'Menyimpan...' : 'Perbarui PIN'}
                   </button>
@@ -486,11 +486,11 @@ export default function AdminCheckersPage() {
                 <span className="font-bold text-black">{deleteConfirmChecker.name}</span>?
               </p>
 
-              <div className="flex justify-end gap-2">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setDeleteConfirmChecker(null)}
-                  className="px-4 py-2 rounded-xl border border-neutral-300 font-bold text-neutral-600 text-xs hover:bg-neutral-100"
+                  className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl border border-neutral-300 font-bold text-neutral-600 text-xs hover:bg-neutral-100 active:scale-[0.98] transition-all"
                 >
                   Batal
                 </button>
@@ -498,7 +498,7 @@ export default function AdminCheckersPage() {
                   type="button"
                   onClick={handleDeleteChecker}
                   disabled={deleting}
-                  className="px-4 py-2 rounded-xl bg-red-600 text-white font-bold text-xs hover:bg-red-700 disabled:opacity-50"
+                  className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl bg-red-600 text-white font-bold text-xs hover:bg-red-700 disabled:opacity-50 active:scale-[0.98] transition-all"
                 >
                   {deleting ? 'Menghapus...' : 'Ya, Hapus'}
                 </button>

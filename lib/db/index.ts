@@ -22,7 +22,7 @@ import {
   TaskPriority,
   TaskReminder,
 } from '@/types';
-import { formatDueDateIndo } from '@/lib/calendar';
+import { formatDueDateIndo, getLocalTodayStr } from '@/lib/calendar';
 
 function getDbFilePath(): string {
   const defaultPath = path.join(process.cwd(), 'data', 'local_db.json');
@@ -101,21 +101,29 @@ function writeLocalDb(data: LocalDatabase): void {
 
 // Generate sequential loan code
 function generateLoanCode(): string {
-  const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const dateStr = getLocalTodayStr().replace(/-/g, '');
   const rand = Math.floor(1000 + Math.random() * 9000);
   return `MNT-${dateStr}-${rand}`;
 }
 
 // Calculate overdue
 export function calculateOverdue(expectedDateStr: string, actualDateStr?: string): { isOverdue: boolean; daysOverdue: number } {
-  const targetDate = new Date(expectedDateStr);
-  targetDate.setHours(0, 0, 0, 0);
+  if (!expectedDateStr) return { isOverdue: false, daysOverdue: 0 };
+  const [ey, em, ed] = expectedDateStr.split('-').map(Number);
+  const targetDate = new Date(ey, em - 1, ed, 0, 0, 0, 0);
 
-  const compareDate = actualDateStr ? new Date(actualDateStr) : new Date();
-  compareDate.setHours(0, 0, 0, 0);
+  let compareDate: Date;
+  if (actualDateStr) {
+    const [ay, am, ad] = actualDateStr.split('-').map(Number);
+    compareDate = new Date(ay, am - 1, ad, 0, 0, 0, 0);
+  } else {
+    const todayStr = getLocalTodayStr();
+    const [ty, tm, td] = todayStr.split('-').map(Number);
+    compareDate = new Date(ty, tm - 1, td, 0, 0, 0, 0);
+  }
 
   const diffTime = compareDate.getTime() - targetDate.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
   if (diffDays > 0) {
     return { isOverdue: true, daysOverdue: diffDays };
@@ -1205,7 +1213,7 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
 
   const db = readLocalDb();
   const now = new Date().toISOString();
-  const today = now.slice(0, 10);
+  const today = getLocalTodayStr();
   const returnedItemNames: string[] = [];
   const returnConditionsArr: string[] = [];
   const returnNotesArr: string[] = [];
@@ -1386,7 +1394,7 @@ export async function processReturnTransaction(input: ProcessReturnInput): Promi
 // ADMIN DASHBOARD & ACTIVITY & HISTORY
 // ====================================================================
 export async function getDashboardStats() {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getLocalTodayStr();
 
   try {
     const [loansRes, itemsRes] = await Promise.all([
@@ -1458,9 +1466,10 @@ export async function getLoansActivity(filters?: { status?: LoanStatus | 'ALL'; 
         const q = filters.search.toLowerCase();
         enriched = enriched.filter(
           (l) =>
-            l.loan_code.toLowerCase().includes(q) ||
-            l.member?.name.toLowerCase().includes(q) ||
-            l.items?.some((i: any) => i.item?.name.toLowerCase().includes(q))
+            l.loan_code?.toLowerCase().includes(q) ||
+            l.member?.name?.toLowerCase().includes(q) ||
+            (l as any).custom_name?.toLowerCase().includes(q) ||
+            l.items?.some((i: any) => i.item?.name?.toLowerCase().includes(q))
         );
       }
 
@@ -1507,9 +1516,10 @@ export async function getLoansActivity(filters?: { status?: LoanStatus | 'ALL'; 
     const q = filters.search.toLowerCase();
     return enriched.filter(
       (l) =>
-        l.loan_code.toLowerCase().includes(q) ||
-        l.member?.name.toLowerCase().includes(q) ||
-        l.items?.some((i) => i.item?.name.toLowerCase().includes(q))
+        l.loan_code?.toLowerCase().includes(q) ||
+        l.member?.name?.toLowerCase().includes(q) ||
+        (l as any).custom_name?.toLowerCase().includes(q) ||
+        l.items?.some((i) => i.item?.name?.toLowerCase().includes(q))
     );
   }
 
@@ -1572,10 +1582,11 @@ export async function deleteLoansHistory(mode: 'ALL' | 'EXCEPT_THIS_MONTH'): Pro
     let targetLoans: Loan[] = [];
 
     if (mode === 'ALL') {
-      targetLoans = [...db.loans];
+      targetLoans = db.loans.filter((l) => l.status === 'RETURNED');
     } else {
-      // Hapus riwayat sebelum bulan ini (pertahankan bulan ini)
+      // Hapus riwayat selesai sebelum bulan ini (transaksi aktif / belum kembali tetap dipertahankan)
       targetLoans = db.loans.filter((l) => {
+        if (l.status !== 'RETURNED') return false;
         const dateStr = l.borrow_date || (l.created_at ? l.created_at.slice(0, 7) : '');
         return !dateStr.startsWith(currentYearMonth);
       });
@@ -1827,7 +1838,7 @@ export async function checkAndCreateWeeklyOverdueReminders(): Promise<Notificati
 
     const { daysOverdue } = calculateOverdue(loan.expected_return_date);
 
-    const message = `[REMINDER PENGEMBALIAN]\n\nNama:\n${member?.name || '-'}\n\nBarang:\n${unreturnedItems}\n\nSeharusnya dikembalikan:\n${loan.expected_return_date}\n\nTerlambat:\n${daysOverdue} hari\n\nStatus:\nBelum Dikembalikan`;
+    const message = `[REMINDER PENGEMBALIAN]\n\nNama:\n${member?.name || (loan as any).custom_name || '-'}\n\nBarang:\n${unreturnedItems}\n\nSeharusnya dikembalikan:\n${loan.expected_return_date}\n\nTerlambat:\n${daysOverdue} hari\n\nStatus:\nBelum Dikembalikan`;
 
     const newNotif: NotificationEvent = {
       id: crypto.randomUUID(),

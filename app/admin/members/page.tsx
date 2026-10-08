@@ -248,7 +248,7 @@ export default function AdminMembersPage() {
   // Filtered members
   const filteredMembers = members.filter((m) => {
     const matchesSearch =
-      m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (m.name?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
       (m.phone && m.phone.includes(searchQuery));
     const matchesGen = selectedGenFilter === 'ALL' || m.generation_id === selectedGenFilter;
     return matchesSearch && matchesGen;
@@ -266,7 +266,7 @@ export default function AdminMembersPage() {
             <h1 className="text-3xl font-black text-white tracking-tight">Angkatan & Anggota</h1>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
             <button
               onClick={loadData}
               disabled={loading}
@@ -282,7 +282,7 @@ export default function AdminMembersPage() {
                 setModalError('');
                 setIsGenModalOpen(true);
               }}
-              className="px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-white font-bold text-xs uppercase tracking-wider hover:border-neutral-500 transition-all flex items-center gap-1.5"
+              className="px-3.5 py-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-white font-bold text-xs uppercase tracking-wider hover:border-neutral-500 transition-all flex items-center gap-1.5 active:scale-[0.98]"
             >
               <FolderTree className="w-3.5 h-3.5" />
               <span>+ Angkatan</span>
@@ -290,7 +290,7 @@ export default function AdminMembersPage() {
 
             <button
               onClick={handleOpenCreateMember}
-              className="px-4 py-2.5 rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-all shadow-md flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-mention-yellowDark transition-all shadow-md flex items-center gap-1.5 active:scale-[0.98]"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>+ Anggota</span>
@@ -299,10 +299,10 @@ export default function AdminMembersPage() {
         </div>
 
         {/* Generations Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
           <button
             onClick={() => setSelectedGenFilter('ALL')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap active:scale-[0.98] ${
               selectedGenFilter === 'ALL'
                 ? 'bg-white text-black'
                 : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
@@ -318,7 +318,7 @@ export default function AdminMembersPage() {
               <div key={gen.id} className="flex items-center gap-1">
                 <button
                   onClick={() => setSelectedGenFilter(gen.id)}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap active:scale-[0.98] ${
                     isSelected
                       ? 'bg-white text-black'
                       : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
@@ -356,7 +356,7 @@ export default function AdminMembersPage() {
         </div>
 
         {/* Members Table (Card in White) */}
-        <div className="bg-white text-black rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-200">
+        <div className="bg-white text-black rounded-2xl p-4 sm:p-8 shadow-xl border border-neutral-200">
           {loading ? (
             <div className="py-12 text-center text-neutral-400 text-sm flex items-center justify-center gap-2">
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -367,8 +367,8 @@ export default function AdminMembersPage() {
               Belum ada anggota terdaftar untuk filter ini.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[550px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-3">Nama Anggota</th>

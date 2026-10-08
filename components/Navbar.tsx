@@ -23,7 +23,7 @@ export default function Navbar({ showHomeLink = false }: NavbarProps) {
           {showHomeLink && (
             <Link
               href="/"
-              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
+              className={`text-xs font-semibold px-3 py-2 min-h-[38px] flex items-center rounded-xl transition-all ${
                 pathname === '/'
                   ? 'text-white bg-neutral-800/80'
                   : 'text-neutral-400 hover:text-white hover:bg-neutral-900'
@@ -35,8 +35,8 @@ export default function Navbar({ showHomeLink = false }: NavbarProps) {
 
           <Link
             href="/calendar"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border transition-all duration-200 active:scale-95 ${
-              pathname === '/calendar'
+            className={`flex items-center gap-1.5 px-3.5 py-2 min-h-[38px] text-xs font-bold rounded-xl border transition-all duration-200 active:scale-95 ${
+              pathname === '/calendar' || pathname === '/kalender'
                 ? 'border-mention-yellow/80 bg-mention-yellow/15 text-mention-yellow shadow-sm shadow-yellow-500/10'
                 : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:border-mention-yellow hover:text-mention-yellow hover:bg-neutral-800'
             }`}
@@ -47,7 +47,7 @@ export default function Navbar({ showHomeLink = false }: NavbarProps) {
 
           <Link
             href="/admin"
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border transition-all duration-200 active:scale-95 ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 min-h-[38px] text-xs font-bold rounded-xl border transition-all duration-200 active:scale-95 ${
               pathname?.startsWith('/admin')
                 ? 'border-mention-yellow/80 bg-mention-yellow/15 text-mention-yellow shadow-sm shadow-yellow-500/10'
                 : 'border-neutral-700 bg-neutral-900 text-neutral-300 hover:border-mention-yellow hover:text-mention-yellow hover:bg-neutral-800'

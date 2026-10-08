@@ -34,13 +34,13 @@ export default function AdminRequiredModal({ isOpen, onClose }: AdminRequiredMod
           <button
             type="button"
             onClick={onClose}
-            className="w-full py-2.5 rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold transition-colors order-2 sm:order-1"
+            className="w-full py-2.5 min-h-[42px] rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-semibold transition-all active:scale-[0.98] order-2 sm:order-1"
           >
             Tutup
           </button>
           <Link
             href="/admin/login?from=/calendar"
-            className="w-full py-2.5 rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-yellow-500/10 order-1 sm:order-2"
+            className="w-full py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-yellow-500/10 active:scale-[0.98] order-1 sm:order-2"
           >
             <span>Login Admin</span>
             <ArrowRight className="w-3.5 h-3.5" />

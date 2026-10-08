@@ -211,12 +211,12 @@ export default function AdminCalendarPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
             {/* Tombol Cek & Kirim Pengingat WA H-1 */}
             <button
               onClick={handleTriggerTaskReminder}
               disabled={triggeringReminder}
-              className="px-3.5 py-2.5 rounded-xl border border-emerald-700/70 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 font-bold text-xs transition-all flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+              className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/70 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50 active:scale-[0.98]"
               title="Cek tugas H-1 besok & kirim pengingat ke grup WhatsApp (Anti-Spam: Tidak double)"
             >
               {triggeringReminder ? (
@@ -230,15 +230,15 @@ export default function AdminCalendarPage() {
             <Link
               href="/calendar"
               target="_blank"
-              className="px-3.5 py-2.5 rounded-xl border border-mention-border bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5"
+              className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-mention-border bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]"
             >
-              <span>Lihat Kalender Publik</span>
+              <span>Lihat Kalender</span>
               <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
             </Link>
 
             <button
               onClick={handleOpenCreateModal}
-              className="px-4 py-2.5 rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 font-bold text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-yellow-500/10"
+              className="w-full sm:w-auto px-4 py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black hover:bg-yellow-400 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-yellow-500/10 active:scale-[0.98]"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Tambah Tugas</span>
@@ -341,7 +341,7 @@ export default function AdminCalendarPage() {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="p-4 rounded-2xl bg-neutral-900/80 border border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 rounded-2xl bg-neutral-900/80 border border-neutral-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="relative w-full sm:w-72">
             <Search className="w-4 h-4 text-neutral-500 absolute left-3 top-3" />
             <input
@@ -349,18 +349,18 @@ export default function AdminCalendarPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari judul tugas, PIC, deskripsi..."
-              className="w-full pl-9 pr-3.5 py-2 rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 placeholder-neutral-500 text-xs focus:border-mention-yellow focus:outline-none transition-colors"
+              className="w-full pl-9 pr-3.5 py-2.5 min-h-[42px] rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 placeholder-neutral-500 text-xs focus:border-mention-yellow focus:outline-none transition-colors"
             />
           </div>
 
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2.5 w-full sm:w-auto">
             {/* Status Urgensi Filter */}
             <select
               value={urgencyFilter}
               onChange={(e) =>
                 setUrgencyFilter(e.target.value as 'ALL' | 'UPCOMING' | 'OVERDUE')
               }
-              className="text-xs px-3 py-2 rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 focus:border-mention-yellow focus:outline-none transition-colors"
+              className="text-xs px-3 py-2.5 min-h-[42px] rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 focus:border-mention-yellow focus:outline-none transition-colors"
             >
               <option value="ALL">Semua Waktu</option>
               <option value="UPCOMING">Mendatang</option>
@@ -373,7 +373,7 @@ export default function AdminCalendarPage() {
               onChange={(e) =>
                 setPriorityFilter(e.target.value as 'ALL' | TaskPriority)
               }
-              className="text-xs px-3 py-2 rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 focus:border-mention-yellow focus:outline-none transition-colors"
+              className="text-xs px-3 py-2.5 min-h-[42px] rounded-xl border border-neutral-800 bg-neutral-950 text-neutral-200 focus:border-mention-yellow focus:outline-none transition-colors"
             >
               <option value="ALL">Semua Prioritas</option>
               <option value="HIGH">Tinggi</option>
@@ -407,8 +407,8 @@ export default function AdminCalendarPage() {
               </button>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[620px] text-left text-xs">
                 <thead className="bg-neutral-950/90 text-neutral-400 uppercase text-[10px] tracking-wider border-b border-neutral-800">
                   <tr>
                     <th className="py-3.5 px-4 font-bold">Judul Tugas</th>
@@ -537,12 +537,12 @@ export default function AdminCalendarPage() {
                 </div>
               )}
 
-              <div className="flex items-center gap-2 pt-1">
+              <div className="flex flex-col-reverse sm:flex-row items-center gap-2.5 pt-1">
                 <button
                   type="button"
                   onClick={() => setDeleteConfirmTask(null)}
                   disabled={deleting}
-                  className="flex-1 py-2.5 rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-750 text-neutral-300 text-xs font-semibold transition-colors"
+                  className="w-full sm:flex-1 py-2.5 min-h-[42px] rounded-xl border border-neutral-700 bg-neutral-800 hover:bg-neutral-750 text-neutral-300 text-xs font-semibold transition-colors active:scale-[0.98]"
                 >
                   Batal
                 </button>
@@ -550,7 +550,7 @@ export default function AdminCalendarPage() {
                   type="button"
                   onClick={handleDeleteTask}
                   disabled={deleting}
-                  className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  className="w-full sm:flex-1 py-2.5 min-h-[42px] rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 active:scale-[0.98]"
                 >
                   {deleting ? (
                     <>
@@ -729,12 +729,12 @@ CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USIN
               </div>
 
               {/* Modal Footer */}
-              <div className="p-3.5 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] flex items-center justify-between gap-3">
+              <div className="p-3.5 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
                 <a
                   href="https://qaaslumawvoykqyohclh.supabase.co"
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 rounded-xl border border-neutral-700 hover:border-neutral-600 bg-neutral-800 hover:bg-neutral-750 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                  className="w-full sm:w-auto px-3.5 py-2.5 min-h-[40px] rounded-xl border border-neutral-700 hover:border-neutral-600 bg-neutral-800 hover:bg-neutral-750 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
                   <span>Buka Supabase SQL Editor</span>
@@ -742,7 +742,7 @@ CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USIN
                 <button
                   type="button"
                   onClick={() => setIsSqlModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white font-bold text-xs transition-colors"
+                  className="w-full sm:w-auto px-4 py-2.5 min-h-[40px] rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white font-bold text-xs transition-colors"
                 >
                   Tutup
                 </button>

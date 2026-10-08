@@ -88,10 +88,10 @@ export default function DayTasksModal({
           })}
         </div>
 
-        <div className="p-4 border-t border-neutral-700/80 bg-[#1c1e27] text-right">
+        <div className="p-3.5 sm:p-4 border-t border-neutral-700/80 bg-[#1c1e27] text-right">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white text-xs font-bold transition-colors"
+            className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white text-xs font-bold transition-colors active:scale-[0.98]"
           >
             Tutup
           </button>

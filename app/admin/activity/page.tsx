@@ -90,10 +90,11 @@ export default function AdminActivityPage() {
   const filteredLoans = loans.filter((l) => {
     const q = searchQuery.toLowerCase();
     return (
-      l.loan_code.toLowerCase().includes(q) ||
-      l.member?.name.toLowerCase().includes(q) ||
-      l.member?.generation?.name.toLowerCase().includes(q) ||
-      l.items?.some((i) => i.item?.name.toLowerCase().includes(q))
+      l.loan_code?.toLowerCase().includes(q) ||
+      l.member?.name?.toLowerCase().includes(q) ||
+      (l as any).custom_name?.toLowerCase().includes(q) ||
+      l.member?.generation?.name?.toLowerCase().includes(q) ||
+      l.items?.some((i) => i.item?.name?.toLowerCase().includes(q))
     );
   });
 
@@ -101,10 +102,10 @@ export default function AdminActivityPage() {
   const filteredBorrowedItems = borrowedItems.filter((bi) => {
     const q = searchQuery.toLowerCase();
     return (
-      bi.item.name.toLowerCase().includes(q) ||
-      (bi.item.code && bi.item.code.toLowerCase().includes(q)) ||
-      (bi.borrower && bi.borrower.name.toLowerCase().includes(q)) ||
-      (bi.generation && bi.generation.name.toLowerCase().includes(q))
+      bi.item?.name?.toLowerCase().includes(q) ||
+      (bi.item?.code && bi.item.code.toLowerCase().includes(q)) ||
+      (bi.borrower?.name && bi.borrower.name.toLowerCase().includes(q)) ||
+      (bi.generation?.name && bi.generation.name.toLowerCase().includes(q))
     );
   });
 
@@ -133,11 +134,11 @@ export default function AdminActivityPage() {
         </div>
 
         {/* View Toggle Tabs & Search */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center p-1 bg-neutral-900 border border-neutral-800 rounded-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 p-1 bg-neutral-900 border border-neutral-800 rounded-xl w-full sm:w-auto">
             <button
               onClick={() => setViewMode('loans')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-3 sm:px-4 py-2 text-center rounded-lg text-xs font-bold transition-all ${
                 viewMode === 'loans'
                   ? 'bg-white text-black shadow-sm'
                   : 'text-neutral-400 hover:text-white'
@@ -147,13 +148,13 @@ export default function AdminActivityPage() {
             </button>
             <button
               onClick={() => setViewMode('items')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-3 sm:px-4 py-2 text-center rounded-lg text-xs font-bold transition-all ${
                 viewMode === 'items'
                   ? 'bg-white text-black shadow-sm'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
-              Barang Sedang Dipakai ({borrowedItems.length})
+              Barang Dipakai ({borrowedItems.length})
             </button>
           </div>
 
@@ -171,7 +172,7 @@ export default function AdminActivityPage() {
 
         {/* VIEW 1: TRANSAKSI AKTIF TABLE */}
         {viewMode === 'loans' && (
-          <div className="bg-white text-black rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-200">
+          <div className="bg-white text-black rounded-2xl p-4 sm:p-8 shadow-xl border border-neutral-200">
             {loading ? (
               <div className="py-12 text-center text-neutral-400 text-sm flex items-center justify-center gap-2">
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -182,8 +183,8 @@ export default function AdminActivityPage() {
                 Tidak ada data peminjaman aktif yang sesuai kriteria pencarian.
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="overflow-x-auto no-scrollbar">
+                <table className="w-full min-w-[620px] text-left border-collapse text-xs">
                   <thead>
                     <tr className="border-b border-neutral-200 text-neutral-500 uppercase tracking-wider text-[10px]">
                       <th className="py-3 px-3">Kode</th>
@@ -203,8 +204,8 @@ export default function AdminActivityPage() {
                         <tr key={loan.id} className="hover:bg-neutral-50 transition-colors">
                           <td className="py-3.5 px-3 font-mono font-bold text-black">{loan.loan_code}</td>
                           <td className="py-3.5 px-3">
-                            <div className="font-bold text-black">{loan.member?.name}</div>
-                            <div className="text-[10px] text-neutral-500">{loan.member?.generation?.name}</div>
+                            <div className="font-bold text-black">{loan.member?.name || (loan as any).custom_name || '-'}</div>
+                            <div className="text-[10px] text-neutral-500">{loan.member?.generation?.name || ((loan as any).custom_name ? 'Lainnya' : '')}</div>
                           </td>
                           <td className="py-3.5 px-3">
                             <div className="font-semibold text-neutral-800">
@@ -289,14 +290,14 @@ export default function AdminActivityPage() {
             ) : (
               filteredBorrowedItems.map((bi, idx) => (
                 <div
-                  key={`${bi.item.id}-${idx}`}
+                  key={`${bi.item?.id || idx}-${idx}`}
                   className="bg-white text-black rounded-2xl p-6 shadow-xl border border-neutral-200 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div>
-                        <h3 className="font-bold text-base text-black">{bi.item.name}</h3>
-                        {bi.item.code && (
+                        <h3 className="font-bold text-base text-black">{bi.item?.name || 'Barang'}</h3>
+                        {bi.item?.code && (
                           <span className="text-[10px] bg-neutral-200 text-neutral-700 px-2 py-0.5 rounded font-mono font-bold">
                             {bi.item.code}
                           </span>
@@ -369,20 +370,20 @@ export default function AdminActivityPage() {
               </div>
 
               {/* Body */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-6 text-xs">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 text-xs">
                 {/* Borrower & PIC info */}
-                <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-neutral-50 border border-neutral-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-neutral-50 border border-neutral-200">
                   <div>
                     <span className="text-neutral-500 block uppercase font-bold text-[10px] mb-0.5">Peminjam</span>
-                    <strong className="text-sm text-black block">{selectedLoan.member?.name}</strong>
-                    <span className="text-neutral-600">{selectedLoan.member?.generation?.name}</span>
+                    <strong className="text-sm text-black block">{selectedLoan.member?.name || (selectedLoan as any).custom_name || '-'}</strong>
+                    <span className="text-neutral-600">{selectedLoan.member?.generation?.name || ((selectedLoan as any).custom_name ? 'Lainnya' : '')}</span>
                     {selectedLoan.member?.phone && (
                       <span className="text-neutral-500 block mt-0.5 font-mono">{selectedLoan.member?.phone}</span>
                     )}
                   </div>
                   <div>
                     <span className="text-neutral-500 block uppercase font-bold text-[10px] mb-0.5">PIC Checker Peminjaman</span>
-                    <strong className="text-sm text-black block">{selectedLoan.initial_checker?.name}</strong>
+                    <strong className="text-sm text-black block">{selectedLoan.initial_checker?.name || '-'}</strong>
                     <span className="text-neutral-500 block mt-1">
                       Tgl Pinjam: <strong>{selectedLoan.borrow_date}</strong>
                     </span>
@@ -428,7 +429,7 @@ export default function AdminActivityPage() {
                           </span>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 text-neutral-700 text-[11px] pt-2 border-t border-neutral-100">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-neutral-700 text-[11px] pt-2 border-t border-neutral-100">
                           <div>
                             <span className="text-neutral-400 block text-[10px]">Kondisi Awal:</span>
                             <strong className="text-black">{li.initial_condition}</strong>
@@ -458,21 +459,21 @@ export default function AdminActivityPage() {
               </div>
 
               {/* Footer */}
-              <div className="p-4 border-t border-neutral-200 flex items-center justify-between">
+              <div className="p-4 border-t border-neutral-200 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5">
                 <button
                   type="button"
                   onClick={() => {
                     setDeleteError('');
                     setDeleteConfirmLoan(selectedLoan);
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-50 text-red-600 text-xs font-bold hover:bg-red-100 transition-colors"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 min-h-[42px] rounded-xl bg-red-50 text-red-600 text-xs font-bold hover:bg-red-100 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Hapus Transaksi</span>
                 </button>
                 <button
                   onClick={() => setSelectedLoan(null)}
-                  className="px-5 py-2 rounded-xl bg-black text-white text-xs font-bold hover:bg-neutral-800"
+                  className="w-full sm:w-auto px-5 py-2.5 min-h-[42px] rounded-xl bg-black text-white text-xs font-bold hover:bg-neutral-800 text-center"
                 >
                   Tutup Detail
                 </button>
