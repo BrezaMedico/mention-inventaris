@@ -7,11 +7,31 @@ interface LogoProps {
   width?: number;
   height?: number;
   className?: string;
-  showText?: boolean;
+  iconOnly?: boolean;
 }
 
-export default function Logo({ width = 160, height = 36, className = '' }: LogoProps) {
+export default function Logo({
+  width = 160,
+  height = 36,
+  className = '',
+  iconOnly = false,
+}: LogoProps) {
   const [imgError, setImgError] = useState(false);
+
+  if (iconOnly) {
+    return (
+      <div className={`flex items-center ${className}`}>
+        <Image
+          src="/icon.png"
+          alt="MENTION"
+          width={height || 36}
+          height={height || 36}
+          priority
+          className="h-8 w-8 object-contain"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`flex items-center ${className}`}>
@@ -27,8 +47,14 @@ export default function Logo({ width = 160, height = 36, className = '' }: LogoP
         />
       ) : (
         <div className="flex items-center gap-1.5 font-black text-xl tracking-tight text-white">
+          <Image
+            src="/icon.png"
+            alt="m"
+            width={24}
+            height={24}
+            className="w-6 h-6 object-contain"
+          />
           <span>mention</span>
-          <span className="w-2 h-2 rounded-full bg-mention-yellow"></span>
         </div>
       )}
     </div>
