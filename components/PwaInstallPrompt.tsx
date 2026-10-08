@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Download, X, Share2, PlusSquare, Smartphone, Check } from 'lucide-react';
+import { Download, X, Share2, PlusSquare, Smartphone, Check, Zap, Sparkles, ArrowDownToLine } from 'lucide-react';
 
 export default function PwaInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -19,7 +19,7 @@ export default function PwaInstallPrompt() {
         .catch((err) => console.log('SW registration error:', err));
     }
 
-    // 2. Check if already installed & running in standalone mode
+    // 2. Check if already running in standalone PWA mode
     const checkStandalone = () => {
       const isStandaloneMode =
         window.matchMedia('(display-mode: standalone)').matches ||
@@ -44,8 +44,7 @@ export default function PwaInstallPrompt() {
       e.preventDefault();
       setDeferredPrompt(e);
       if (!dismissed) {
-        // Show after 2 seconds delay for great user experience
-        setTimeout(() => setShowPrompt(true), 2000);
+        setTimeout(() => setShowPrompt(true), 1800);
       }
     };
 
@@ -53,7 +52,7 @@ export default function PwaInstallPrompt() {
 
     // If on iOS and not dismissed, show prompt after delay
     if (isIosDevice && !dismissed) {
-      setTimeout(() => setShowPrompt(true), 2500);
+      setTimeout(() => setShowPrompt(true), 2200);
     }
 
     // Handle app installed event
@@ -85,8 +84,11 @@ export default function PwaInstallPrompt() {
     } else if (isIos) {
       setShowIosGuide(true);
     } else {
-      // Fallback guide if browser already dismissed or doesn't support automatic prompt
-      alert('Untuk memasang aplikasi: Buka menu browser (titik 3 di kanan atas) dan pilih "Pasang aplikasi" atau "Tambahkan ke Layar Utama".');
+      alert(
+        'Untuk memasang aplikasi MENTION di HP:\n\n' +
+        '1. Ketuk tombol Menu (titik tiga ⋮) di pojok kanan atas browser.\n' +
+        '2. Pilih "Pasang aplikasi" atau "Tambahkan ke Layar Utama".'
+      );
     }
   };
 
@@ -95,84 +97,108 @@ export default function PwaInstallPrompt() {
     sessionStorage.setItem('pwa_prompt_dismissed', 'true');
   };
 
-  // If already opened as installed standalone PWA, don't show prompts
   if (isStandalone) return null;
 
   return (
     <>
       {/* Toast Notifikasi Berhasil Terinstall */}
       {installedSuccess && (
-        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md p-4 rounded-2xl bg-neutral-900 border border-green-500/70 text-white shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4">
-          <div className="w-10 h-10 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center shrink-0">
-            <Check className="w-5 h-5 stroke-[2.5]" />
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md p-4 rounded-2xl bg-[#12131b] border-2 border-green-500 text-white shadow-2xl flex items-center gap-3.5 animate-in fade-in slide-in-from-bottom-5">
+          <div className="w-11 h-11 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center shrink-0">
+            <Check className="w-6 h-6 stroke-[3]" />
           </div>
           <div>
-            <div className="text-sm font-bold text-white">Aplikasi Berhasil Dipasang!</div>
-            <div className="text-xs text-neutral-400">
-              Buka aplikasi MENTION langsung dari layar utama HP Anda.
+            <div className="text-sm font-black text-white">Aplikasi Berhasil Terpasang!</div>
+            <div className="text-xs text-neutral-300">
+              Sekarang Anda bisa membukanya langsung dari layar utama HP.
             </div>
           </div>
         </div>
       )}
 
-      {/* Floating PWA Banner (Khusus HP / Mobile Viewport) */}
+      {/* Floating PWA Card / Bottom Sheet (Khusus Tampilan HP) */}
       {showPrompt && !installedSuccess && (
         <aside
-          aria-label="Install App"
-          className="fixed bottom-3 inset-x-3 sm:bottom-5 sm:right-5 sm:left-auto sm:max-w-md z-50 p-4 rounded-2xl bg-neutral-900/95 backdrop-blur-xl border border-mention-yellow/40 shadow-2xl shadow-black/80 ring-1 ring-white/10 animate-in fade-in slide-in-from-bottom-5 duration-200"
+          aria-label="Install App Banner"
+          className="fixed bottom-3 inset-x-3 sm:bottom-6 sm:right-6 sm:left-auto sm:max-w-md z-50 p-5 rounded-3xl bg-gradient-to-b from-[#181926]/98 to-[#0e0f17]/98 backdrop-blur-2xl border-2 border-mention-yellow/50 shadow-2xl shadow-yellow-500/20 ring-1 ring-white/10 animate-in fade-in slide-in-from-bottom-6 duration-200"
         >
-          <div className="flex items-start gap-3.5">
-            {/* App Icon */}
-            <div className="w-12 h-12 rounded-xl bg-black border border-mention-yellow/60 flex items-center justify-center shrink-0 shadow-md p-2">
-              <img
-                src="/icons/icon-192.png"
-                alt="MENTION App"
-                className="w-full h-full object-contain"
-              />
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[10px] font-black uppercase tracking-wider text-mention-yellow bg-yellow-500/15 border border-yellow-500/30 px-2 py-0.5 rounded-md">
-                  Aplikasi HP Siap Jadi
-                </span>
-                <button
-                  onClick={handleDismiss}
-                  className="p-1 text-neutral-400 hover:text-white transition-colors"
-                  title="Tutup"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+          {/* Header */}
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <div className="flex items-center gap-3">
+              {/* App Icon */}
+              <div className="w-14 h-14 rounded-2xl bg-black border-2 border-mention-yellow/80 p-1.5 shadow-lg shadow-yellow-500/20 shrink-0 flex items-center justify-center">
+                <img
+                  src="/icons/icon-192.png"
+                  alt="MENTION App"
+                  className="w-full h-full object-contain"
+                />
               </div>
 
-              <h4 className="text-sm font-extrabold text-white mt-1">
-                Jadikan Aplikasi di HP
-              </h4>
-              <p className="text-xs text-neutral-400 mt-0.5 leading-relaxed">
-                Pasang ke Layar Utama HP untuk akses cepat satu ketukan, bebas bar browser, dan tampilan persis aplikasi native.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="mt-3 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleInstallClick}
-                  className="flex-1 py-2.5 px-4 min-h-[42px] rounded-xl bg-mention-yellow hover:bg-yellow-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md shadow-yellow-500/20 active:scale-[0.98]"
-                >
-                  <Download className="w-4 h-4 stroke-[2.5]" />
-                  <span>Pasang Aplikasi</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleDismiss}
-                  className="py-2.5 px-3 min-h-[42px] rounded-xl border border-neutral-700 bg-neutral-800 text-neutral-300 text-xs font-semibold hover:text-white active:scale-[0.98] transition-colors"
-                >
-                  Nanti
-                </button>
+              <div>
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-black bg-mention-yellow px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Sparkles className="w-2.5 h-2.5" />
+                    <span>Aplikasi Resmi</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-neutral-400">PWA Siap Pasang</span>
+                </div>
+                <h4 className="text-base font-black text-white leading-tight">
+                  MENTION Inventaris
+                </h4>
+                <p className="text-[11px] text-neutral-400">
+                  Pasang langsung ke Layar Utama HP
+                </p>
               </div>
             </div>
+
+            <button
+              onClick={handleDismiss}
+              className="p-1.5 text-neutral-400 hover:text-white rounded-xl bg-neutral-800/60 hover:bg-neutral-800 transition-colors"
+              title="Tutup"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Feature Highlights Pills */}
+          <div className="grid grid-cols-2 gap-2 my-3 p-2.5 rounded-2xl bg-neutral-900/80 border border-neutral-800 text-xs">
+            <div className="flex items-center gap-2 text-neutral-300">
+              <div className="w-6 h-6 rounded-lg bg-yellow-500/15 text-mention-yellow flex items-center justify-center shrink-0">
+                <Smartphone className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-[11px] font-semibold leading-tight">
+                Layar Penuh (Full App)
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 text-neutral-300">
+              <div className="w-6 h-6 rounded-lg bg-green-500/15 text-green-400 flex items-center justify-center shrink-0">
+                <Zap className="w-3.5 h-3.5" />
+              </div>
+              <span className="text-[11px] font-semibold leading-tight">
+                Buka Cepat 1-Ketukan
+              </span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2.5 pt-1">
+            <button
+              type="button"
+              onClick={handleInstallClick}
+              className="flex-1 py-3 px-4 min-h-[46px] rounded-2xl bg-gradient-to-r from-mention-yellow via-yellow-400 to-mention-yellow text-black font-black text-xs uppercase tracking-wider hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/25 cursor-pointer"
+            >
+              <ArrowDownToLine className="w-4 h-4 stroke-[3]" />
+              <span>Pasang Aplikasi di HP</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDismiss}
+              className="py-3 px-4 min-h-[46px] rounded-2xl border border-neutral-700 bg-neutral-800/80 text-neutral-300 text-xs font-bold hover:text-white active:scale-[0.98] transition-colors"
+            >
+              Nanti
+            </button>
           </div>
         </aside>
       )}
@@ -181,51 +207,53 @@ export default function PwaInstallPrompt() {
       {showIosGuide && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-150">
           <div
-            className="w-full max-w-sm rounded-3xl bg-[#14151c] border border-neutral-700 p-6 space-y-4 shadow-2xl text-white"
+            className="w-full max-w-sm rounded-3xl bg-[#14151c] border-2 border-mention-yellow/50 p-6 space-y-4 shadow-2xl text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-2 border-b border-neutral-800">
-              <div className="flex items-center gap-2">
-                <Smartphone className="w-5 h-5 text-mention-yellow" />
-                <h3 className="text-base font-bold text-white">Pasang di iPhone / iPad</h3>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-mention-yellow text-black flex items-center justify-center font-bold">
+                  <Smartphone className="w-4 h-4 stroke-[2.5]" />
+                </div>
+                <h3 className="text-base font-black text-white">Pasang di iPhone / iPad</h3>
               </div>
               <button
                 onClick={() => setShowIosGuide(false)}
-                className="p-1 text-neutral-400 hover:text-white"
+                className="p-1.5 text-neutral-400 hover:text-white rounded-lg bg-neutral-800"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             <p className="text-xs text-neutral-300 leading-relaxed">
-              Ikuti 2 langkah mudah berikut untuk menambahkan aplikasi MENTION ke layar utama iPhone Anda:
+              Ikuti 2 langkah mudah di bawah untuk memunculkan ikon MENTION di layar utama iPhone Anda:
             </p>
 
-            <div className="space-y-3 text-xs bg-neutral-900/80 p-3.5 rounded-2xl border border-neutral-800">
+            <div className="space-y-3 text-xs bg-neutral-900/90 p-4 rounded-2xl border border-neutral-800">
               <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center text-mention-yellow shrink-0 font-bold">
+                <div className="w-8 h-8 rounded-xl bg-mention-yellow/15 text-mention-yellow border border-yellow-500/30 flex items-center justify-center shrink-0 font-black text-sm">
                   1
                 </div>
                 <div>
-                  <div className="font-semibold text-white flex items-center gap-1.5">
-                    Ketuk tombol Bagikan <Share2 className="w-3.5 h-3.5 text-blue-400 inline" />
+                  <div className="font-bold text-white flex items-center gap-1.5">
+                    Ketuk tombol Bagikan <Share2 className="w-4 h-4 text-blue-400 inline" />
                   </div>
-                  <div className="text-neutral-400 text-[11px] mt-0.5">
-                    Tombol kotak dengan panah ke atas di bagian bawah layar Safari.
+                  <div className="text-neutral-400 text-[11px] mt-0.5 leading-relaxed">
+                    Ikon kotak berpanah ke atas di bilah bawah Safari.
                   </div>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center text-mention-yellow shrink-0 font-bold">
+                <div className="w-8 h-8 rounded-xl bg-mention-yellow/15 text-mention-yellow border border-yellow-500/30 flex items-center justify-center shrink-0 font-black text-sm">
                   2
                 </div>
                 <div>
-                  <div className="font-semibold text-white flex items-center gap-1.5">
-                    Pilih &apos;Tambahkan ke Layar Utama&apos; <PlusSquare className="w-3.5 h-3.5 text-mention-yellow inline" />
+                  <div className="font-bold text-white flex items-center gap-1.5">
+                    Pilih &apos;Tambahkan ke Layar Utama&apos; <PlusSquare className="w-4 h-4 text-mention-yellow inline" />
                   </div>
-                  <div className="text-neutral-400 text-[11px] mt-0.5">
-                    Gulir sedikit ke bawah pada menu bagikan, lalu ketuk &quot;Tambahkan ke Layar Utama&quot;.
+                  <div className="text-neutral-400 text-[11px] mt-0.5 leading-relaxed">
+                    Gulir ke bawah pada menu opsi, lalu ketuk tombol &quot;Tambahkan ke Layar Utama&quot;.
                   </div>
                 </div>
               </div>
@@ -234,9 +262,9 @@ export default function PwaInstallPrompt() {
             <button
               type="button"
               onClick={() => setShowIosGuide(false)}
-              className="w-full py-2.5 min-h-[42px] rounded-xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-yellow-400 transition-all"
+              className="w-full py-3 min-h-[44px] rounded-2xl bg-mention-yellow text-black font-extrabold text-xs uppercase tracking-wider hover:bg-yellow-400 active:scale-[0.98] transition-all"
             >
-              Saya Mengerti
+              Saya Mengerti, Tutup
             </button>
           </div>
         </div>
