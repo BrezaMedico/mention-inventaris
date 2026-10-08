@@ -53,7 +53,7 @@ export default function DayTasksModal({
         {/* List of Tasks on Date */}
         <div className="p-4 space-y-2.5 overflow-y-auto flex-1">
           {tasks.map((task) => {
-            const urgency = getTaskUrgency(task.due_date);
+            const taskColor = task.color || '#FACC15';
             return (
               <div
                 key={task.id}
@@ -61,14 +61,22 @@ export default function DayTasksModal({
                   onClose();
                   onSelectTask(task);
                 }}
-                className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 group ${urgency.cardBg} ${urgency.cardBorder}`}
+                className="p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 group bg-[#161822] hover:bg-[#1f2230] border-neutral-700/80 hover:border-neutral-500"
+                style={{
+                  borderLeftColor: taskColor,
+                  borderLeftWidth: '4px',
+                }}
               >
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-center gap-2">
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${urgency.badgeBg}`}
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ backgroundColor: taskColor }}
+                    />
+                    <span
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-md border border-neutral-700 bg-[#1c1e27] text-neutral-200"
                     >
-                      {urgency.shortLabel}
+                      {task.priority === 'HIGH' ? 'Prioritas Tinggi' : task.priority === 'LOW' ? 'Prioritas Rendah' : 'Prioritas Sedang'}
                     </span>
                     <span className="text-[11px] text-neutral-300 flex items-center gap-1 truncate">
                       <User className="w-3 h-3 text-neutral-400 shrink-0" />

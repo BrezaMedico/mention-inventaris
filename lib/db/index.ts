@@ -2024,6 +2024,23 @@ export async function isTasksTableReady(): Promise<boolean> {
   }
 }
 
+function parseTaskColor(task: any): Task {
+  let color = task.color;
+  let desc = task.description || '';
+  if (!color && desc) {
+    const match = desc.match(/\[color:(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\]/);
+    if (match) {
+      color = match[1];
+      desc = desc.replace(match[0], '').trim();
+    }
+  }
+  return {
+    ...task,
+    description: desc,
+    color: color || '#FACC15',
+  };
+}
+
 export async function getAllTasks(): Promise<Task[]> {
   try {
     const { data, error } = await supabase
@@ -2032,18 +2049,19 @@ export async function getAllTasks(): Promise<Task[]> {
       .order('due_date', { ascending: true });
 
     if (!error && data !== null) {
+      const parsedTasks = (data as any[]).map(parseTaskColor);
       // Keep local DB in sync
       const db = readLocalDb();
-      db.tasks = data as Task[];
+      db.tasks = parsedTasks;
       writeLocalDb(db);
-      return data as Task[];
+      return parsedTasks;
     }
   } catch (err) {
     console.error('Supabase getAllTasks catch:', err);
   }
 
   const db = readLocalDb();
-  return (db.tasks || []).sort((a, b) => a.due_date.localeCompare(b.due_date));
+  return (db.tasks || []).map(parseTaskColor).sort((a, b) => a.due_date.localeCompare(b.due_date));
 }
 
 export async function getTaskById(id: string): Promise<Task | null> {
@@ -2055,14 +2073,15 @@ export async function getTaskById(id: string): Promise<Task | null> {
       .maybeSingle();
 
     if (!error && data) {
-      return data as Task;
+      return parseTaskColor(data);
     }
   } catch (err) {
     console.error('Supabase getTaskById catch:', err);
   }
 
   const db = readLocalDb();
-  return (db.tasks || []).find((t) => t.id === id) || null;
+  const found = (db.tasks || []).find((t) => t.id === id);
+  return found ? parseTaskColor(found) : null;
 }
 
 export async function createTask(input: {
@@ -2071,9 +2090,11 @@ export async function createTask(input: {
   pic: string;
   priority: TaskPriority;
   due_date: string;
+  color?: string;
 }): Promise<Task> {
   const id = crypto.randomUUID();
   const now = new Date().toISOString();
+  const chosenColor = input.color?.trim() || '#FACC15';
 
   const newTask: Task = {
     id,
@@ -2082,6 +2103,7 @@ export async function createTask(input: {
     pic: input.pic.trim(),
     priority: input.priority,
     due_date: input.due_date,
+    color: chosenColor,
     created_at: now,
     updated_at: now,
   };
@@ -2089,7 +2111,14 @@ export async function createTask(input: {
   try {
     const { error } = await supabase.from('tasks').insert([newTask]);
     if (error) {
-      console.error('Supabase createTask error:', error);
+      if (error.code === 'PGRST204' || error.message?.includes('color')) {
+        // Fallback: jika kolom color belum ada di Supabase Cloud, sematkan tag di description
+        const fallbackDesc = (input.description?.trim() ? `${input.description.trim()} ` : '') + `[color:${chosenColor}]`;
+        const { color: _, ...rest } = newTask;
+        await supabase.from('tasks').insert([{ ...rest, description: fallbackDesc }]);
+      } else {
+        console.error('Supabase createTask error:', error);
+      }
     }
   } catch (err) {
     console.error('Supabase createTask catch:', err);
@@ -2111,6 +2140,7 @@ export async function updateTask(
     pic?: string;
     priority?: TaskPriority;
     due_date?: string;
+    color?: string;
   }
 ): Promise<Task | null> {
   const now = new Date().toISOString();
@@ -2123,11 +2153,21 @@ export async function updateTask(
   if (input.pic !== undefined) updateData.pic = input.pic.trim();
   if (input.priority !== undefined) updateData.priority = input.priority;
   if (input.due_date !== undefined) updateData.due_date = input.due_date;
+  if (input.color !== undefined) updateData.color = input.color.trim();
 
   try {
     const { error } = await supabase.from('tasks').update(updateData).eq('id', id);
     if (error) {
-      console.error('Supabase updateTask error:', error);
+      if (error.code === 'PGRST204' || error.message?.includes('color')) {
+        // Fallback: simpan di description jika kolom belum ada
+        const chosenColor = input.color?.trim() || '#FACC15';
+        const rawDesc = input.description !== undefined ? input.description.trim() : '';
+        const fallbackDesc = (rawDesc ? `${rawDesc} ` : '') + `[color:${chosenColor}]`;
+        const { color: _, ...rest } = updateData;
+        await supabase.from('tasks').update({ ...rest, description: fallbackDesc }).eq('id', id);
+      } else {
+        console.error('Supabase updateTask error:', error);
+      }
     }
   } catch (err) {
     console.error('Supabase updateTask catch:', err);
@@ -2139,7 +2179,7 @@ export async function updateTask(
   if (index !== -1) {
     db.tasks[index] = { ...db.tasks[index], ...updateData };
     writeLocalDb(db);
-    return db.tasks[index];
+    return parseTaskColor(db.tasks[index]);
   }
 
   return null;

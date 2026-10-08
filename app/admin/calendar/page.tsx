@@ -429,11 +429,17 @@ export default function AdminCalendarPage() {
                         className="hover:bg-neutral-800/40 transition-colors"
                       >
                         <td className="py-3.5 px-4">
-                          <div className="font-bold text-white text-sm">
-                            {task.title}
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm border border-black/30"
+                              style={{ backgroundColor: task.color || '#FACC15' }}
+                            />
+                            <div className="font-bold text-white text-sm">
+                              {task.title}
+                            </div>
                           </div>
                           {task.description && (
-                            <div className="text-[11px] text-neutral-400 truncate max-w-xs mt-0.5">
+                            <div className="text-[11px] text-neutral-400 truncate max-w-xs mt-0.5 ml-4.5">
                               {task.description}
                             </div>
                           )}

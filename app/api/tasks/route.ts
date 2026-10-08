@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { title, description, pic, priority, due_date } = body;
+    const { title, description, pic, priority, due_date, color } = body;
 
     if (!title || !title.trim()) {
       return NextResponse.json(
@@ -76,6 +76,7 @@ export async function POST(request: NextRequest) {
       pic: pic.trim(),
       priority: priority as TaskPriority,
       due_date,
+      color: typeof color === 'string' ? color.trim() : undefined,
     });
 
     return NextResponse.json({
@@ -99,7 +100,7 @@ export async function PUT(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { id, title, description, pic, priority, due_date } = body;
+    const { id, title, description, pic, priority, due_date, color } = body;
 
     if (!id) {
       return NextResponse.json(
@@ -142,6 +143,7 @@ export async function PUT(request: NextRequest) {
       pic,
       priority,
       due_date,
+      color: typeof color === 'string' ? color.trim() : undefined,
     });
 
     if (!updatedTask) {

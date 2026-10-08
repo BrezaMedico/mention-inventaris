@@ -920,14 +920,34 @@
   ],
   "items": [
     {
-      "id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "Camera Canon",
-      "code": "ITM-5004",
-      "description": "Camera yayasan",
+      "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
+      "name": "Trippod",
+      "code": "ITM-8509",
+      "description": "Trippod Camera",
       "image_url": null,
       "status": "AVAILABLE",
-      "created_at": "2026-09-19T07:30:25.004+00:00",
-      "updated_at": "2026-10-07T15:05:40.591+00:00"
+      "created_at": "2026-09-19T08:55:48.509+00:00",
+      "updated_at": "2026-10-08T04:23:09.126+00:00"
+    },
+    {
+      "id": "b9db56c5-434c-4976-8790-e94a2358b1ed",
+      "name": "HP POCO",
+      "code": "ITM-9217",
+      "description": "HP POCO SEKOLAH/MENTION",
+      "image_url": null,
+      "status": "AVAILABLE",
+      "created_at": "2026-10-08T04:07:49.217+00:00",
+      "updated_at": "2026-10-08T06:05:45.363+00:00"
+    },
+    {
+      "id": "bcd4083e-7b3e-441e-a410-84b2bee20893",
+      "name": "Lampu sorot",
+      "code": "ITM-7259",
+      "description": "Lampu sorot",
+      "image_url": null,
+      "status": "MAINTENANCE",
+      "created_at": "2026-09-19T08:59:07.259+00:00",
+      "updated_at": "2026-09-19T08:59:07.477072+00:00"
     },
     {
       "id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
@@ -938,47 +958,9 @@
       "status": "AVAILABLE",
       "created_at": "2026-09-19T08:58:23.638+00:00",
       "updated_at": "2026-10-08T01:24:27.151+00:00"
-    },
-    {
-      "id": "01bb1bf7-d557-44bf-b89e-f76ea66c3b45",
-      "name": "Trippod",
-      "code": "ITM-8509",
-      "description": "Trippod Camera",
-      "image_url": null,
-      "status": "AVAILABLE",
-      "created_at": "2026-09-19T08:55:48.509+00:00",
-      "updated_at": "2026-10-08T03:42:13.442+00:00"
     }
   ],
   "item_accessories": [
-    {
-      "id": "e60afaba-fcf1-42f3-b1b5-999623e11d8e",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "Baterai 1",
-      "is_required": true,
-      "created_at": "2026-09-19T07:30:26.573246+00:00"
-    },
-    {
-      "id": "437b8f65-e6f2-4739-820f-f9391b63f681",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "Baterai 2",
-      "is_required": true,
-      "created_at": "2026-09-19T07:30:26.573246+00:00"
-    },
-    {
-      "id": "a2984fc0-f9fd-4345-8c80-424543bd23ad",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "Charger Case",
-      "is_required": true,
-      "created_at": "2026-09-19T07:30:26.573246+00:00"
-    },
-    {
-      "id": "72c9bee9-93d6-414e-a080-d81c93acf5bc",
-      "item_id": "9a768857-ac0a-43ea-82ee-11b1788d7af1",
-      "name": "SD Card",
-      "is_required": true,
-      "created_at": "2026-09-19T07:30:26.573246+00:00"
-    },
     {
       "id": "56c2cbbd-7165-458c-999e-753f742020be",
       "item_id": "2dab5820-4315-4b44-9ca9-6b9380cd1da2",
@@ -1012,6 +994,18 @@
   "overdue_reminders": [],
   "tasks": [
     {
+      "id": "8e686728-ee77-4d3e-929f-a36fd51c2a87",
+      "title": "BIC : Main poster",
+      "description": "",
+      "pic": "Upan",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-06",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:42:46.879+00:00",
+      "updated_at": "2026-10-08T06:42:46.879+00:00",
+      "color": "#FACC15"
+    },
+    {
       "id": "9a057441-1523-4d58-9da5-91867663f3fc",
       "title": "BIC:Konten",
       "description": "",
@@ -1020,7 +1014,20 @@
       "due_date": "2026-10-08",
       "h1_reminder_sent_at": null,
       "created_at": "2026-10-07T16:53:55.262+00:00",
-      "updated_at": "2026-10-07T16:53:55.262+00:00"
+      "updated_at": "2026-10-07T16:53:55.262+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "3c98dc2f-1893-48c0-a943-b9ff0410093f",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Bijer",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-08",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:44:32.467+00:00",
+      "updated_at": "2026-10-08T06:44:32.467+00:00",
+      "color": "#FACC15"
     },
     {
       "id": "ce8b3935-3a2b-463b-9810-07d57f764900",
@@ -1031,7 +1038,8 @@
       "due_date": "2026-10-09",
       "h1_reminder_sent_at": null,
       "created_at": "2026-10-08T00:23:44.719+00:00",
-      "updated_at": "2026-10-08T00:23:44.719+00:00"
+      "updated_at": "2026-10-08T00:23:44.719+00:00",
+      "color": "#FACC15"
     },
     {
       "id": "03011bed-88dd-42fc-b298-e260432500f9",
@@ -1042,7 +1050,8 @@
       "due_date": "2026-10-10",
       "h1_reminder_sent_at": null,
       "created_at": "2026-10-08T00:24:08.179+00:00",
-      "updated_at": "2026-10-08T00:24:08.179+00:00"
+      "updated_at": "2026-10-08T00:24:08.179+00:00",
+      "color": "#FACC15"
     },
     {
       "id": "5f9303f0-848b-4476-b27e-eb4c965bf67d",
@@ -1053,7 +1062,200 @@
       "due_date": "2026-10-11",
       "h1_reminder_sent_at": null,
       "created_at": "2026-10-08T00:24:48.162+00:00",
-      "updated_at": "2026-10-08T00:24:48.162+00:00"
+      "updated_at": "2026-10-08T00:24:48.162+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "472d5fde-70fc-43a7-80ac-d780ba2e6de3",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Fayyadh",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-11",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:43:30.249+00:00",
+      "updated_at": "2026-10-08T06:43:30.249+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "a7b51434-7d1e-4bde-aa26-12e553a4737a",
+      "title": "Upacara",
+      "description": "",
+      "pic": "Kholik",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-12",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:29:24.42+00:00",
+      "updated_at": "2026-10-08T06:33:34.62+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "4e125759-511b-425e-b4c2-462bb7921952",
+      "title": "Literasi",
+      "description": "",
+      "pic": "Lukyan",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-13",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:35:36.673+00:00",
+      "updated_at": "2026-10-08T06:35:36.673+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "85dee03f-b6cc-4ad8-968a-d806b96bde89",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Taqy",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-14",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:43:54.6+00:00",
+      "updated_at": "2026-10-08T06:43:54.6+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "9e9d25bb-731e-4a4b-a580-7dabd790c590",
+      "title": "Tadarus",
+      "description": "",
+      "pic": "Breza",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-16",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:36:04.682+00:00",
+      "updated_at": "2026-10-08T06:36:04.682+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "bc0b2852-eb06-49af-9e29-002263aa4a97",
+      "title": "Tadarus Asrama",
+      "description": "",
+      "pic": "Bijer",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-17",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:36:22.446+00:00",
+      "updated_at": "2026-10-08T06:36:22.446+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "8ac6fa3b-d48b-47eb-b54c-faed96fb508e",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Khalik",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-17",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:44:16.154+00:00",
+      "updated_at": "2026-10-08T06:44:16.154+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "98fdc63c-1ef8-444c-b0d7-59e54f90168c",
+      "title": "Upacara",
+      "description": "",
+      "pic": "Faadhil",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-19",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:36:46.171+00:00",
+      "updated_at": "2026-10-08T06:36:46.171+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "35b2c246-6bb0-4aab-b1aa-ed086d744649",
+      "title": "Senam",
+      "description": "",
+      "pic": "Fayyadh",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-20",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:36:58.399+00:00",
+      "updated_at": "2026-10-08T06:36:58.399+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "bfa530fb-1c6f-4643-b523-ed31f82f2e10",
+      "title": "Tadarus",
+      "description": "",
+      "pic": "Taqy",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-23",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:37:07.685+00:00",
+      "updated_at": "2026-10-08T06:37:07.685+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "6482250f-e4bd-4673-8d1e-099eda36b8de",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Breja",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-23",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:44:52.394+00:00",
+      "updated_at": "2026-10-08T06:44:52.394+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "270e06c9-7016-4777-bdaa-a50b8c47afa5",
+      "title": "Tadarus Asrama",
+      "description": "",
+      "pic": "Azril",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-24",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:37:19.582+00:00",
+      "updated_at": "2026-10-08T06:37:19.582+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "71b40835-dc46-4e7d-b119-1e1f3b056b64",
+      "title": "Upacara",
+      "description": "",
+      "pic": "Lutfan",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-26",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:37:31.696+00:00",
+      "updated_at": "2026-10-08T06:37:31.696+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "d8ed8ae1-88f0-4bd1-abf4-e6d883d534dc",
+      "title": "BIC : Promosi",
+      "description": "",
+      "pic": "Azril",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-26",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:45:15.331+00:00",
+      "updated_at": "2026-10-08T06:45:15.331+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "38e08f2d-3e44-4e01-8534-ceab3300e48a",
+      "title": "Literasi",
+      "description": "",
+      "pic": "Lukyan",
+      "priority": "MEDIUM",
+      "due_date": "2026-10-27",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T06:37:41.1+00:00",
+      "updated_at": "2026-10-08T06:40:19.905+00:00",
+      "color": "#FACC15"
+    },
+    {
+      "id": "59b2d513-22c5-4aff-b252-0a7cfd499a65",
+      "title": "bojot cimol",
+      "description": "",
+      "pic": "Adit",
+      "priority": "LOW",
+      "due_date": "2026-10-31",
+      "h1_reminder_sent_at": null,
+      "created_at": "2026-10-08T07:48:04.348+00:00",
+      "updated_at": "2026-10-08T07:48:04.348+00:00",
+      "color": "#a13cd7"
     }
   ],
   "task_reminders": []

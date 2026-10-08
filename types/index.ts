@@ -140,6 +140,7 @@ export interface Task {
   pic: string;
   priority: TaskPriority;
   due_date: string; // YYYY-MM-DD
+  color?: string; // e.g. '#FACC15'
   h1_reminder_sent_at?: string;
   created_at?: string;
   updated_at?: string;

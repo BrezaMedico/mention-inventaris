@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Task, TaskPriority } from '@/types';
-import { X, Calendar, User, FileText, AlertTriangle, Loader2, Save } from 'lucide-react';
+import { X, Calendar, User, AlertTriangle, Loader2, Save, Palette, Check, SunMedium } from 'lucide-react';
 import { getLocalTodayStr } from '@/lib/calendar';
 
 interface TaskFormModalProps {
@@ -11,6 +11,67 @@ interface TaskFormModalProps {
   onSuccess: (task: Task) => void;
   initialDate?: string;
   taskToEdit?: Task | null;
+}
+
+const PRESET_COLORS = [
+  { hex: '#FACC15', label: 'Kuning MENTION (Default)' },
+  { hex: '#38BDF8', label: 'Biru Cerah' },
+  { hex: '#34D399', label: 'Hijau Zamrud' },
+  { hex: '#A78BFA', label: 'Ungu Lavender' },
+  { hex: '#FB7185', label: 'Merah Coral' },
+];
+
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  let c = hex.replace('#', '');
+  if (c.length === 3) c = c.split('').map((x) => x + x).join('');
+  const num = parseInt(c, 16);
+  if (isNaN(num)) return { h: 48, s: 96, l: 53 };
+
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+
+  const rNorm = r / 255;
+  const gNorm = g / 255;
+  const bNorm = b / 255;
+
+  const max = Math.max(rNorm, gNorm, bNorm);
+  const min = Math.min(rNorm, gNorm, bNorm);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case rNorm:
+        h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0);
+        break;
+      case gNorm:
+        h = (bNorm - rNorm) / d + 2;
+        break;
+      case bNorm:
+        h = (rNorm - gNorm) / d + 4;
+        break;
+    }
+    h = Math.round(h * 60);
+  }
+  return { h, s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  const sNorm = s / 100;
+  const lNorm = l / 100;
+  const k = (n: number) => (n + h / 30) % 12;
+  const a = sNorm * Math.min(lNorm, 1 - lNorm);
+  const f = (n: number) =>
+    lNorm - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  const toHex = (x: number) => {
+    const val = Math.max(0, Math.min(255, Math.round(x * 255))).toString(16);
+    return val.length === 1 ? '0' + val : val;
+  };
+  return `#${toHex(f(0))}${toHex(f(8))}${toHex(f(4))}`.toUpperCase();
 }
 
 export default function TaskFormModal({
@@ -25,6 +86,8 @@ export default function TaskFormModal({
   const [pic, setPic] = useState('');
   const [priority, setPriority] = useState<TaskPriority>('MEDIUM');
   const [dueDate, setDueDate] = useState('');
+  const [color, setColor] = useState('#FACC15');
+  const [currentLightness, setCurrentLightness] = useState(53);
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -35,17 +98,41 @@ export default function TaskFormModal({
       setPic(taskToEdit.pic);
       setPriority(taskToEdit.priority);
       setDueDate(taskToEdit.due_date);
+      const chosenColor = taskToEdit.color || '#FACC15';
+      setColor(chosenColor);
+      setCurrentLightness(hexToHsl(chosenColor).l);
     } else {
       setTitle('');
       setDescription('');
       setPic('');
       setPriority('MEDIUM');
       setDueDate(initialDate || getLocalTodayStr());
+      setColor('#FACC15');
+      setCurrentLightness(53);
     }
     setErrorMessage('');
   }, [taskToEdit, initialDate, isOpen]);
 
   if (!isOpen) return null;
+
+  const handleColorChange = (newHex: string) => {
+    setColor(newHex);
+    const hsl = hexToHsl(newHex);
+    setCurrentLightness(hsl.l);
+  };
+
+  const handlePresetClick = (hex: string) => {
+    setColor(hex);
+    const hsl = hexToHsl(hex);
+    setCurrentLightness(hsl.l);
+  };
+
+  const handleLightnessChange = (newLightness: number) => {
+    setCurrentLightness(newLightness);
+    const hsl = hexToHsl(color);
+    const newHex = hslToHex(hsl.h, hsl.s, newLightness);
+    setColor(newHex);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +165,7 @@ export default function TaskFormModal({
         pic: pic.trim(),
         priority,
         due_date: dueDate,
+        color: color.trim() || '#FACC15',
       };
 
       const res = await fetch(url, {
@@ -109,7 +197,10 @@ export default function TaskFormModal({
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-700/80 bg-[#1c1e27]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-mention-yellow text-black flex items-center justify-center font-bold text-xs shrink-0">
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 shadow-sm"
+              style={{ backgroundColor: color, color: currentLightness > 60 ? '#000000' : '#ffffff' }}
+            >
               <Calendar className="w-4 h-4" />
             </div>
             <div>
@@ -118,8 +209,8 @@ export default function TaskFormModal({
               </h3>
               <p className="text-[11px] text-neutral-300">
                 {taskToEdit
-                  ? 'Perbarui informasi tenggat atau deskripsi tugas.'
-                  : 'Tentukan deadline dan penanggung jawab tugas.'}
+                  ? 'Perbarui informasi tenggat, warna atau deskripsi tugas.'
+                  : 'Tentukan deadline, penanggung jawab, dan warna tugas.'}
               </p>
             </div>
           </div>
@@ -216,10 +307,95 @@ export default function TaskFormModal({
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={3}
+              rows={2}
               placeholder="Tambahkan catatan rincian tugas atau arahan teknis..."
               className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-700 bg-[#1c1e27] text-neutral-100 placeholder-neutral-500 text-xs sm:text-sm focus:border-mention-yellow focus:outline-none transition-colors resize-none"
             />
+          </div>
+
+          {/* Pilihan Warna Tugas (Tepat di bawah Deskripsi Tugas) */}
+          <div className="space-y-2.5 pt-2 border-t border-neutral-800">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-neutral-300 flex items-center gap-1.5">
+                <Palette className="w-3.5 h-3.5 text-mention-yellow" />
+                <span>Warna Jadwal Kalender</span>
+              </label>
+              <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#1c1e27] border border-neutral-700/80">
+                <span
+                  className="w-3 h-3 rounded-full border border-black/30 shadow-inner"
+                  style={{ backgroundColor: color }}
+                />
+                <span className="text-[11px] font-mono font-semibold text-neutral-200">
+                  {color.toUpperCase()}
+                </span>
+              </div>
+            </div>
+
+            {/* 5 Rekomendasi Warna + Wheel Custom */}
+            <div className="flex items-center gap-2.5 flex-wrap">
+              {PRESET_COLORS.map((p) => {
+                const isSelected = color.toUpperCase() === p.hex.toUpperCase();
+                return (
+                  <button
+                    key={p.hex}
+                    type="button"
+                    onClick={() => handlePresetClick(p.hex)}
+                    title={p.label}
+                    className={`relative w-8 h-8 rounded-full transition-all flex items-center justify-center border shadow-sm ${
+                      isSelected
+                        ? 'ring-2 ring-white ring-offset-2 ring-offset-[#14151c] scale-110 border-white'
+                        : 'border-white/20 hover:scale-105'
+                    }`}
+                    style={{ backgroundColor: p.hex }}
+                  >
+                    {isSelected && (
+                      <Check className="w-4 h-4 text-black drop-shadow stroke-[3]" />
+                    )}
+                  </button>
+                );
+              })}
+
+              {/* Color Wheel Trigger */}
+              <div className="relative group">
+                <label
+                  title="Pilih warna bebas (Color Wheel)"
+                  className="relative w-8 h-8 rounded-full cursor-pointer flex items-center justify-center border border-white/20 hover:scale-105 transition-transform overflow-hidden shadow-sm"
+                  style={{
+                    background:
+                      'conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)',
+                  }}
+                >
+                  <input
+                    type="color"
+                    value={color}
+                    onChange={(e) => handleColorChange(e.target.value)}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                  />
+                </label>
+              </div>
+            </div>
+
+            {/* Slider Gelap - Terang */}
+            <div className="bg-[#1c1e27] border border-neutral-800 rounded-xl p-2.5 space-y-1.5">
+              <div className="flex items-center justify-between text-[11px] text-neutral-400">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <SunMedium className="w-3.5 h-3.5 text-neutral-400" />
+                  Kecerahan (Gelap — Terang)
+                </span>
+                <span className="font-mono text-[10px] text-neutral-300">{currentLightness}%</span>
+              </div>
+              <input
+                type="range"
+                min="18"
+                max="82"
+                value={currentLightness}
+                onChange={(e) => handleLightnessChange(Number(e.target.value))}
+                className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-mention-yellow"
+                style={{
+                  background: `linear-gradient(to right, #000000 0%, ${color} 50%, #ffffff 100%)`,
+                }}
+              />
+            </div>
           </div>
 
           {/* Action Footer inside Form */}

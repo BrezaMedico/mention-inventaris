@@ -92,10 +92,15 @@ export default function TaskDetailModal({
                 {priorityBadge.label}
               </span>
               <span
-                className={`text-[10px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${urgency.badgeBg}`}
+                className="text-[10px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-full border border-neutral-700 bg-[#161822] text-neutral-200 flex items-center gap-1.5"
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${urgency.dotColor}`} />
-                {urgency.label}
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
+                  style={{ backgroundColor: task.color || '#FACC15' }}
+                />
+                <span className="font-mono text-[10px] text-neutral-300">
+                  {task.color?.toUpperCase() || '#FACC15'}
+                </span>
               </span>
             </div>
             <h3 className="text-base sm:text-xl font-bold text-white tracking-tight leading-snug">
