@@ -50,17 +50,26 @@ body {
 @keyframes loader-pingpong {
   0% {
     transform: translateX(-120%);
+    opacity: 0.7;
+  }
+  25% {
+    opacity: 1;
   }
   50% {
     transform: translateX(260%);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
   }
   100% {
     transform: translateX(-120%);
+    opacity: 0.7;
   }
 }
 
 .animate-loader-pingpong {
-  animation: loader-pingpong 1.25s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  animation: loader-pingpong 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 
