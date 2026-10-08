@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import AuroraBackground from '@/components/AuroraBackground';
 import PwaInstallPrompt from '@/components/PwaInstallPrompt';
+import SplashScreen from '@/components/SplashScreen';
 
 export const metadata: Metadata = {
   title: 'MENTION - Sistem Peminjaman & Pengembalian Barang',
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="bg-[#070708] text-white antialiased selection:bg-mention-yellow selection:text-black min-h-screen relative overflow-x-hidden">
+        <SplashScreen />
         <AuroraBackground />
         <div className="relative z-10 flex flex-col min-h-screen w-full">
           {children}

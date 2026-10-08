@@ -46,3 +46,21 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Splash Indeterminate Ping-Pong Loader */
+@keyframes loader-pingpong {
+  0% {
+    transform: translateX(-120%);
+  }
+  50% {
+    transform: translateX(260%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}
+
+.animate-loader-pingpong {
+  animation: loader-pingpong 1.25s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+
