@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import HomeInstallBadge from '@/components/HomeInstallBadge';
 import { ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 
 export default function HomePage() {
@@ -66,6 +67,9 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+
+        {/* PWA Mobile Quick Install Badge */}
+        <HomeInstallBadge />
       </main>
 
       <footer className="w-full border-t border-mention-border/60 py-5 text-center text-xs text-neutral-500">
