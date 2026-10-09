@@ -257,35 +257,11 @@ export default function CalendarPage() {
         <Navbar showHomeLink />
       </div>
 
-      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 pt-2 pb-2 sm:pb-3 w-full flex flex-col min-h-0 overflow-hidden">
-        {/* Page Title & Status Pills - All aligned to the left */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-2 shrink-0">
-          <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
-            Kalender <span className="text-mention-yellow">Tugas</span>
-          </h1>
-
-          {/* Indikator Mendatang & Telat ditaruh di kiri pas samping Kalender Tugas */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="px-2.5 py-1 rounded-xl bg-[#14151c] border border-neutral-700/80 flex items-center gap-1.5 text-xs">
-              <span className="w-2 h-2 rounded-full bg-mention-yellow" />
-              <span className="text-neutral-200 font-medium text-[11px] sm:text-xs">
-                {upcomingTasks.length} Mendatang
-              </span>
-            </div>
-            {overdueTasks.length > 0 && (
-              <div className="px-2.5 py-1 rounded-xl bg-rose-950/60 border border-rose-800/70 flex items-center gap-1.5 text-rose-300 text-xs">
-                <span className="w-2 h-2 rounded-full bg-rose-500" />
-                <span className="font-semibold text-[11px] sm:text-xs">
-                  {overdueTasks.length} Telat
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
+      <main className="flex-1 max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 pt-1 sm:pt-2 pb-2 sm:pb-3 w-full flex flex-col min-h-0 overflow-hidden">
 
         {/* Warning Banner untuk Admin jika Supabase belum dimigrate */}
         {isAdmin && !isSupabaseReady && (
-          <div className="mb-2 p-2.5 rounded-xl bg-amber-950/60 border border-amber-500/60 text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs shrink-0">
+          <div className="mb-2 p-2 rounded-xl bg-amber-950/60 border border-amber-500/60 text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs shrink-0">
             <div className="flex items-center gap-2">
               <Database className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="text-amber-200/90 text-[11px]">
@@ -301,15 +277,15 @@ export default function CalendarPage() {
           </div>
         )}
 
-        {/* Main Grid: Sidebar (Kiri) & Kalender (Kanan) - Pas Panjangnya & Konsisten */}
-        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[320px_1fr] gap-3 sm:gap-4 items-stretch flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
+        {/* Main Grid: Sidebar (Kiri) & Kalender (Kanan) - Pas 1 Layar Penuh */}
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] xl:grid-cols-[300px_1fr] gap-2.5 sm:gap-3 items-stretch flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
           {/* ========================================================= */}
           {/* 1. SIDEBAR DAFTAR TUGAS (SEBELAH KIRI)                    */}
           {/* Hanya bagian ini yang dapat di-scroll                     */}
           {/* ========================================================= */}
-          <aside className="w-full h-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-3 sm:p-4 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-2 lg:order-1 min-h-0 overflow-hidden">
+          <aside className="w-full h-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-2.5 sm:p-3 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-2 lg:order-1 min-h-0 overflow-hidden">
             {/* Header: Title + Total Pill */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-neutral-700/80 shrink-0">
+            <div className="flex items-center justify-between pb-2 border-b border-neutral-700/80 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-xl bg-mention-yellow/15 border border-mention-yellow/30 flex items-center justify-center text-mention-yellow shadow-sm">
                   <CalendarDays className="w-3.5 h-3.5" />
@@ -327,11 +303,11 @@ export default function CalendarPage() {
             </div>
 
             {/* Segmented Filter Tabs: [Mendatang] [Telat] */}
-            <div className="mt-2.5 p-1 rounded-xl bg-[#161822] border border-neutral-700/80 grid grid-cols-2 gap-1 shrink-0">
+            <div className="mt-2 p-1 rounded-xl bg-[#161822] border border-neutral-700/80 grid grid-cols-2 gap-1 shrink-0">
               <button
                 type="button"
                 onClick={() => setSidebarFilter('UPCOMING')}
-                className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                className={`py-1 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
                   sidebarFilter === 'UPCOMING'
                     ? 'bg-[#252836] text-mention-yellow shadow-md border border-neutral-600/90'
                     : 'text-neutral-400 hover:text-white hover:bg-neutral-800/40'
@@ -352,7 +328,7 @@ export default function CalendarPage() {
               <button
                 type="button"
                 onClick={() => setSidebarFilter('OVERDUE')}
-                className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                className={`py-1 px-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
                   sidebarFilter === 'OVERDUE'
                     ? 'bg-rose-950/80 text-rose-200 shadow-md border border-rose-800/80'
                     : 'text-neutral-400 hover:text-rose-300 hover:bg-rose-950/30'
@@ -372,7 +348,7 @@ export default function CalendarPage() {
             </div>
 
             {/* Task Items List — HANYA BAGIAN INI YANG BISA DI-SCROLL */}
-            <div className="mt-2.5 space-y-2 flex-1 overflow-y-auto pr-1 min-h-0">
+            <div className="mt-2 space-y-2 flex-1 overflow-y-auto pr-1 min-h-0">
               {loading ? (
                 <div className="py-10 text-center text-neutral-400 space-y-2">
                   <Loader2 className="w-5 h-5 animate-spin mx-auto text-mention-yellow" />
@@ -401,7 +377,7 @@ export default function CalendarPage() {
                     <div
                       key={task.id}
                       onClick={() => handleOpenDetail(task)}
-                      className="group relative p-2.5 sm:p-3 rounded-xl border border-neutral-700/80 bg-[#161822] hover:bg-[#1d202e] hover:border-neutral-500 transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/40 active:scale-[0.98]"
+                      className="group relative p-2.5 rounded-xl border border-neutral-700/80 bg-[#161822] hover:bg-[#1d202e] hover:border-neutral-500 transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/40 active:scale-[0.98]"
                       style={{
                         borderLeftColor: taskColor,
                         borderLeftWidth: '3.5px',
@@ -473,24 +449,24 @@ export default function CalendarPage() {
 
           {/* ========================================================= */}
           {/* 2. KALENDER BULANAN (BAGIAN KANAN)                        */}
-          {/* FULL DARI ATAS SAMPAI BAWAH, SAMA PANJANG DENGAN SIDEBAR   */}
+          {/* PAS 1 LAYAR - TIDAK ADA SCROLL DI DESKTOP                 */}
           {/* ========================================================= */}
-          <section className="w-full h-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-3 sm:p-4 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-1 lg:order-2 min-h-0 overflow-hidden">
+          <section className="w-full h-full rounded-2xl bg-[#13141a]/95 backdrop-blur-md border border-neutral-700/80 p-2 sm:p-3 shadow-2xl shadow-black/50 ring-1 ring-white/5 flex flex-col order-1 lg:order-2 min-h-0 overflow-hidden">
             {/* Calendar Controls Header */}
-            <div className="flex items-center justify-between gap-1.5 sm:gap-3 pb-2 border-b border-neutral-700/80 shrink-0">
+            <div className="flex items-center justify-between gap-1.5 sm:gap-2 pb-1.5 border-b border-neutral-700/80 shrink-0">
               {/* Navigation */}
               <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-initial">
                 <button
                   type="button"
                   onClick={handlePrevMonth}
                   title="Bulan Sebelumnya"
-                  className="p-1 sm:px-2.5 sm:py-1 min-h-[32px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
+                  className="p-1 sm:px-2 sm:py-1 min-h-[30px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Sebelumnya</span>
                 </button>
 
-                <div className="px-2 sm:px-3 py-1 min-h-[32px] rounded-xl bg-[#1c1e27] border border-neutral-700/80 text-center flex-1 sm:flex-initial sm:min-w-[160px] shadow-inner flex items-center justify-center">
+                <div className="px-2 sm:px-3 py-1 min-h-[30px] rounded-xl bg-[#1c1e27] border border-neutral-700/80 text-center flex-1 sm:flex-initial sm:min-w-[150px] shadow-inner flex items-center justify-center">
                   <span className="text-xs sm:text-sm font-extrabold text-white tracking-wide whitespace-nowrap">
                     {INDONESIAN_MONTHS[currentMonth]} {currentYear}
                   </span>
@@ -500,7 +476,7 @@ export default function CalendarPage() {
                   type="button"
                   onClick={handleNextMonth}
                   title="Bulan Berikutnya"
-                  className="p-1 sm:px-2.5 sm:py-1 min-h-[32px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
+                  className="p-1 sm:px-2 sm:py-1 min-h-[30px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] hover:bg-[#252834] active:scale-95 text-neutral-200 hover:text-white transition-all flex items-center justify-center gap-1 text-xs font-semibold shrink-0"
                 >
                   <span className="hidden sm:inline">Berikutnya</span>
                   <ChevronRight className="w-4 h-4" />
@@ -511,18 +487,18 @@ export default function CalendarPage() {
               <button
                 type="button"
                 onClick={handleResetToday}
-                className="text-xs font-semibold px-2.5 sm:px-3 py-1 min-h-[32px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] text-neutral-300 hover:text-white hover:border-mention-yellow hover:bg-[#252834] active:scale-95 transition-all shrink-0 flex items-center justify-center"
+                className="text-xs font-semibold px-2.5 py-1 min-h-[30px] rounded-xl border border-neutral-700/80 bg-[#1c1e27] text-neutral-300 hover:text-white hover:border-mention-yellow hover:bg-[#252834] active:scale-95 transition-all shrink-0 flex items-center justify-center"
               >
                 Hari Ini
               </button>
             </div>
 
             {/* Days of Week Header */}
-            <div className="grid grid-cols-7 gap-1 sm:gap-1.5 pt-2 pb-1 text-center shrink-0">
+            <div className="grid grid-cols-7 gap-1 sm:gap-1.5 pt-1 pb-1 text-center shrink-0">
               {INDONESIAN_DAYS.map((dayName, idx) => (
                 <div
                   key={dayName}
-                  className={`text-[10px] sm:text-xs font-bold uppercase tracking-normal sm:tracking-wider py-0.5 sm:py-1 rounded-md sm:rounded-lg ${
+                  className={`text-[9.5px] sm:text-xs font-bold uppercase tracking-normal sm:tracking-wider py-0.5 rounded-md sm:rounded-lg ${
                     idx >= 5
                       ? 'text-rose-400 bg-rose-500/10 border border-rose-500/20'
                       : 'text-neutral-300 bg-[#1a1c24] border border-neutral-700/40'
@@ -533,9 +509,9 @@ export default function CalendarPage() {
               ))}
             </div>
 
-            {/* 7-Columns Date Grid — Full Height Stretch from Top to Bottom */}
+            {/* 7-Columns Date Grid — Strictly fits 1 screen using 1fr distribution */}
             <div
-              className="grid grid-cols-7 gap-1 sm:gap-1.5 flex-1 min-h-0 w-full"
+              className="grid grid-cols-7 gap-1 sm:gap-1.5 flex-1 min-h-0 w-full overflow-hidden"
               style={{
                 gridTemplateRows: `repeat(${numRows}, minmax(0, 1fr))`,
               }}
@@ -549,20 +525,20 @@ export default function CalendarPage() {
                   <div
                     key={cell.date}
                     onClick={() => handleCellClick(cell.date, cell.isCurrentMonth, dayTasks)}
-                    className={`h-full min-h-[42px] sm:min-h-0 p-1 sm:p-1.5 rounded-lg sm:rounded-xl border transition-all flex flex-col justify-between select-none cursor-pointer active:scale-95 overflow-hidden ${
+                    className={`h-full min-h-[42px] sm:min-h-0 p-1 sm:p-1.5 rounded-lg sm:rounded-xl border transition-all flex flex-col justify-start select-none cursor-pointer active:scale-95 overflow-hidden ${
                       cell.isToday
                         ? isSelected
-                          ? '!bg-[#272a3a] !border-mention-yellow ring-2 ring-mention-yellow shadow-lg shadow-yellow-500/20'
+                          ? '!bg-[#272a38] !border-mention-yellow ring-2 ring-mention-yellow shadow-lg shadow-yellow-500/20'
                           : '!bg-mention-yellow/10 !border-mention-yellow ring-1 ring-mention-yellow/60 shadow-md shadow-yellow-500/10'
                         : isSelected
-                        ? '!bg-[#272a3a] !border-white/80 ring-2 ring-white/50 shadow-md'
+                        ? '!bg-[#272a38] !border-white/80 ring-2 ring-white/50 shadow-md'
                         : cell.isCurrentMonth
                         ? 'bg-[#1a1c25] border-neutral-700/70 hover:border-neutral-500/80 hover:bg-[#20232f] shadow-sm'
                         : 'bg-[#101117]/50 border-neutral-800/50 text-neutral-600 opacity-40 hover:opacity-70'
                     }`}
                   >
                     {/* Date Number + Penanda Hari Ini */}
-                    <div className="flex items-center justify-between leading-none">
+                    <div className="flex items-center justify-between leading-none mb-0.5 sm:mb-1 shrink-0">
                       <span
                         className={`text-[11px] sm:text-xs font-bold leading-none ${
                           cell.isToday
@@ -577,43 +553,40 @@ export default function CalendarPage() {
                         {cell.dayNumber}
                       </span>
 
-                      {/* Small task count or Today pill on desktop */}
-                      {cell.isToday ? (
-                        <span
-                          title="Hari ini"
-                          className="text-[8px] font-black uppercase text-mention-yellow bg-yellow-500/20 border border-yellow-500/30 px-1 py-0.2 rounded hidden sm:inline-block leading-tight"
-                        >
-                          Hari Ini
-                        </span>
-                      ) : hasTasks ? (
-                        <span className="text-[8px] font-bold px-1 py-0.2 rounded-full bg-[#272a38] text-neutral-300 border border-neutral-600/70 hidden sm:inline-block leading-none">
-                          {dayTasks.length}
-                        </span>
-                      ) : null}
-                    </div>
-
-                    {/* Mobile Task Dots Indicator (< sm) - Colored Dots by task.color */}
-                    {hasTasks && (
-                      <div className="flex sm:hidden items-center justify-center gap-1 mt-0.5 pb-0.5 flex-wrap">
-                        {dayTasks.slice(0, 3).map((t, idx) => (
+                      {/* Header right: Today pill, +N lainnya button, or task count */}
+                      <div className="flex items-center gap-1">
+                        {cell.isToday && (
                           <span
-                            key={t.id || idx}
-                            title={t.title}
-                            className="w-1.5 h-1.5 rounded-full shadow-sm ring-1 ring-black/40"
-                            style={{ backgroundColor: t.color || '#FACC15' }}
-                          />
-                        ))}
-                        {dayTasks.length > 3 && (
-                          <span className="text-[7px] font-black text-mention-yellow leading-none">
-                            +{dayTasks.length - 3}
+                            title="Hari ini"
+                            className="text-[7.5px] font-black uppercase text-mention-yellow bg-yellow-500/20 border border-yellow-500/30 px-1 py-0.2 rounded leading-tight hidden sm:inline-block"
+                          >
+                            Hari Ini
                           </span>
                         )}
-                      </div>
-                    )}
 
-                    {/* Desktop Task Pills (sm:) - Stretches neatly */}
-                    <div className="hidden sm:flex mt-0.5 flex-col gap-0.5 justify-end overflow-hidden">
-                      {dayTasks.slice(0, 1).map((t) => (
+                        {dayTasks.length > 2 ? (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDayModal(cell.date, dayTasks);
+                            }}
+                            title={`Ada ${dayTasks.length} tugas pada tanggal ini. Klik untuk lihat lengkap`}
+                            className="px-1.5 py-0.5 rounded bg-mention-yellow hover:bg-yellow-300 text-black font-black text-[7.5px] sm:text-[8px] xl:text-[8.5px] shadow-sm flex items-center gap-0.5 cursor-pointer leading-tight shrink-0 transition-transform hover:scale-105 active:scale-95"
+                          >
+                            +{dayTasks.length - 2} lainnya
+                          </button>
+                        ) : hasTasks ? (
+                          <span className="text-[7.5px] sm:text-[8px] font-bold px-1 py-0.2 rounded-full bg-[#272a38] text-neutral-300 border border-neutral-600/70 hidden sm:inline-block leading-none">
+                            {dayTasks.length}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    {/* Mobile View (< sm): Compact 1-line Title and PIC */}
+                    <div className="flex sm:hidden flex-1 flex-col gap-0.5 min-h-0 overflow-hidden justify-start">
+                      {dayTasks.slice(0, 2).map((t) => (
                         <div
                           key={t.id}
                           onClick={(e) => {
@@ -621,32 +594,83 @@ export default function CalendarPage() {
                             handleOpenDetail(t);
                           }}
                           title={`${t.title} — PIC: ${t.pic}`}
-                          className="h-[18px] sm:h-[19px] px-1.5 rounded bg-[#151722] hover:bg-[#1f2232] border border-neutral-700/80 flex items-center gap-1 cursor-pointer transition-colors overflow-hidden"
+                          className="h-[14px] px-0.5 rounded bg-[#151722] border border-neutral-700/80 flex items-center justify-between gap-0.5 overflow-hidden shrink-0"
                           style={{
                             borderLeftColor: t.color || '#FACC15',
-                            borderLeftWidth: '3px',
+                            borderLeftWidth: '2px',
                           }}
                         >
-                          <span
-                            className="w-1.5 h-1.5 rounded-full shrink-0"
-                            style={{ backgroundColor: t.color || '#FACC15' }}
-                          />
-                          <span className="font-medium truncate text-white text-[9px] sm:text-[10px] leading-none">
+                          <span className="font-semibold truncate text-white text-[7.5px] leading-none">
                             {t.title}
+                          </span>
+                          <span className="truncate text-mention-yellow text-[7px] leading-none font-medium shrink-0 max-w-[45%]">
+                            {t.pic}
                           </span>
                         </div>
                       ))}
 
-                      {dayTasks.length > 1 && (
+                      {dayTasks.length > 2 && (
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleOpenDayModal(cell.date, dayTasks);
                           }}
-                          className="w-full text-center text-[8px] sm:text-[9px] font-bold py-0.2 rounded bg-[#272a38] hover:bg-[#323647] text-mention-yellow border border-neutral-600/70 shadow-sm transition-colors leading-tight truncate"
+                          className="h-[14px] w-full text-center text-[7.5px] font-black rounded bg-mention-yellow hover:bg-yellow-300 text-black border border-yellow-400 truncate leading-none active:scale-95 shrink-0 flex items-center justify-center cursor-pointer shadow-xs"
                         >
-                          +{dayTasks.length - 1} lainnya
+                          +{dayTasks.length - 2} lainnya
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Desktop / Tablet View (sm:): Sleek Horizontal Task Pill (Title & PIC) */}
+                    <div className="hidden sm:flex flex-1 flex-col gap-0.5 min-h-0 overflow-hidden justify-start">
+                      {dayTasks.slice(0, 2).map((t) => (
+                        <div
+                          key={t.id}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenDetail(t);
+                          }}
+                          title={`${t.title} — PIC: ${t.pic}`}
+                          className="h-[17px] sm:h-[18px] xl:h-[19px] px-1 sm:px-1.5 rounded bg-[#151722]/95 hover:bg-[#1f2232] border border-neutral-700/80 hover:border-neutral-500/90 flex items-center justify-between gap-1 cursor-pointer transition-colors overflow-hidden group/task shadow-sm shrink-0"
+                          style={{
+                            borderLeftColor: t.color || '#FACC15',
+                            borderLeftWidth: '2.5px',
+                          }}
+                        >
+                          {/* Left: Title & Color Dot */}
+                          <div className="flex items-center gap-1 min-w-0 flex-1">
+                            <span
+                              className="w-1.5 h-1.5 rounded-full shrink-0 shadow-sm"
+                              style={{ backgroundColor: t.color || '#FACC15' }}
+                            />
+                            <span className="font-semibold truncate text-white text-[9px] sm:text-[9.5px] leading-none group-hover/task:text-mention-yellow transition-colors">
+                              {t.title}
+                            </span>
+                          </div>
+
+                          {/* Right: PIC Badge */}
+                          <div className="flex items-center gap-0.5 text-[8px] sm:text-[8.5px] text-neutral-300 group-hover/task:text-white shrink-0 font-medium pl-0.5 max-w-[48%]">
+                            <User className="w-2.5 h-2.5 text-mention-yellow shrink-0" />
+                            <span className="truncate">{t.pic}</span>
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* Button +N lainnya jika ada lebih dari 2 tugas */}
+                      {dayTasks.length > 2 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenDayModal(cell.date, dayTasks);
+                          }}
+                          title={`Lihat semua ${dayTasks.length} tugas untuk tanggal ini`}
+                          className="h-[16px] sm:h-[17px] w-full text-center text-[8px] sm:text-[8.5px] font-black px-1.5 rounded bg-mention-yellow hover:bg-yellow-300 text-black border border-yellow-400 shadow-md transition-all leading-none truncate active:scale-95 shrink-0 cursor-pointer flex items-center justify-center gap-1"
+                        >
+                          <Plus className="w-2.5 h-2.5 stroke-[3]" />
+                          <span>{dayTasks.length - 2} lainnya</span>
                         </button>
                       )}
                     </div>
