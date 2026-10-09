@@ -15,6 +15,10 @@ export async function GET() {
       getNotificationEvents(30),
     ]);
 
+    if (status.isConnected && config.target_group_jid) {
+      dispatchPendingNotifications().catch(() => {});
+    }
+
     return NextResponse.json({
       success: true,
       status,

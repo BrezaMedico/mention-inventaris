@@ -3,6 +3,7 @@ import {
   getWhatsAppConfig,
   updateWhatsAppConfig,
   getNotificationEvents,
+  getPendingNotificationEvents,
   markNotificationSent,
   markNotificationFailed,
 } from '@/lib/db';
@@ -148,7 +149,7 @@ export async function dispatchPendingNotifications(): Promise<{ sentCount: numbe
     return { sentCount: 0, failedCount: 0 };
   }
 
-  const pendingEvents = (await getNotificationEvents(20)).filter((e) => e.status === 'PENDING');
+  const pendingEvents = await getPendingNotificationEvents();
   let sentCount = 0;
   let failedCount = 0;
 
@@ -158,6 +159,17 @@ export async function dispatchPendingNotifications(): Promise<{ sentCount: numbe
       await markNotificationSent(event.id);
       sentCount++;
     } else {
+      // If service is unreachable or socket dropped, stop and leave remaining items as PENDING
+      const isConnectionError =
+        res.error?.includes('not currently connected') ||
+        res.error?.includes('ECONNREFUSED') ||
+        res.error?.includes('Service Unavailable') ||
+        res.error?.includes('tidak dapat dihubungi');
+
+      if (isConnectionError) {
+        break;
+      }
+
       await markNotificationFailed(event.id, res.error || 'Pengiriman gagal');
       failedCount++;
     }

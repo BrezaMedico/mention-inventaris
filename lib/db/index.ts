@@ -1915,6 +1915,24 @@ export async function getNotificationEvents(limit = 50): Promise<NotificationEve
     .slice(0, limit);
 }
 
+export async function getPendingNotificationEvents(): Promise<NotificationEvent[]> {
+  try {
+    const { data, error } = await supabase
+      .from('notification_events')
+      .select('*')
+      .eq('status', 'PENDING')
+      .order('created_at', { ascending: true });
+    if (!error && data !== null) return data as NotificationEvent[];
+  } catch (err) {
+    console.error('Supabase getPendingNotificationEvents error:', err);
+  }
+
+  const db = readLocalDb();
+  return (db.notification_events || [])
+    .filter((n) => n.status === 'PENDING')
+    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+}
+
 export async function markNotificationSent(id: string): Promise<void> {
   const now = new Date().toISOString();
   try {

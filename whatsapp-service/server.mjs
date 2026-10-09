@@ -99,6 +99,8 @@ async function connectToWhatsApp() {
         currentQrDataUrl = null;
         connectedUser = sock.user?.id ? sock.user.id.split(':')[0] : 'Connected';
         console.log('WhatsApp connection opened successfully for user:', connectedUser);
+        // Otomatis kirim notifikasi yang sempat tertunda (PENDING) saat WhatsApp tersambung
+        triggerDispatchPending();
       }
     });
   } catch (err) {
@@ -230,6 +232,28 @@ async function triggerTaskReminderCron() {
   }
 }
 
+// Auto-flush all PENDING notifications from Next.js queue
+async function triggerDispatchPending() {
+  try {
+    const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
+    const res = await fetch(`${nextApiUrl}/api/cron/dispatch`, {
+      method: 'POST',
+      headers: {
+        'x-cron-secret': SERVICE_SECRET,
+        'x-service-secret': SERVICE_SECRET,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.dispatched?.sentCount > 0) {
+        console.log(`[Auto-Dispatch] Successfully sent ${data.dispatched.sentCount} queued WhatsApp notifications.`);
+      }
+    }
+  } catch (err) {
+    // Silent catch if main web server is temporarily down
+  }
+}
+
 // Check every 60 seconds:
 // 1. Triggers at 07:00 AM daily for Task H-1 deadlines (anti-spam, strictly 1 non-duplicate message)
 // 2. Triggers at 08:00 AM daily for overdue item reminders
@@ -287,6 +311,13 @@ setInterval(async () => {
     }
   }
 }, 30 * 1000);
+
+// Auto-flush pending notifications every 2 minutes while connected
+setInterval(() => {
+  if (isConnected) {
+    triggerDispatchPending();
+  }
+}, 2 * 60 * 1000);
 
 // Anti-Sleep Self-Ping for Render: Render provides RENDER_EXTERNAL_URL automatically
 const externalUrl = process.env.RENDER_EXTERNAL_URL || process.env.SELF_URL;
