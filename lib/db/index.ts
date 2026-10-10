@@ -22,7 +22,7 @@ import {
   TaskPriority,
   TaskReminder,
 } from '@/types';
-import { formatDueDateIndo, getLocalTodayStr } from '@/lib/calendar';
+import { formatDueDateIndo, getLocalTodayStr, formatFullDateIndo, getJakartaDateStrings } from '@/lib/calendar';
 
 function getDbFilePath(): string {
   const defaultPath = path.join(process.cwd(), 'data', 'local_db.json');
@@ -2222,121 +2222,356 @@ export async function deleteTask(id: string): Promise<{ success: boolean; error?
   return { success: true };
 }
 
+function formatTaskItemForWhatsApp(task: Task, index: number): string {
+  const priorityLabels: Record<string, string> = {
+    HIGH: 'Tinggi (High)',
+    MEDIUM: 'Sedang (Medium)',
+    LOW: 'Rendah (Low)',
+  };
+  const priorityText = priorityLabels[task.priority] || task.priority;
+
+  let item = `${index}. *${task.title}*`;
+  item += `\n   👤 PIC: ${task.pic}`;
+  item += `\n   ⚡ Prioritas: ${priorityText}`;
+
+  // Bersihkan tag warna bawaan jika tersimpan di deskripsi (misal [color:#FACC15])
+  const cleanDesc = (task.description || '').replace(/\[color:[^\]]+\]/g, '').trim();
+  if (cleanDesc) {
+    const shortDesc = cleanDesc.length > 130 ? `${cleanDesc.slice(0, 127)}...` : cleanDesc;
+    item += `\n   📝 Deskripsi: ${shortDesc}`;
+  }
+
+  return item;
+}
+
 /**
- * Pengingat Kalender H-1 (Pukul 07:00 Pagi)
- * Anti-Spam: Mencegah pesan dobel dengan pengecekan ganda di level task.h1_reminder_sent_at,
- * tabel task_reminders, dan event notification_events.
+ * PENGINGAT PAGI (Pukul 07:00 Pagi WIB):
+ * Mengingatkan seluruh tugas yang jatuh tempo pada HARI INI (Hari H / H-0).
+ * Mencakup prioritas: RENDAH (LOW), SEDANG (MEDIUM), dan TINGGI (HIGH).
+ * Seluruh tugas hari ini digabung dalam 1 pesan WhatsApp (Anti-Spam).
+ * Jika tidak ada tugas hari ini, tidak ada pesan kosong yang dikirim.
  */
-export async function checkAndCreateTaskH1Reminders(): Promise<{ newEvents: NotificationEvent[]; skippedCount: number; targetDate: string }> {
+export async function checkAndCreateTaskMorningReminders(): Promise<{
+  newEvents: NotificationEvent[];
+  skippedCount: number;
+  targetDate: string;
+  taskCount: number;
+}> {
   const db = readLocalDb();
   if (!db.tasks) db.tasks = [];
   if (!db.task_reminders) db.task_reminders = [];
+  if (!db.notification_events) db.notification_events = [];
 
-  // Hitung tanggal besok (H-1) dalam zona waktu Asia/Jakarta (WIB)
-  const now = new Date();
-  const jakartaToday = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Jakarta',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(now); // "YYYY-MM-DD"
+  const { today: jakartaToday } = getJakartaDateStrings();
 
-  // Tambahkan 1 hari (24 jam)
-  const tomorrowTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-  const jakartaTomorrow = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Jakarta',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(tomorrowTime); // "YYYY-MM-DD"
+  // Ambil semua tasks dari database
+  const tasksList = await getAllTasks();
 
-  // Ambil semua tasks
-  let tasksList: Task[] = [];
-  try {
-    const { data, error } = await supabase.from('tasks').select('*');
-    if (!error && data !== null && data.length > 0) {
-      tasksList = data as Task[];
-    }
-  } catch {}
-  if (tasksList.length === 0) {
-    tasksList = db.tasks;
-  }
-
-  // Target task adalah yang tenggatnya BESOK (artinya hari ini tepat H-1 sebelum deadline)
-  const h1Tasks = tasksList.filter((t) => t.due_date === jakartaTomorrow);
-  const newEvents: NotificationEvent[] = [];
+  // Filter tugas hari ini (semua prioritas: LOW, MEDIUM, HIGH)
+  const candidateTasks = tasksList.filter((t) => t.due_date === jakartaToday);
+  const eligibleTasks: Task[] = [];
   let skippedCount = 0;
 
-  for (const task of h1Tasks) {
-    // ANTI-SPAM & DEDUPLICATION:
-    // 1. Cek apakah task sudah ditandai terkirim
+  for (const task of candidateTasks) {
+    // 1. Cek apakah sudah ditandai di task
+    if (task.h0_reminder_sent_at) {
+      skippedCount++;
+      continue;
+    }
+
+    // 2. Cek apakah sudah tercatat di tabel log task_reminders untuk H-0
+    const alreadyLogged = (db.task_reminders || []).some(
+      (r) => r.task_id === task.id && r.due_date === task.due_date && r.reminder_type === 'H-0'
+    );
+    if (alreadyLogged) {
+      skippedCount++;
+      continue;
+    }
+
+    // 3. Cek apakah ada di notification_events
+    const alreadyInQueue = (db.notification_events || []).some(
+      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-0]`)
+    );
+    if (alreadyInQueue) {
+      skippedCount++;
+      continue;
+    }
+
+    eligibleTasks.push(task);
+  }
+
+  // Jika tidak ada tugas yang valid, jangan kirim pesan kosong
+  if (eligibleTasks.length === 0) {
+    return {
+      newEvents: [],
+      skippedCount,
+      targetDate: jakartaToday,
+      taskCount: 0,
+    };
+  }
+
+  // Susun 1 pesan gabungan untuk semua tugas hari ini
+  const formattedItems = eligibleTasks
+    .map((task, idx) => formatTaskItemForWhatsApp(task, idx + 1))
+    .join('\n\n');
+
+  const refTags = eligibleTasks.map((t) => `${t.id}:H-0`).join(',');
+  const fullDateIndo = formatFullDateIndo(jakartaToday);
+
+  const message = `⏰ *[PENGINGAT TUGAS HARI INI]*
+_Waktu Pengingat: 07:00 WIB_
+📅 Hari ini: ${fullDateIndo}
+
+Semangat pagi Rekan Tim Mention! Berikut daftar tugas organisasi yang memiliki tenggat hari ini:
+
+${formattedItems}
+
+Mohon dapat diselesaikan tepat waktu hari ini. Selamat beraktivitas!
+[REF:${refTags}]`;
+
+  const nowIso = new Date().toISOString();
+  const event: NotificationEvent = {
+    id: crypto.randomUUID(),
+    type: 'TASK_REMINDER',
+    message,
+    status: 'PENDING',
+    created_at: nowIso,
+  };
+
+  db.notification_events.push(event);
+
+  // Catat riwayat pengingat untuk tiap tugas
+  for (const task of eligibleTasks) {
+    db.task_reminders.push({
+      id: crypto.randomUUID(),
+      task_id: task.id,
+      reminder_type: 'H-0',
+      due_date: task.due_date,
+      sent_at: nowIso,
+    });
+
+    task.h0_reminder_sent_at = nowIso;
+    const localTask = db.tasks.find((t) => t.id === task.id);
+    if (localTask) {
+      localTask.h0_reminder_sent_at = nowIso;
+      localTask.updated_at = nowIso;
+    }
+
+    // Sync ke Supabase
+    try {
+      await supabase.from('task_reminders').insert([{
+        task_id: task.id,
+        reminder_type: 'H-0',
+        due_date: task.due_date,
+        sent_at: nowIso,
+      }]);
+    } catch {}
+
+    try {
+      await supabase.from('tasks').update({
+        h0_reminder_sent_at: nowIso,
+        updated_at: nowIso,
+      }).eq('id', task.id);
+    } catch {}
+  }
+
+  try {
+    await supabase.from('notification_events').insert([{
+      id: event.id,
+      type: 'TASK_REMINDER',
+      message: event.message,
+      status: 'PENDING',
+    }]);
+  } catch {}
+
+  writeLocalDb(db);
+
+  return {
+    newEvents: [event],
+    skippedCount,
+    targetDate: jakartaToday,
+    taskCount: eligibleTasks.length,
+  };
+}
+
+/**
+ * PENGINGAT SORE (Pukul 15:00 / 3 Sore WIB):
+ * 1. H-1 (Besok): Untuk tugas berprioritas SEDANG (MEDIUM) & TINGGI (HIGH).
+ * 2. H-2 (Lusa): Untuk tugas berprioritas TINGGI (HIGH).
+ * Jika ada tugas H-1 dan H-2 sekaligus, keduanya digabungkan ke dalam 1 pesan WhatsApp (Anti-Spam)
+ * dengan pemisahan bagian yang jelas dan mudah dibaca.
+ * Jika tidak ada tugas yang valid, tidak ada pesan kosong yang dikirim.
+ */
+export async function checkAndCreateTaskAfternoonReminders(): Promise<{
+  newEvents: NotificationEvent[];
+  skippedCount: number;
+  targetDates: { tomorrow: string; dayAfterTomorrow: string };
+  taskCount: number;
+}> {
+  const db = readLocalDb();
+  if (!db.tasks) db.tasks = [];
+  if (!db.task_reminders) db.task_reminders = [];
+  if (!db.notification_events) db.notification_events = [];
+
+  const { tomorrow: jakartaTomorrow, dayAfterTomorrow: jakartaDayAfterTomorrow } = getJakartaDateStrings();
+
+  // Ambil semua tasks dari database
+  const tasksList = await getAllTasks();
+
+  const eligibleH1Tasks: Task[] = [];
+  const eligibleH2Tasks: Task[] = [];
+  let skippedCount = 0;
+
+  // 1. Evaluasi tugas BESOK (H-1): Prioritas SEDANG & TINGGI
+  const h1Candidates = tasksList.filter(
+    (t) => t.due_date === jakartaTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
+  );
+
+  for (const task of h1Candidates) {
     if (task.h1_reminder_sent_at) {
       skippedCount++;
       continue;
     }
-
-    // 2. Cek apakah sudah tercatat di db.task_reminders untuk task ini & due_date ini
-    const alreadySentInLog = db.task_reminders.some(
+    const alreadyLogged = (db.task_reminders || []).some(
       (r) => r.task_id === task.id && r.due_date === task.due_date && r.reminder_type === 'H-1'
     );
-    if (alreadySentInLog) {
+    if (alreadyLogged) {
       skippedCount++;
       continue;
     }
-
-    // 3. Cek apakah ada notification_event (PENDING atau SENT) dengan identifier task ini
-    const alreadyInEvents = db.notification_events.some(
-      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}]`)
+    const alreadyInQueue = (db.notification_events || []).some(
+      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-1]`)
     );
-    if (alreadyInEvents) {
+    if (alreadyInQueue) {
       skippedCount++;
       continue;
     }
+    eligibleH1Tasks.push(task);
+  }
 
-    // Format prioritas tugas
-    const priorityLabels: Record<string, string> = {
-      HIGH: 'Tinggi (High)',
-      MEDIUM: 'Sedang (Medium)',
-      LOW: 'Rendah (Low)',
+  // 2. Evaluasi tugas LUSA (H-2): Hanya Prioritas TINGGI (HIGH)
+  const h2Candidates = tasksList.filter(
+    (t) => t.due_date === jakartaDayAfterTomorrow && t.priority === 'HIGH'
+  );
+
+  for (const task of h2Candidates) {
+    if (task.h2_reminder_sent_at) {
+      skippedCount++;
+      continue;
+    }
+    const alreadyLogged = (db.task_reminders || []).some(
+      (r) => r.task_id === task.id && r.due_date === task.due_date && r.reminder_type === 'H-2'
+    );
+    if (alreadyLogged) {
+      skippedCount++;
+      continue;
+    }
+    const alreadyInQueue = (db.notification_events || []).some(
+      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-2]`)
+    );
+    if (alreadyInQueue) {
+      skippedCount++;
+      continue;
+    }
+    eligibleH2Tasks.push(task);
+  }
+
+  const totalEligibleCount = eligibleH1Tasks.length + eligibleH2Tasks.length;
+
+  // Jika tidak ada tugas besok maupun lusa yang perlu diingatkan, jangan kirim pesan kosong
+  if (totalEligibleCount === 0) {
+    return {
+      newEvents: [],
+      skippedCount,
+      targetDates: { tomorrow: jakartaTomorrow, dayAfterTomorrow: jakartaDayAfterTomorrow },
+      taskCount: 0,
     };
-    const priorityText = priorityLabels[task.priority] || task.priority;
+  }
 
-    // Susun pesan WhatsApp yang rapi dan terstruktur
-    const message = `[PENGINGAT TENGGAT TUGAS (H-1)]
+  const tomorrowFullDate = formatFullDateIndo(jakartaTomorrow);
+  const dayAfterTomorrowFullDate = formatFullDateIndo(jakartaDayAfterTomorrow);
 
-Halo Tim Mention, terdapat tugas inventaris/organisasi yang akan mencapai batas tenggat waktu besok:
+  let message = '';
 
-📌 Judul Tugas:
-${task.title}
+  // Kasus A: Ada kedua tugas (H-1 dan H-2) -> Gabungkan dengan pemisahan yang sangat jelas
+  if (eligibleH1Tasks.length > 0 && eligibleH2Tasks.length > 0) {
+    const h1Items = eligibleH1Tasks
+      .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
+      .join('\n\n');
+    const h2Items = eligibleH2Tasks
+      .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
+      .join('\n\n');
 
-📝 Deskripsi:
-${task.description?.trim() ? task.description.trim() : '-'}
+    message = `🔔 *[PENGINGAT TUGAS ORGANISASI]*
+_Waktu Pengingat: 15:00 WIB_
 
-👤 PIC (Penanggung Jawab):
-${task.pic}
+Halo Rekan Tim Mention, berikut pengingat tugas organisasi yang mendekati batas tenggat:
 
-📅 Tenggat Waktu:
-${formatDueDateIndo(task.due_date)}
+━━━━━━━━━━━━━━━━━━━
+📅 *TUGAS BESOK (H-1)*
+Tenggat: ${tomorrowFullDate}
+━━━━━━━━━━━━━━━━━━━
+${h1Items}
 
-⚡ Prioritas:
-${priorityText}
+━━━━━━━━━━━━━━━━━━━
+📅 *TUGAS LUSA (H-2)*
+Tenggat: ${dayAfterTomorrowFullDate}
+━━━━━━━━━━━━━━━━━━━
+${h2Items}
 
-Mohon untuk dipastikan dan diselesaikan tepat waktu. Terima kasih!
-[REF:${task.id}]`;
+Mohon dipersiapkan dan dikoordinasikan dengan baik. Terima kasih!`;
+  } else if (eligibleH1Tasks.length > 0) {
+    // Kasus B: Hanya tugas besok (H-1)
+    const h1Items = eligibleH1Tasks
+      .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
+      .join('\n\n');
 
-    const nowIso = new Date().toISOString();
-    const event: NotificationEvent = {
-      id: crypto.randomUUID(),
-      type: 'TASK_REMINDER',
-      message,
-      status: 'PENDING',
-      created_at: nowIso,
-    };
+    message = `🔔 *[PENGINGAT TUGAS BESOK (H-1)]*
+_Waktu Pengingat: 15:00 WIB_
+📅 Tenggat: ${tomorrowFullDate}
 
-    newEvents.push(event);
-    db.notification_events.push(event);
+Halo Rekan Tim Mention, terdapat tugas organisasi yang memiliki batas tenggat waktu besok:
 
-    // Catat ke db.task_reminders
+${h1Items}
+
+Mohon dipersiapkan dan diselesaikan tepat waktu. Terima kasih!`;
+  } else {
+    // Kasus C: Hanya tugas lusa (H-2)
+    const h2Items = eligibleH2Tasks
+      .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
+      .join('\n\n');
+
+    message = `🔔 *[PENGINGAT TUGAS LUSA (H-2)]*
+_Waktu Pengingat: 15:00 WIB_
+📅 Tenggat: ${dayAfterTomorrowFullDate}
+
+Halo Rekan Tim Mention, terdapat tugas prioritas tinggi yang memiliki batas tenggat waktu lusa:
+
+${h2Items}
+
+Mohon mulai dipersiapkan dan dikoordinasikan lebih awal. Terima kasih!`;
+  }
+
+  // Tambahkan tag ref pelacak deduplikasi
+  const allRefTags = [
+    ...eligibleH1Tasks.map((t) => `${t.id}:H-1`),
+    ...eligibleH2Tasks.map((t) => `${t.id}:H-2`),
+  ].join(',');
+  message += `\n[REF:${allRefTags}]`;
+
+  const nowIso = new Date().toISOString();
+  const event: NotificationEvent = {
+    id: crypto.randomUUID(),
+    type: 'TASK_REMINDER',
+    message,
+    status: 'PENDING',
+    created_at: nowIso,
+  };
+
+  db.notification_events.push(event);
+
+  // Update logging dan status untuk tugas H-1
+  for (const task of eligibleH1Tasks) {
     db.task_reminders.push({
       id: crypto.randomUUID(),
       task_id: task.id,
@@ -2345,7 +2580,6 @@ Mohon untuk dipastikan dan diselesaikan tepat waktu. Terima kasih!
       sent_at: nowIso,
     });
 
-    // Update task status di db
     task.h1_reminder_sent_at = nowIso;
     const localTask = db.tasks.find((t) => t.id === task.id);
     if (localTask) {
@@ -2353,14 +2587,16 @@ Mohon untuk dipastikan dan diselesaikan tepat waktu. Terima kasih!
       localTask.updated_at = nowIso;
     }
 
-    // Sync ke Supabase jika ada
     try {
-      await supabase.from('notification_events').insert([{
-        id: event.id,
-        type: 'TASK_REMINDER',
-        message: event.message,
-        status: 'PENDING',
+      await supabase.from('task_reminders').insert([{
+        task_id: task.id,
+        reminder_type: 'H-1',
+        due_date: task.due_date,
+        sent_at: nowIso,
       }]);
+    } catch {}
+
+    try {
       await supabase.from('tasks').update({
         h1_reminder_sent_at: nowIso,
         updated_at: nowIso,
@@ -2368,10 +2604,131 @@ Mohon untuk dipastikan dan diselesaikan tepat waktu. Terima kasih!
     } catch {}
   }
 
-  if (newEvents.length > 0) {
-    writeLocalDb(db);
+  // Update logging dan status untuk tugas H-2
+  for (const task of eligibleH2Tasks) {
+    db.task_reminders.push({
+      id: crypto.randomUUID(),
+      task_id: task.id,
+      reminder_type: 'H-2',
+      due_date: task.due_date,
+      sent_at: nowIso,
+    });
+
+    task.h2_reminder_sent_at = nowIso;
+    const localTask = db.tasks.find((t) => t.id === task.id);
+    if (localTask) {
+      localTask.h2_reminder_sent_at = nowIso;
+      localTask.updated_at = nowIso;
+    }
+
+    try {
+      await supabase.from('task_reminders').insert([{
+        task_id: task.id,
+        reminder_type: 'H-2',
+        due_date: task.due_date,
+        sent_at: nowIso,
+      }]);
+    } catch {}
+
+    try {
+      await supabase.from('tasks').update({
+        h2_reminder_sent_at: nowIso,
+        updated_at: nowIso,
+      }).eq('id', task.id);
+    } catch {}
   }
 
-  return { newEvents, skippedCount, targetDate: jakartaTomorrow };
+  try {
+    await supabase.from('notification_events').insert([{
+      id: event.id,
+      type: 'TASK_REMINDER',
+      message: event.message,
+      status: 'PENDING',
+    }]);
+  } catch {}
+
+  writeLocalDb(db);
+
+  return {
+    newEvents: [event],
+    skippedCount,
+    targetDates: { tomorrow: jakartaTomorrow, dayAfterTomorrow: jakartaDayAfterTomorrow },
+    taskCount: totalEligibleCount,
+  };
 }
+
+/**
+ * Controller utama pengingat jadwal tugas kalender:
+ * mode:
+ * - 'morning': Jalankan cek pengingat pagi (07:00 WIB, Hari H)
+ * - 'afternoon': Jalankan cek pengingat sore (15:00 WIB, H-1 Sedang/Tinggi & H-2 Tinggi)
+ * - 'all': Jalankan kedua pengecekan (pagi dan sore)
+ * - 'auto': Otomatis tentukan berdasarkan jam saat ini di WIB (< 12 = pagi, >= 12 = sore)
+ */
+export async function checkAndCreateTaskScheduleReminders(
+  mode: 'auto' | 'morning' | 'afternoon' | 'all' = 'auto'
+): Promise<{
+  newEvents: NotificationEvent[];
+  skippedCount: number;
+  taskCount: number;
+  modeExecuted: string;
+}> {
+  let resolvedMode = mode;
+  if (resolvedMode === 'auto') {
+    const now = new Date();
+    let currentHour = 12;
+    try {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Jakarta',
+        hour: 'numeric',
+        hour12: false,
+      }).format(now);
+      currentHour = parseInt(parts, 10);
+    } catch {}
+    resolvedMode = currentHour < 12 ? 'morning' : 'afternoon';
+  }
+
+  const allEvents: NotificationEvent[] = [];
+  let totalSkipped = 0;
+  let totalTasks = 0;
+
+  if (resolvedMode === 'morning' || resolvedMode === 'all') {
+    const morningRes = await checkAndCreateTaskMorningReminders();
+    allEvents.push(...morningRes.newEvents);
+    totalSkipped += morningRes.skippedCount;
+    totalTasks += morningRes.taskCount;
+  }
+
+  if (resolvedMode === 'afternoon' || resolvedMode === 'all') {
+    const afternoonRes = await checkAndCreateTaskAfternoonReminders();
+    allEvents.push(...afternoonRes.newEvents);
+    totalSkipped += afternoonRes.skippedCount;
+    totalTasks += afternoonRes.taskCount;
+  }
+
+  return {
+    newEvents: allEvents,
+    skippedCount: totalSkipped,
+    taskCount: totalTasks,
+    modeExecuted: resolvedMode,
+  };
+}
+
+/**
+ * Backward compatibility wrapper untuk caller lama
+ */
+export async function checkAndCreateTaskH1Reminders(): Promise<{
+  newEvents: NotificationEvent[];
+  skippedCount: number;
+  targetDate: string;
+}> {
+  const res = await checkAndCreateTaskScheduleReminders('auto');
+  const { tomorrow } = getJakartaDateStrings();
+  return {
+    newEvents: res.newEvents,
+    skippedCount: res.skippedCount,
+    targetDate: tomorrow,
+  };
+}
+
 

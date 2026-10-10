@@ -26,6 +26,37 @@ export const INDONESIAN_MONTHS = [
 ];
 
 export const INDONESIAN_DAYS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+export const INDONESIAN_FULL_DAYS = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+export function formatFullDateIndo(dateStr: string): string {
+  if (!dateStr) return '-';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const dateObj = new Date(Date.UTC(year, month, day, 12, 0, 0));
+  const dayName = INDONESIAN_FULL_DAYS[dateObj.getUTCDay()] || '';
+  const monthName = INDONESIAN_MONTHS[month] || '';
+  return `${dayName}, ${day} ${monthName} ${year}`;
+}
+
+export function getJakartaDateStrings(refDate = new Date()): {
+  today: string;
+  tomorrow: string;
+  dayAfterTomorrow: string;
+} {
+  const parts = getLocalTodayStr(refDate);
+  const [y, m, d] = parts.split('-').map(Number);
+  const dObj = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+  const tomorrowObj = new Date(dObj.getTime() + 24 * 60 * 60 * 1000);
+  const dayAfterTomorrowObj = new Date(dObj.getTime() + 48 * 60 * 60 * 1000);
+  return {
+    today: parts,
+    tomorrow: tomorrowObj.toISOString().slice(0, 10),
+    dayAfterTomorrow: dayAfterTomorrowObj.toISOString().slice(0, 10),
+  };
+}
 
 export function formatDueDateIndo(dateStr: string): string {
   if (!dateStr) return '-';

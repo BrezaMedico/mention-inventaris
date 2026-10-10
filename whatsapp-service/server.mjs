@@ -192,15 +192,17 @@ app.post('/trigger-cron', async (req, res) => {
 
 app.post('/trigger-task-reminder', async (req, res) => {
   try {
-    await triggerTaskReminderCron();
-    res.json({ success: true, message: 'Task H-1 reminder check triggered manually' });
+    const mode = req.query.mode || req.body?.mode || 'auto';
+    await triggerTaskReminderCron(mode);
+    res.json({ success: true, message: `Task reminder check (${mode}) triggered manually` });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
 let lastOverdueRunDay = '';
-let lastTaskReminderRunDay = '';
+let lastMorningTaskRunDay = '';
+let lastAfternoonTaskRunDay = '';
 
 async function triggerOverdueCron() {
   try {
@@ -208,7 +210,10 @@ async function triggerOverdueCron() {
     console.log('[08:00 AM Cron] Dispatching overdue reminders at', new Date().toISOString());
     const res = await fetch(`${nextApiUrl}/api/cron/overdue`, {
       method: 'POST',
-      headers: { 'x-cron-secret': SERVICE_SECRET },
+      headers: {
+        'x-cron-secret': SERVICE_SECRET,
+        'x-service-secret': SERVICE_SECRET,
+      },
     });
     const result = await res.json();
     console.log('[08:00 AM Cron] Result:', result);
@@ -217,18 +222,21 @@ async function triggerOverdueCron() {
   }
 }
 
-async function triggerTaskReminderCron() {
+async function triggerTaskReminderCron(mode = 'auto') {
   try {
     const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
-    console.log('[07:00 AM Cron] Dispatching task H-1 reminders at', new Date().toISOString());
-    const res = await fetch(`${nextApiUrl}/api/cron/task-reminder`, {
+    console.log(`[Task Reminder Cron - ${mode}] Dispatching at`, new Date().toISOString());
+    const res = await fetch(`${nextApiUrl}/api/cron/task-reminder?mode=${mode}`, {
       method: 'POST',
-      headers: { 'x-cron-secret': SERVICE_SECRET },
+      headers: {
+        'x-cron-secret': SERVICE_SECRET,
+        'x-service-secret': SERVICE_SECRET,
+      },
     });
     const result = await res.json();
-    console.log('[07:00 AM Cron] Result:', result);
+    console.log(`[Task Reminder Cron - ${mode}] Result:`, result);
   } catch (err) {
-    console.warn('[07:00 AM Cron] Failed to trigger Next.js task reminder cron API:', err.message);
+    console.warn(`[Task Reminder Cron - ${mode}] Failed to trigger Next.js cron API:`, err.message);
   }
 }
 
@@ -254,15 +262,15 @@ async function triggerDispatchPending() {
   }
 }
 
-// Check every 60 seconds:
-// 1. Triggers at 07:00 AM daily for Task H-1 deadlines (anti-spam, strictly 1 non-duplicate message)
-// 2. Triggers at 08:00 AM daily for overdue item reminders
+// Check every 30 seconds for accurate schedule trigger:
+// 1. 07:00 AM WIB: Pengingat tugas Hari H (semua prioritas: Low, Medium, High)
+// 2. 08:00 AM WIB: Pengingat keterlambatan peminjaman barang (Overdue)
+// 3. 15:00 PM (3 Sore) WIB: Pengingat tugas H-1 (Sedang & Tinggi) dan H-2 (Tinggi)
 setInterval(() => {
   const now = new Date();
   
   // Ambil jam & menit dalam zona waktu Asia/Jakarta (WIB)
   let currentHour = now.getHours();
-  let currentMinute = now.getMinutes();
   let todayStr = now.toISOString().slice(0, 10);
   
   try {
@@ -277,29 +285,33 @@ setInterval(() => {
     });
     const parts = wibFormatter.formatToParts(now);
     const hPart = parts.find((p) => p.type === 'hour')?.value;
-    const mPart = parts.find((p) => p.type === 'minute')?.value;
     const yPart = parts.find((p) => p.type === 'year')?.value;
     const moPart = parts.find((p) => p.type === 'month')?.value;
     const dPart = parts.find((p) => p.type === 'day')?.value;
-    if (hPart && mPart) {
+    if (hPart) {
       currentHour = parseInt(hPart, 10);
-      currentMinute = parseInt(mPart, 10);
       todayStr = `${yPart}-${moPart}-${dPart}`;
     }
   } catch {}
 
-  // 1. Tepat jam 07:00 pagi WIB untuk pengingat kalender H-1 (hanya sekali per hari kalender)
-  if (currentHour === 7 && currentMinute === 0 && lastTaskReminderRunDay !== todayStr) {
-    lastTaskReminderRunDay = todayStr;
-    triggerTaskReminderCron();
+  // 1. Jam 07:00 Pagi WIB: Pengingat Hari H (H-0)
+  if (currentHour === 7 && lastMorningTaskRunDay !== todayStr) {
+    lastMorningTaskRunDay = todayStr;
+    triggerTaskReminderCron('morning');
   }
 
-  // 2. Tepat jam 08:00 pagi WIB untuk overdue barang
-  if (currentHour === 8 && currentMinute === 0 && lastOverdueRunDay !== todayStr) {
+  // 2. Jam 08:00 Pagi WIB: Overdue barang
+  if (currentHour === 8 && lastOverdueRunDay !== todayStr) {
     lastOverdueRunDay = todayStr;
     triggerOverdueCron();
   }
-}, 60 * 1000);
+
+  // 3. Jam 15:00 (3 Sore) WIB: Pengingat H-1 (Sedang/Tinggi) & H-2 (Tinggi)
+  if (currentHour === 15 && lastAfternoonTaskRunDay !== todayStr) {
+    lastAfternoonTaskRunDay = todayStr;
+    triggerTaskReminderCron('afternoon');
+  }
+}, 30 * 1000);
 
 // 24/7 Keep-Alive Heartbeat: Pings presence every 30 seconds so socket stays awake
 setInterval(async () => {

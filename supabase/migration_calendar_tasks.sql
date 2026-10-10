@@ -14,9 +14,15 @@ CREATE TABLE IF NOT EXISTS tasks (
     priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date DATE NOT NULL,
     h1_reminder_sent_at TIMESTAMPTZ,
+    h2_reminder_sent_at TIMESTAMPTZ,
+    h0_reminder_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h1_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h2_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h0_reminder_sent_at TIMESTAMPTZ;
 
 -- 2. Buat Tabel task_reminders (Log Riwayat Notifikasi H-1 WhatsApp)
 CREATE TABLE IF NOT EXISTS task_reminders (

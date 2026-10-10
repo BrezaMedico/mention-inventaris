@@ -159,6 +159,8 @@ CREATE TABLE tasks (
     priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date DATE NOT NULL,
     h1_reminder_sent_at TIMESTAMPTZ,
+    h2_reminder_sent_at TIMESTAMPTZ,
+    h0_reminder_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );

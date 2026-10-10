@@ -170,7 +170,7 @@ export default function AdminCalendarPage() {
       setTriggeringReminder(true);
       setReminderMessage('');
       setReminderError('');
-      const res = await fetch('/api/cron/task-reminder', {
+      const res = await fetch('/api/cron/task-reminder?mode=all', {
         method: 'POST',
       });
       const data = await res.json();
@@ -212,19 +212,19 @@ export default function AdminCalendarPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-            {/* Tombol Cek & Kirim Pengingat WA H-1 */}
+            {/* Tombol Cek & Kirim Pengingat WA */}
             <button
               onClick={handleTriggerTaskReminder}
               disabled={triggeringReminder}
               className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/70 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50 active:scale-[0.98]"
-              title="Cek tugas H-1 besok & kirim pengingat ke grup WhatsApp (Anti-Spam: Tidak double)"
+              title="Otomatis terjadwal: Jam 07:00 Pagi (Hari H) & Jam 15:00 Sore (H-1 Sedang/Tinggi & H-2 Tinggi). Klik untuk trigger pengingat tugas sekarang (Anti-Spam: Tidak double)."
             >
               {triggeringReminder ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-400" />
               ) : (
                 <Bell className="w-3.5 h-3.5 text-emerald-400" />
               )}
-              <span>Kirim Pengingat H-1 (WA)</span>
+              <span>Kirim Pengingat Tugas (WA)</span>
             </button>
 
             <Link
@@ -628,9 +628,15 @@ CREATE TABLE IF NOT EXISTS tasks (
     priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date DATE NOT NULL,
     h1_reminder_sent_at TIMESTAMPTZ,
+    h2_reminder_sent_at TIMESTAMPTZ,
+    h0_reminder_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h1_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h2_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h0_reminder_sent_at TIMESTAMPTZ;
 
 -- 2. Buat Tabel task_reminders (Log Pengingat Tugas H-1)
 CREATE TABLE IF NOT EXISTS task_reminders (
@@ -694,9 +700,15 @@ CREATE TABLE IF NOT EXISTS tasks (
     priority TEXT NOT NULL DEFAULT 'MEDIUM' CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date DATE NOT NULL,
     h1_reminder_sent_at TIMESTAMPTZ,
+    h2_reminder_sent_at TIMESTAMPTZ,
+    h0_reminder_sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h1_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h2_reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h0_reminder_sent_at TIMESTAMPTZ;
 
 -- 2. Buat Tabel task_reminders (Log Pengingat Tugas H-1)
 CREATE TABLE IF NOT EXISTS task_reminders (

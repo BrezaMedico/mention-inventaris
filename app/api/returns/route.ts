@@ -41,8 +41,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: result.error || 'Gagal memproses pengembalian.' }, { status: 400 });
     }
 
-    // 4. Trigger WhatsApp notification (asynchronous, non-fatal)
-    dispatchPendingNotifications().catch((err) => {
+    // 4. Trigger WhatsApp notification immediately
+    await dispatchPendingNotifications().catch((err) => {
       console.warn('WhatsApp notification dispatch error (non-fatal):', err.message);
     });
 
