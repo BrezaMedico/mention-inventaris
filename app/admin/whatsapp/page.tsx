@@ -17,6 +17,11 @@ import {
   Radio,
   Terminal,
   Clock,
+  ShieldCheck,
+  Activity,
+  Zap,
+  Copy,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function AdminWhatsAppPage() {
@@ -25,10 +30,50 @@ export default function AdminWhatsAppPage() {
   const [selectedGroupJid, setSelectedGroupJid] = useState('');
   const [logs, setLogs] = useState<NotificationEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [copiedUrl, setCopiedUrl] = useState(false);
 
   // Action states
   const [actionLoading, setActionLoading] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const formatUptime = (seconds?: number) => {
+    if (!seconds || seconds <= 0) return 'Baru dimulai / Memuat';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    if (h > 0) return `${h} jam ${m} mnt`;
+    if (m > 0) return `${m} mnt ${s} dtk`;
+    return `${s} dtk`;
+  };
+
+  const handleCopyHealthUrl = () => {
+    const healthUrl = `${statusData?.serviceUrl || 'https://mention-inventaris.onrender.com'}/health`;
+    navigator.clipboard.writeText(healthUrl);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2500);
+  };
+
+  const handlePingKeepAlive = async () => {
+    try {
+      setActionLoading(true);
+      setFeedback(null);
+      const res = await fetch('/api/cron/keepalive');
+      const data = await res.json();
+      if (data.success) {
+        setFeedback({
+          type: 'success',
+          message: `Keep-Alive Berhasil! Respon diterima: Uptime ${formatUptime(data.health?.uptimeSeconds)}, Microservice Aktif 24/7.`,
+        });
+        loadWhatsAppInfo();
+      } else {
+        setFeedback({ type: 'error', message: data.error || 'Keep-alive ping gagal dihubungi.' });
+      }
+    } catch {
+      setFeedback({ type: 'error', message: 'Gagal mengirim sinyal keep-alive ke microservice.' });
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   const loadWhatsAppInfo = async () => {
     try {
@@ -224,6 +269,81 @@ export default function AdminWhatsAppPage() {
             </button>
           </div>
         )}
+
+        {/* 24/7 Always-On Sentinel Card */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 sm:p-7 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-800 pb-5 mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold text-white tracking-tight">
+                    WhatsApp 24/7 Always-On Sentinel
+                  </h2>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-green-950 text-green-400 border border-green-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping" />
+                    Always-On Active
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Sistem otomatis menjaga sesi WhatsApp tetap aktif 24 jam nonstop tanpa perlu scan ulang.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePingKeepAlive}
+                disabled={actionLoading}
+                className="px-3.5 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-all border border-neutral-700 active:scale-[0.98]"
+                title="Kirim sinyal keep-alive ke microservice"
+              >
+                <Zap className="w-3.5 h-3.5 text-mention-yellow" />
+                <span>Tes Ping Keep-Alive</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
+              <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Uptime Service</div>
+              <div className="text-sm font-extrabold text-white mt-1">
+                {formatUptime(statusData?.uptimeSeconds)}
+              </div>
+              <div className="text-[10px] text-green-400 mt-0.5">Aktif berjalan</div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
+              <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Watchdog Presence</div>
+              <div className="text-sm font-extrabold text-white mt-1">Tiap 25 Detik</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5">Auto-ping presence & reconnect</div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
+              <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Anti-Sleep Keep-Alive</div>
+              <div className="text-sm font-extrabold text-white mt-1">Tiap 2.5 Menit</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5">Cegah cloud container tidur</div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-neutral-950/60 border border-neutral-800/80">
+              <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Target Endpoint</div>
+              <div className="text-xs font-mono text-neutral-200 mt-1 truncate" title={statusData?.serviceUrl}>
+                {statusData?.serviceUrl ? (statusData.serviceUrl.replace(/^https?:\/\//, '')) : 'localhost:3001'}
+              </div>
+              <button
+                onClick={handleCopyHealthUrl}
+                className="text-[10px] text-mention-yellow hover:underline mt-0.5 flex items-center gap-1 font-medium"
+              >
+                <Copy className="w-2.5 h-2.5" />
+                <span>{copiedUrl ? 'Tersalin!' : 'Salin URL Health'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Top Section: Connection Status & QR Code (Card in White) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

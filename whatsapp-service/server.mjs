@@ -9,7 +9,23 @@ import makeWASocket, {
   DisconnectReason,
   useMultiFileAuthState,
   fetchLatestBaileysVersion,
+  Browsers,
 } from '@whiskeysockets/baileys';
+
+// ====================================================================
+// CRASH IMMUNITY (24/7 Always-On Protection)
+// Mencegah Node.js crash akibat unhandled socket frame atau crypto error
+// ====================================================================
+process.on('uncaughtException', (err) => {
+  console.error('[Anti-Crash 24/7] Uncaught Exception:', err?.message || err);
+  if (!isConnected && !isConnecting) {
+    setTimeout(connectToWhatsApp, 5000);
+  }
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[Anti-Crash 24/7] Unhandled Rejection:', reason);
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,13 +38,27 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+let sock = null;
+let currentQrDataUrl = null;
+let isConnected = false;
+let connectedUser = null;
+let isConnecting = false;
+let reconnectCount = 0;
+let lastPresencePing = null;
+let connectionStartTime = null;
+const logger = pino({ level: 'warn' });
+
 // Public healthcheck for Render & UptimeRobot keepalive
-app.get(['/', '/health'], (req, res) => {
+app.get(['/', '/health', '/ping'], (req, res) => {
   res.json({
     status: 'ok',
-    service: 'MENTION WhatsApp Microservice',
+    service: 'MENTION WhatsApp 24/7 Microservice',
     isConnected,
+    connectedUser: isConnected ? connectedUser : null,
     uptimeSeconds: Math.floor(process.uptime()),
+    reconnectCount,
+    lastPresencePing,
+    alwaysOn: true,
     timestamp: new Date().toISOString(),
   });
 });
@@ -42,27 +72,51 @@ app.use((req, res, next) => {
   next();
 });
 
-let sock = null;
-let currentQrDataUrl = null;
-let isConnected = false;
-let connectedUser = null;
-const logger = pino({ level: 'warn' });
-
 async function connectToWhatsApp() {
+  if (isConnecting) {
+    console.log('[WhatsApp 24/7] Connection attempt already in progress, waiting...');
+    return;
+  }
+  isConnecting = true;
+
   try {
+    // Bersihkan instance socket lama sebelum membuat yang baru
+    if (sock) {
+      try {
+        sock.ev.removeAllListeners();
+        sock.end(undefined);
+      } catch {}
+      sock = null;
+    }
+
     if (!fs.existsSync(AUTH_DIR)) {
       fs.mkdirSync(AUTH_DIR, { recursive: true });
     }
 
     const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
-    const { version, isLatest } = await fetchLatestBaileysVersion();
+
+    let version;
+    try {
+      const v = await fetchLatestBaileysVersion();
+      version = v.version;
+    } catch (err) {
+      console.warn('[WhatsApp] Could not fetch latest Baileys version online, fallback to default:', err?.message);
+    }
 
     sock = makeWASocket({
       version,
       logger,
       printQRInTerminal: false,
       auth: state,
-      browser: ['MENTION System', 'Chrome', '1.0.0'],
+      browser: Browsers.ubuntu('Chrome'),
+      syncFullHistory: false,
+      shouldSyncHistoryMessage: () => false,
+      keepAliveIntervalMs: 15000,
+      connectTimeoutMs: 60000,
+      defaultQueryTimeoutMs: 60000,
+      markOnlineOnConnect: true,
+      generateHighQualityLinkPreview: false,
+      getMessage: async () => undefined,
     });
 
     sock.ev.on('creds.update', saveCreds);
@@ -74,37 +128,58 @@ async function connectToWhatsApp() {
         try {
           currentQrDataUrl = await QRCode.toDataURL(qr);
         } catch (err) {
-          console.error('Error generating QR code data URL:', err);
+          console.error('[WhatsApp] Error generating QR code data URL:', err);
         }
       }
 
       if (connection === 'close') {
         isConnected = false;
+        isConnecting = false;
         connectedUser = null;
-        const statusCode = lastDisconnect?.error?.output?.statusCode;
-        const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
-        console.log('WhatsApp connection closed, statusCode:', statusCode, 'reconnecting:', shouldReconnect);
+        reconnectCount++;
 
-        if (shouldReconnect) {
-          setTimeout(connectToWhatsApp, 5000);
-        } else {
-          // Logged out, clear auth
+        const statusCode = lastDisconnect?.error?.output?.statusCode;
+        console.log('[WhatsApp 24/7] Connection closed. StatusCode:', statusCode);
+
+        if (statusCode === DisconnectReason.loggedOut) {
+          console.warn('[WhatsApp 24/7] Sesi logged out. Menghapus folder auth dan menyiapkan QR baru...');
           try {
             fs.rmSync(AUTH_DIR, { recursive: true, force: true });
           } catch {}
           currentQrDataUrl = null;
+          // Segera siapkan sesi baru dan generate QR baru agar tidak mati/stuck
+          setTimeout(() => connectToWhatsApp(), 3000);
+        } else if (statusCode === DisconnectReason.restartRequired) {
+          console.log('[WhatsApp 24/7] Restart required oleh WhatsApp server. Reconnecting segera...');
+          setTimeout(() => connectToWhatsApp(), 1500);
+        } else {
+          // Putus sementara (network hiccup, timeout, 503, 408, 428, dll)
+          console.log('[WhatsApp 24/7] Terputus sementara. Otomatis menghubungkan ulang dalam 4 detik...');
+          setTimeout(() => connectToWhatsApp(), 4000);
         }
       } else if (connection === 'open') {
         isConnected = true;
+        isConnecting = false;
         currentQrDataUrl = null;
         connectedUser = sock.user?.id ? sock.user.id.split(':')[0] : 'Connected';
-        console.log('WhatsApp connection opened successfully for user:', connectedUser);
+        connectionStartTime = new Date().toISOString();
+        console.log('[WhatsApp 24/7] Koneksi TERBUKA & AKTIF 24/7 untuk nomor:', connectedUser);
+
+        // Langsung tandai presence available di WhatsApp
+        try {
+          await sock.sendPresenceUpdate('available');
+          lastPresencePing = new Date().toISOString();
+        } catch {}
+
         // Otomatis kirim notifikasi yang sempat tertunda (PENDING) saat WhatsApp tersambung
         triggerDispatchPending();
       }
     });
   } catch (err) {
-    console.error('Error in connectToWhatsApp:', err);
+    isConnecting = false;
+    console.error('[WhatsApp 24/7] Error in connectToWhatsApp:', err?.message || err);
+    // Jika gagal inisialisasi, coba lagi otomatis setelah 6 detik
+    setTimeout(() => connectToWhatsApp(), 6000);
   }
 }
 
@@ -114,6 +189,10 @@ app.get('/status', (req, res) => {
     isConnected,
     qr: currentQrDataUrl,
     phoneNumber: connectedUser,
+    uptimeSeconds: Math.floor(process.uptime()),
+    reconnectCount,
+    lastPresencePing,
+    alwaysOn: true,
   });
 });
 
@@ -313,16 +392,25 @@ setInterval(() => {
   }
 }, 30 * 1000);
 
-// 24/7 Keep-Alive Heartbeat: Pings presence every 30 seconds so socket stays awake
+// ====================================================================
+// 24/7 SENTINEL WATCHDOG (Tiap 25 Detik)
+// Menjaga socket Baileys tidak idle/dormant dan mendeteksi ghost socket
+// ====================================================================
 setInterval(async () => {
   if (isConnected && sock) {
     try {
       await sock.sendPresenceUpdate('available');
+      lastPresencePing = new Date().toISOString();
     } catch (err) {
-      // Socket ping error handled silently
+      console.warn('[Watchdog 24/7] Presence update gagal (socket hang/silent drop). Melakukan reconnect paksa...', err?.message);
+      isConnected = false;
+      connectToWhatsApp();
     }
+  } else if (!isConnected && !isConnecting) {
+    console.log('[Watchdog 24/7] WhatsApp terdeteksi belum terhubung. Menjalankan auto-reconnect...');
+    connectToWhatsApp();
   }
-}, 30 * 1000);
+}, 25 * 1000);
 
 // Auto-flush pending notifications every 2 minutes while connected
 setInterval(() => {
@@ -331,23 +419,37 @@ setInterval(() => {
   }
 }, 2 * 60 * 1000);
 
-// Anti-Sleep Self-Ping for Render: Render provides RENDER_EXTERNAL_URL automatically
-const externalUrl = process.env.RENDER_EXTERNAL_URL || process.env.SELF_URL;
-if (externalUrl) {
-  console.log(`[Anti-Sleep] Self-ping active targeting external URL: ${externalUrl}`);
-  setInterval(async () => {
+// ====================================================================
+// ANTI-SLEEP MULTI-TARGET KEEP-ALIVE (Tiap 150 Detik / 2.5 Menit)
+// Render Free Tier sleep setelah 15 menit jika tanpa request luar.
+// Microservice secara agresif mem-ping endpoint publik dirinya sendiri.
+// ====================================================================
+const pingTargets = [
+  process.env.RENDER_EXTERNAL_URL,
+  process.env.SELF_URL,
+  'https://mention-inventaris.onrender.com',
+].filter(Boolean);
+
+const uniquePingTargets = [...new Set(pingTargets)];
+
+setInterval(async () => {
+  for (const targetUrl of uniquePingTargets) {
     try {
-      const pingUrl = `${externalUrl.replace(/\/$/, '')}/health`;
-      const res = await fetch(pingUrl);
-      console.log(`[Anti-Sleep] Pinged ${pingUrl} - Status: ${res.status}`);
+      const pingUrl = `${targetUrl.replace(/\/$/, '')}/health`;
+      const res = await fetch(pingUrl, {
+        headers: { 'User-Agent': 'Mention-WhatsApp-247-KeepAlive/2.0' },
+      });
+      console.log(`[Keep-Alive 24/7] Pinged ${pingUrl} -> Status: ${res.status}`);
     } catch (err) {
-      console.warn(`[Anti-Sleep] Self-ping failed:`, err.message);
+      console.warn(`[Keep-Alive 24/7] Ping failed to ${targetUrl}:`, err?.message);
     }
-  }, 10 * 60 * 1000); // Set to 10 minutes (Render sleeps after 15 minutes of inactivity)
-}
+  }
+}, 150 * 1000); // 2.5 minutes interval
 
 app.listen(PORT, () => {
-  console.log(`MENTION WhatsApp 24/7 Microservice running on http://localhost:${PORT}`);
+  console.log(`=======================================================`);
+  console.log(`MENTION WhatsApp 24/7 Always-On Service running on port ${PORT}`);
+  console.log(`Anti-Sleep Keep-Alive Targets:`, uniquePingTargets);
+  console.log(`=======================================================`);
   connectToWhatsApp();
 });
-

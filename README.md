@@ -17,23 +17,24 @@ npm run dev
 
 Buka browser di: [http://localhost:3000](http://localhost:3000)
 
-### B. Menjalankan WhatsApp Microservice (Persistent)
+### B. Menjalankan WhatsApp Microservice (24/7 Always-On)
 
-WhatsApp Microservice berjalan terpisah untuk menjaga sesi WhatsApp Web tetap aktif secara persisten:
+WhatsApp Microservice berjalan terpisah untuk menjaga sesi WhatsApp Web tetap aktif 24/7 secara persisten tanpa terputus:
 
+- **Cara 1 (Windows Batch 24/7 Auto-Restart)**:
+  Cukup double-click file `start-wa-always-on.bat` di root project. Script ini akan menjaga service tetap berjalan dan otomatis menyala kembali jika terjadi crash atau koneksi reset.
+
+- **Cara 2 (NPM Command)**:
 ```bash
 npm run start:wa
 ```
 
-Atau masuk ke direktori:
-
-```bash
-cd whatsapp-service
-npm install
-npm start
-```
-
-Service berjalan pada port `3001`. Admin dapat membuka menu **WhatsApp** di Admin Portal untuk melakukan scan QR Code (Linked Devices).
+- **Cara 3 (Cloud / Render 24/7 Keep-Alive)**:
+  Service telah dilengkapi:
+  1. **Anti-Sleep Keep-Alive**: Otomatis mem-ping endpoint `/health` tiap 2.5 menit agar server cloud (seperti Render) tidak pernah sleep.
+  2. **Sentinel Watchdog**: Memperbarui status presence ke WhatsApp tiap 25 detik dan auto-reconnect jika koneksi internet terputus.
+  3. **Crash Protection**: Kebal terhadap uncaught exceptions socket frame.
+  4. **Eksternal Monitoring (Opsional)**: Daftarkan URL `https://mention-inventaris.onrender.com/health` di UptimeRobot (Free) untuk jaminan pinger dari luar 24/7.
 
 ---
 

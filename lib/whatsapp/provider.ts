@@ -16,6 +16,11 @@ export interface WhatsAppStatus {
   targetGroupJid?: string;
   targetGroupName?: string;
   message?: string;
+  uptimeSeconds?: number;
+  lastHeartbeat?: string;
+  serviceUrl?: string;
+  alwaysOn?: boolean;
+  reconnectCount?: number;
 }
 
 export interface IWhatsAppProvider {
@@ -35,7 +40,7 @@ class MicroserviceWhatsAppProvider implements IWhatsAppProvider {
     this.secret = process.env.WHATSAPP_SERVICE_SECRET || 'mention_wa_secret_2026';
   }
 
-  private async fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 4000): Promise<Response> {
+  private async fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 12000): Promise<Response> {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -74,6 +79,11 @@ class MicroserviceWhatsAppProvider implements IWhatsAppProvider {
           phoneNumber: data.phoneNumber,
           targetGroupJid: config.target_group_jid,
           targetGroupName: config.target_group_name,
+          uptimeSeconds: data.uptimeSeconds,
+          lastHeartbeat: data.lastPresencePing || new Date().toISOString(),
+          serviceUrl: this.baseUrl,
+          alwaysOn: data.alwaysOn ?? true,
+          reconnectCount: data.reconnectCount ?? 0,
         };
       }
     } catch (err) {
@@ -85,7 +95,9 @@ class MicroserviceWhatsAppProvider implements IWhatsAppProvider {
       status: 'SERVICE_OFFLINE',
       targetGroupJid: config.target_group_jid,
       targetGroupName: config.target_group_name,
-      message: 'WhatsApp Microservice belum aktif di port 3001. Jalankan `npm run start:wa` di folder whatsapp-service.',
+      serviceUrl: this.baseUrl,
+      alwaysOn: false,
+      message: `WhatsApp Microservice belum aktif di ${this.baseUrl}. Jalankan \`npm run start:wa\` atau pastikan server Render aktif.`,
     };
   }
 
