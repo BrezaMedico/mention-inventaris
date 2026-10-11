@@ -1897,40 +1897,128 @@ export async function updateWhatsAppConfig(updates: Partial<WhatsAppConfig>): Pr
   return db.whatsapp_configs[0];
 }
 
+export function normalizeNotificationEvent(e: any): NotificationEvent {
+  let type = e.type;
+  if (
+    type !== 'TASK_REMINDER' &&
+    (e.message?.includes('[PENGINGAT TUGAS') ||
+      e.message?.includes('PENGINGAT TUGAS') ||
+      e.message?.includes('[REF:') ||
+      e.message?.includes('TUGAS BESOK') ||
+      e.message?.includes('TUGAS HARI INI') ||
+      e.message?.includes('TUGAS LUSA'))
+  ) {
+    type = 'TASK_REMINDER';
+  }
+  return {
+    ...e,
+    type,
+  };
+}
+
+export async function insertNotificationEvent(event: NotificationEvent): Promise<void> {
+  const db = readLocalDb();
+  if (!db.notification_events) db.notification_events = [];
+  const idx = db.notification_events.findIndex((n) => n.id === event.id);
+  if (idx !== -1) {
+    db.notification_events[idx] = event;
+  } else {
+    db.notification_events.push(event);
+  }
+  writeLocalDb(db);
+
+  try {
+    const { error } = await supabase.from('notification_events').insert([{
+      id: event.id,
+      loan_id: event.loan_id || null,
+      type: event.type,
+      message: event.message,
+      status: event.status || 'PENDING',
+    }]);
+
+    if (error) {
+      console.warn('Supabase insert notification_event primary try:', error.message);
+      // Fallback jika database Supabase memiliki check constraint ('BORROW', 'RETURN', 'OVERDUE', 'TEST')
+      if (error.code === '23514' || error.message?.includes('check constraint')) {
+        const { error: fallbackErr } = await supabase.from('notification_events').insert([{
+          id: event.id,
+          loan_id: event.loan_id || null,
+          type: 'OVERDUE',
+          message: event.message,
+          status: event.status || 'PENDING',
+        }]);
+        if (fallbackErr) {
+          console.error('Supabase insert notification_event fallback error:', fallbackErr);
+        }
+      }
+    }
+  } catch (err: any) {
+    console.error('Supabase insert notification_event catch:', err);
+  }
+}
+
 export async function getNotificationEvents(limit = 50): Promise<NotificationEvent[]> {
+  const db = readLocalDb();
+  let supabaseEvents: NotificationEvent[] = [];
   try {
     const { data, error } = await supabase
       .from('notification_events')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(limit);
-    if (!error && data !== null) return data as NotificationEvent[];
+    if (!error && data !== null) {
+      supabaseEvents = data.map(normalizeNotificationEvent);
+    }
   } catch (err) {
     console.error('Supabase getNotificationEvents error:', err);
   }
 
-  const db = readLocalDb();
-  return [...db.notification_events]
+  const combinedMap = new Map<string, NotificationEvent>();
+  for (const e of supabaseEvents) {
+    combinedMap.set(e.id, e);
+  }
+  for (const e of (db.notification_events || []).map(normalizeNotificationEvent)) {
+    if (!combinedMap.has(e.id)) {
+      combinedMap.set(e.id, e);
+    }
+  }
+
+  return Array.from(combinedMap.values())
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, limit);
 }
 
 export async function getPendingNotificationEvents(): Promise<NotificationEvent[]> {
+  const db = readLocalDb();
+  let supabaseEvents: NotificationEvent[] = [];
   try {
     const { data, error } = await supabase
       .from('notification_events')
       .select('*')
       .eq('status', 'PENDING')
       .order('created_at', { ascending: true });
-    if (!error && data !== null) return data as NotificationEvent[];
+    if (!error && data !== null) {
+      supabaseEvents = data.map(normalizeNotificationEvent);
+    }
   } catch (err) {
     console.error('Supabase getPendingNotificationEvents error:', err);
   }
 
-  const db = readLocalDb();
-  return (db.notification_events || [])
+  const combinedMap = new Map<string, NotificationEvent>();
+  for (const e of supabaseEvents) {
+    combinedMap.set(e.id, e);
+  }
+  for (const e of (db.notification_events || [])
     .filter((n) => n.status === 'PENDING')
-    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    .map(normalizeNotificationEvent)) {
+    if (!combinedMap.has(e.id)) {
+      combinedMap.set(e.id, e);
+    }
+  }
+
+  return Array.from(combinedMap.values()).sort(
+    (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
 }
 
 export async function markNotificationSent(id: string): Promise<void> {
@@ -2338,7 +2426,7 @@ Mohon dapat diselesaikan tepat waktu hari ini. Selamat beraktivitas!
     created_at: nowIso,
   };
 
-  db.notification_events.push(event);
+  await insertNotificationEvent(event);
 
   // Catat riwayat pengingat untuk tiap tugas
   for (const task of eligibleTasks) {
@@ -2374,15 +2462,6 @@ Mohon dapat diselesaikan tepat waktu hari ini. Selamat beraktivitas!
       }).eq('id', task.id);
     } catch {}
   }
-
-  try {
-    await supabase.from('notification_events').insert([{
-      id: event.id,
-      type: 'TASK_REMINDER',
-      message: event.message,
-      status: 'PENDING',
-    }]);
-  } catch {}
 
   writeLocalDb(db);
 
@@ -2422,10 +2501,8 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
   const eligibleH2Tasks: Task[] = [];
   let skippedCount = 0;
 
-  // 1. Evaluasi tugas BESOK (H-1): Prioritas SEDANG & TINGGI
-  const h1Candidates = tasksList.filter(
-    (t) => t.due_date === jakartaTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
-  );
+  // 1. Evaluasi tugas BESOK (H-1): Seluruh prioritas (LOW, MEDIUM, HIGH)
+  const h1Candidates = tasksList.filter((t) => t.due_date === jakartaTomorrow);
 
   for (const task of h1Candidates) {
     if (task.h1_reminder_sent_at) {
@@ -2449,9 +2526,9 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
     eligibleH1Tasks.push(task);
   }
 
-  // 2. Evaluasi tugas LUSA (H-2): Hanya Prioritas TINGGI (HIGH)
+  // 2. Evaluasi tugas LUSA (H-2): Prioritas TINGGI & SEDANG
   const h2Candidates = tasksList.filter(
-    (t) => t.due_date === jakartaDayAfterTomorrow && t.priority === 'HIGH'
+    (t) => t.due_date === jakartaDayAfterTomorrow && (t.priority === 'HIGH' || t.priority === 'MEDIUM')
   );
 
   for (const task of h2Candidates) {
@@ -2568,7 +2645,7 @@ Mohon mulai dipersiapkan dan dikoordinasikan lebih awal. Terima kasih!`;
     created_at: nowIso,
   };
 
-  db.notification_events.push(event);
+  await insertNotificationEvent(event);
 
   // Update logging dan status untuk tugas H-1
   for (const task of eligibleH1Tasks) {
@@ -2637,15 +2714,6 @@ Mohon mulai dipersiapkan dan dikoordinasikan lebih awal. Terima kasih!`;
       }).eq('id', task.id);
     } catch {}
   }
-
-  try {
-    await supabase.from('notification_events').insert([{
-      id: event.id,
-      type: 'TASK_REMINDER',
-      message: event.message,
-      status: 'PENDING',
-    }]);
-  } catch {}
 
   writeLocalDb(db);
 

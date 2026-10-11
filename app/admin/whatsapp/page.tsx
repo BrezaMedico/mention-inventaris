@@ -579,10 +579,12 @@ export default function AdminWhatsAppPage() {
                               ? 'bg-green-100 text-green-800'
                               : log.type === 'OVERDUE'
                               ? 'bg-red-100 text-red-800'
+                              : log.type === 'TASK_REMINDER'
+                              ? 'bg-purple-100 text-purple-800 border border-purple-200'
                               : 'bg-neutral-100 text-neutral-800'
                           }`}
                         >
-                          {log.type}
+                          {log.type === 'TASK_REMINDER' ? 'PENGINGAT TUGAS' : log.type}
                         </span>
                       </td>
                       <td className="py-3 px-3 font-sans max-w-md">

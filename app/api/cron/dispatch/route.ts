@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dispatchPendingNotifications } from '@/lib/whatsapp/provider';
+import { checkAndCreateTaskScheduleReminders } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +13,10 @@ export async function POST(request: NextRequest) {
     if (secret && secret !== expectedSecret) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    try {
+      await checkAndCreateTaskScheduleReminders('auto');
+    } catch {}
 
     const result = await dispatchPendingNotifications();
 

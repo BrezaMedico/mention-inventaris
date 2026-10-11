@@ -32,12 +32,12 @@ export interface IWhatsAppProvider {
 }
 
 class MicroserviceWhatsAppProvider implements IWhatsAppProvider {
-  private baseUrl: string;
-  private secret: string;
+  private get baseUrl(): string {
+    return (process.env.WHATSAPP_SERVICE_URL || 'https://mention-inventaris.onrender.com').replace(/\/$/, '');
+  }
 
-  constructor() {
-    this.baseUrl = process.env.WHATSAPP_SERVICE_URL || 'http://localhost:3001';
-    this.secret = process.env.WHATSAPP_SERVICE_SECRET || 'mention_wa_secret_2026';
+  private get secret(): string {
+    return process.env.WHATSAPP_SERVICE_SECRET || 'mention_wa_secret_2026';
   }
 
   private async fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 12000): Promise<Response> {

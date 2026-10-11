@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/auth/session';
 import { whatsAppProvider, dispatchPendingNotifications } from '@/lib/whatsapp/provider';
-import { getWhatsAppConfig, updateWhatsAppConfig, getNotificationEvents } from '@/lib/db';
+import {
+  getWhatsAppConfig,
+  updateWhatsAppConfig,
+  getNotificationEvents,
+  checkAndCreateTaskScheduleReminders,
+} from '@/lib/db';
 
 export async function GET() {
   const session = await getAdminSession();
@@ -16,6 +21,11 @@ export async function GET() {
     ]);
 
     if (status.isConnected && config.target_group_jid) {
+      checkAndCreateTaskScheduleReminders('auto')
+        .then(async () => {
+          await dispatchPendingNotifications();
+        })
+        .catch(() => {});
       dispatchPendingNotifications().catch(() => {});
     }
 

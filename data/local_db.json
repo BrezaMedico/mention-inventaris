@@ -983,15 +983,17 @@
       "id": "9ada3da6-8a8e-4115-937e-61f08d125043",
       "type": "TASK_REMINDER",
       "message": "⏰ *[PENGINGAT TUGAS HARI INI]*\n_Waktu Pengingat: 07:00 WIB_\n📅 Hari ini: Sabtu, 10 Oktober 2026\n\nSemangat pagi Rekan Tim Mention! Berikut daftar tugas organisasi yang memiliki tenggat hari ini:\n\n1. *Ngaji malam minggu*\n   👤 PIC: Pencot\n   ⚡ Prioritas: Sedang (Medium)\n\n2. *[TEST] Tugas Hari Ini Rendah*\n   👤 PIC: Budi (Low)\n   ⚡ Prioritas: Rendah (Low)\n   📝 Deskripsi: Deskripsi tugas hari ini santai\n\n3. *[TEST] Tugas Hari Ini Urgent*\n   👤 PIC: Siti (High)\n   ⚡ Prioritas: Tinggi (High)\n   📝 Deskripsi: Harus selesai sebelum siang\n\nMohon dapat diselesaikan tepat waktu hari ini. Selamat beraktivitas!\n[REF:03011bed-88dd-42fc-b298-e260432500f9:H-0,956739ec-24b0-4c82-8e14-0d55b5e86f0f:H-0,a6dff85f-56a6-48b7-b51b-88324c458722:H-0]",
-      "status": "PENDING",
-      "created_at": "2026-10-10T11:56:41.075Z"
+      "status": "SENT",
+      "created_at": "2026-10-10T11:56:41.075Z",
+      "sent_at": "2026-10-11T11:48:23.520Z"
     },
     {
       "id": "b97f36e5-a4c9-41d7-bbbe-b4ddd3de6cca",
       "type": "TASK_REMINDER",
       "message": "🔔 *[PENGINGAT TUGAS ORGANISASI]*\n_Waktu Pengingat: 15:00 WIB_\n\nHalo Rekan Tim Mention, berikut pengingat tugas organisasi yang mendekati batas tenggat:\n\n━━━━━━━━━━━━━━━━━━━\n📅 *TUGAS BESOK (H-1)*\nTenggat: Minggu, 11 Oktober 2026\n━━━━━━━━━━━━━━━━━━━\n1. *[TEST] Tugas Besok Sedang*\n   👤 PIC: Rian (Med)\n   ⚡ Prioritas: Sedang (Medium)\n   📝 Deskripsi: Rekap kehadiran anggota\n\n2. *[TEST] Tugas Besok Urgent*\n   👤 PIC: Dewi (High)\n   ⚡ Prioritas: Tinggi (High)\n   📝 Deskripsi: Siapkan proyektor dan ruang rapat\n\n━━━━━━━━━━━━━━━━━━━\n📅 *TUGAS LUSA (H-2)*\nTenggat: Senin, 12 Oktober 2026\n━━━━━━━━━━━━━━━━━━━\n1. *[TEST] Tugas Lusa Penting Banget*\n   👤 PIC: Fajar (High)\n   ⚡ Prioritas: Tinggi (High)\n   📝 Deskripsi: Pemeriksaan akhir sound system konser\n\nMohon dipersiapkan dan dikoordinasikan dengan baik. Terima kasih!\n[REF:49d28a42-a109-4595-9baa-03c16981a914:H-1,defdfda7-41c9-49ee-b1a3-2dfe74174255:H-1,b13c1916-627e-4ac1-b510-da4c908fa438:H-2]",
-      "status": "PENDING",
-      "created_at": "2026-10-10T11:56:41.955Z"
+      "status": "SENT",
+      "created_at": "2026-10-10T11:56:41.955Z",
+      "sent_at": "2026-10-11T11:48:24.148Z"
     }
   ],
   "whatsapp_configs": [
@@ -1077,8 +1079,9 @@
       "due_date": "2026-10-11",
       "h1_reminder_sent_at": "2026-10-10T01:06:07.091+00:00",
       "created_at": "2026-10-08T00:24:48.162+00:00",
-      "updated_at": "2026-10-10T01:06:07.091+00:00",
-      "color": "#FACC15"
+      "updated_at": "2026-10-11T11:47:16.414Z",
+      "color": "#FACC15",
+      "h0_reminder_sent_at": "2026-10-11T11:47:16.414Z"
     },
     {
       "id": "472d5fde-70fc-43a7-80ac-d780ba2e6de3",
@@ -1089,8 +1092,9 @@
       "due_date": "2026-10-11",
       "h1_reminder_sent_at": "2026-10-10T01:06:08.286+00:00",
       "created_at": "2026-10-08T06:43:30.249+00:00",
-      "updated_at": "2026-10-10T08:58:18.083+00:00",
-      "color": "#38BDF8"
+      "updated_at": "2026-10-11T11:47:16.414Z",
+      "color": "#38BDF8",
+      "h0_reminder_sent_at": "2026-10-11T11:47:16.414Z"
     },
     {
       "id": "a7b51434-7d1e-4bde-aa26-12e553a4737a",
@@ -1099,9 +1103,9 @@
       "pic": "Kholik",
       "priority": "MEDIUM",
       "due_date": "2026-10-12",
-      "h1_reminder_sent_at": null,
+      "h1_reminder_sent_at": "2026-10-11T11:47:17.711Z",
       "created_at": "2026-10-08T06:29:24.42+00:00",
-      "updated_at": "2026-10-08T06:33:34.62+00:00",
+      "updated_at": "2026-10-11T11:47:17.711Z",
       "color": "#FACC15"
     },
     {
@@ -1284,25 +1288,32 @@
       "sent_at": "2026-10-10T11:56:41.075Z"
     },
     {
-      "id": "aaf11984-231e-4635-ad43-82e785c62d03",
-      "task_id": "49d28a42-a109-4595-9baa-03c16981a914",
-      "reminder_type": "H-1",
-      "due_date": "2026-10-11",
-      "sent_at": "2026-10-10T11:56:41.955Z"
-    },
-    {
-      "id": "526348eb-78e4-42dd-9d18-38e42aa25a97",
-      "task_id": "defdfda7-41c9-49ee-b1a3-2dfe74174255",
-      "reminder_type": "H-1",
-      "due_date": "2026-10-11",
-      "sent_at": "2026-10-10T11:56:41.955Z"
-    },
-    {
       "id": "1598f8c6-1184-4b5e-a4db-8e4f39ac6c6b",
       "task_id": "b13c1916-627e-4ac1-b510-da4c908fa438",
       "reminder_type": "H-2",
       "due_date": "2026-10-12",
       "sent_at": "2026-10-10T11:56:41.955Z"
+    },
+    {
+      "id": "55bcbabe-d8ee-44ee-ab24-19be720573cb",
+      "task_id": "5f9303f0-848b-4476-b27e-eb4c965bf67d",
+      "reminder_type": "H-0",
+      "due_date": "2026-10-11",
+      "sent_at": "2026-10-11T11:47:16.414Z"
+    },
+    {
+      "id": "871955e6-1f2f-4c28-b2bc-2108960aecab",
+      "task_id": "472d5fde-70fc-43a7-80ac-d780ba2e6de3",
+      "reminder_type": "H-0",
+      "due_date": "2026-10-11",
+      "sent_at": "2026-10-11T11:47:16.414Z"
+    },
+    {
+      "id": "9227bc6d-1a50-4794-bd53-413dcc7f1a8c",
+      "task_id": "a7b51434-7d1e-4bde-aa26-12e553a4737a",
+      "reminder_type": "H-1",
+      "due_date": "2026-10-12",
+      "sent_at": "2026-10-11T11:47:17.711Z"
     }
   ]
 }

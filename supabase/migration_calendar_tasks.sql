@@ -56,3 +56,8 @@ CREATE POLICY "Allow public read task_reminders" ON task_reminders FOR SELECT US
 
 DROP POLICY IF EXISTS "Allow public write task_reminders" ON task_reminders;
 CREATE POLICY "Allow public write task_reminders" ON task_reminders FOR ALL USING (true) WITH CHECK (true);
+
+-- 6. Dukungan Tipe Notifikasi Pengingat Tugas (TASK_REMINDER)
+ALTER TABLE notification_events DROP CONSTRAINT IF EXISTS notification_events_type_check;
+ALTER TABLE notification_events ADD CONSTRAINT notification_events_type_check 
+    CHECK (type IN ('BORROW', 'RETURN', 'OVERDUE', 'TEST', 'TASK_REMINDER'));
