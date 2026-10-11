@@ -2311,22 +2311,22 @@ export async function deleteTask(id: string): Promise<{ success: boolean; error?
 }
 
 function formatTaskItemForWhatsApp(task: Task, index: number): string {
-  const priorityLabels: Record<string, string> = {
-    HIGH: 'Tinggi (High)',
-    MEDIUM: 'Sedang (Medium)',
-    LOW: 'Rendah (Low)',
+  const priorityBadges: Record<string, string> = {
+    HIGH: '🔴 *Tinggi*',
+    MEDIUM: '🟡 *Sedang*',
+    LOW: '🟢 *Rendah*',
   };
-  const priorityText = priorityLabels[task.priority] || task.priority;
+  const priorityText = priorityBadges[task.priority] || `*${task.priority}*`;
 
-  let item = `${index}. *${task.title}*`;
-  item += `\n   👤 PIC: ${task.pic}`;
-  item += `\n   ⚡ Prioritas: ${priorityText}`;
+  let item = `*${index}. ${task.title}*`;
+  item += `\n   • PIC: *${task.pic}*`;
+  item += `\n   • Prioritas: ${priorityText}`;
 
   // Bersihkan tag warna bawaan jika tersimpan di deskripsi (misal [color:#FACC15])
   const cleanDesc = (task.description || '').replace(/\[color:[^\]]+\]/g, '').trim();
   if (cleanDesc) {
-    const shortDesc = cleanDesc.length > 130 ? `${cleanDesc.slice(0, 127)}...` : cleanDesc;
-    item += `\n   📝 Deskripsi: ${shortDesc}`;
+    const shortDesc = cleanDesc.length > 100 ? `${cleanDesc.slice(0, 97)}...` : cleanDesc;
+    item += `\n   • Catatan: _${shortDesc}_`;
   }
 
   return item;
@@ -2376,9 +2376,13 @@ export async function checkAndCreateTaskMorningReminders(): Promise<{
       continue;
     }
 
-    // 3. Cek apakah ada di notification_events
+    // 3. Cek apakah ada di notification_events yang sedang PENDING
     const alreadyInQueue = (db.notification_events || []).some(
-      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-0]`)
+      (ne) =>
+        ne.status === 'PENDING' &&
+        ne.type === 'TASK_REMINDER' &&
+        ne.message.includes(task.title) &&
+        ne.message.includes('HARI INI')
     );
     if (alreadyInQueue) {
       skippedCount++;
@@ -2403,19 +2407,16 @@ export async function checkAndCreateTaskMorningReminders(): Promise<{
     .map((task, idx) => formatTaskItemForWhatsApp(task, idx + 1))
     .join('\n\n');
 
-  const refTags = eligibleTasks.map((t) => `${t.id}:H-0`).join(',');
   const fullDateIndo = formatFullDateIndo(jakartaToday);
 
-  const message = `⏰ *[PENGINGAT TUGAS HARI INI]*
-_Waktu Pengingat: 07:00 WIB_
-📅 Hari ini: ${fullDateIndo}
-
-Semangat pagi Rekan Tim Mention! Berikut daftar tugas organisasi yang memiliki tenggat hari ini:
+  const message = `⏰ *PENGINGAT TUGAS HARI INI*
+📅 *${fullDateIndo}*
+━━━━━━━━━━━━━━━━━━━━
 
 ${formattedItems}
 
-Mohon dapat diselesaikan tepat waktu hari ini. Selamat beraktivitas!
-[REF:${refTags}]`;
+━━━━━━━━━━━━━━━━━━━━
+_Batas tenggat hari ini. Mohon segera diselesaikan._`;
 
   const nowIso = new Date().toISOString();
   const event: NotificationEvent = {
@@ -2517,7 +2518,11 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
       continue;
     }
     const alreadyInQueue = (db.notification_events || []).some(
-      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-1]`)
+      (ne) =>
+        ne.status === 'PENDING' &&
+        ne.type === 'TASK_REMINDER' &&
+        ne.message.includes(task.title) &&
+        (ne.message.includes('H-1') || ne.message.includes('BESOK'))
     );
     if (alreadyInQueue) {
       skippedCount++;
@@ -2544,7 +2549,11 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
       continue;
     }
     const alreadyInQueue = (db.notification_events || []).some(
-      (ne) => ne.type === 'TASK_REMINDER' && ne.message.includes(`[REF:${task.id}:H-2]`)
+      (ne) =>
+        ne.status === 'PENDING' &&
+        ne.type === 'TASK_REMINDER' &&
+        ne.message.includes(task.title) &&
+        (ne.message.includes('H-2') || ne.message.includes('LUSA'))
     );
     if (alreadyInQueue) {
       skippedCount++;
@@ -2570,7 +2579,7 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
 
   let message = '';
 
-  // Kasus A: Ada kedua tugas (H-1 dan H-2) -> Gabungkan dengan pemisahan yang sangat jelas
+  // Kasus A: Ada kedua tugas (H-1 dan H-2) -> Gabungkan dengan pemisahan yang sangat rapi
   if (eligibleH1Tasks.length > 0 && eligibleH2Tasks.length > 0) {
     const h1Items = eligibleH1Tasks
       .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
@@ -2579,62 +2588,47 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
       .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
       .join('\n\n');
 
-    message = `🔔 *[PENGINGAT TUGAS ORGANISASI]*
-_Waktu Pengingat: 15:00 WIB_
+    message = `🔔 *PENGINGAT TUGAS MENDEKATI TENGGAT*
+━━━━━━━━━━━━━━━━━━━━
 
-Halo Rekan Tim Mention, berikut pengingat tugas organisasi yang mendekati batas tenggat:
-
-━━━━━━━━━━━━━━━━━━━
-📅 *TUGAS BESOK (H-1)*
-Tenggat: ${tomorrowFullDate}
-━━━━━━━━━━━━━━━━━━━
+📅 *TUGAS BESOK (H-1)* — ${tomorrowFullDate}
 ${h1Items}
 
-━━━━━━━━━━━━━━━━━━━
-📅 *TUGAS LUSA (H-2)*
-Tenggat: ${dayAfterTomorrowFullDate}
-━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
+📅 *TUGAS LUSA (H-2)* — ${dayAfterTomorrowFullDate}
 ${h2Items}
 
-Mohon dipersiapkan dan dikoordinasikan dengan baik. Terima kasih!`;
+━━━━━━━━━━━━━━━━━━━━
+_Mohon dipersiapkan dan dikoordinasikan lebih awal._`;
   } else if (eligibleH1Tasks.length > 0) {
     // Kasus B: Hanya tugas besok (H-1)
     const h1Items = eligibleH1Tasks
       .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
       .join('\n\n');
 
-    message = `🔔 *[PENGINGAT TUGAS BESOK (H-1)]*
-_Waktu Pengingat: 15:00 WIB_
-📅 Tenggat: ${tomorrowFullDate}
-
-Halo Rekan Tim Mention, terdapat tugas organisasi yang memiliki batas tenggat waktu besok:
+    message = `🔔 *PENGINGAT TUGAS BESOK (H-1)*
+📅 *${tomorrowFullDate}*
+━━━━━━━━━━━━━━━━━━━━
 
 ${h1Items}
 
-Mohon dipersiapkan dan diselesaikan tepat waktu. Terima kasih!`;
+━━━━━━━━━━━━━━━━━━━━
+_Batas tenggat besok. Mohon dipersiapkan._`;
   } else {
     // Kasus C: Hanya tugas lusa (H-2)
     const h2Items = eligibleH2Tasks
       .map((t, idx) => formatTaskItemForWhatsApp(t, idx + 1))
       .join('\n\n');
 
-    message = `🔔 *[PENGINGAT TUGAS LUSA (H-2)]*
-_Waktu Pengingat: 15:00 WIB_
-📅 Tenggat: ${dayAfterTomorrowFullDate}
-
-Halo Rekan Tim Mention, terdapat tugas prioritas tinggi yang memiliki batas tenggat waktu lusa:
+    message = `🔔 *PENGINGAT TUGAS LUSA (H-2)*
+📅 *${dayAfterTomorrowFullDate}*
+━━━━━━━━━━━━━━━━━━━━
 
 ${h2Items}
 
-Mohon mulai dipersiapkan dan dikoordinasikan lebih awal. Terima kasih!`;
+━━━━━━━━━━━━━━━━━━━━
+_Batas tenggat lusa. Mohon dipersiapkan lebih awal._`;
   }
-
-  // Tambahkan tag ref pelacak deduplikasi
-  const allRefTags = [
-    ...eligibleH1Tasks.map((t) => `${t.id}:H-1`),
-    ...eligibleH2Tasks.map((t) => `${t.id}:H-2`),
-  ].join(',');
-  message += `\n[REF:${allRefTags}]`;
 
   const nowIso = new Date().toISOString();
   const event: NotificationEvent = {
