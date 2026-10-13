@@ -181,9 +181,12 @@ export default function AdminCalendarPage() {
 
           <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
             {/* Info: Pengingat Otomatis */}
-            <div className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/40 bg-emerald-950/30 text-emerald-400 font-semibold text-xs flex items-center gap-1.5">
-              <Bell className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Pengingat otomatis: 07:00 (Hari H) &amp; 15:00 WIB (H-1/H-2)</span>
+            <div
+              title="Pengingat otomatis dikirim ke grup WhatsApp pada 07:00 WIB (Hari H) &amp; 15:00 WIB (H-1/H-2)"
+              className="flex-1 sm:flex-none px-3 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/40 bg-emerald-950/30 text-emerald-400 font-semibold text-xs flex items-center justify-center gap-1.5 cursor-default"
+            >
+              <Bell className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Auto WA: 07:00 &amp; 15:00</span>
             </div>
 
             <Link
