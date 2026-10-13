@@ -120,7 +120,7 @@ CREATE TABLE loan_items (
 CREATE TABLE notification_events (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     loan_id UUID REFERENCES loans(id) ON DELETE CASCADE,
-    type TEXT NOT NULL CHECK (type IN ('BORROW', 'RETURN', 'OVERDUE', 'TEST')),
+    type TEXT NOT NULL CHECK (type IN ('BORROW', 'RETURN', 'OVERDUE', 'TEST', 'TASK_REMINDER')),
     message TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'SENT', 'FAILED')),
     error_message TEXT,

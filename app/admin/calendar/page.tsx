@@ -18,9 +18,7 @@ import {
   User,
   Loader2,
   AlertTriangle,
-  CheckCircle2,
   CalendarDays,
-  Filter,
   Bell,
   X,
   Database,
@@ -46,11 +44,6 @@ export default function AdminCalendarPage() {
   const [deleteConfirmTask, setDeleteConfirmTask] = useState<Task | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState('');
-
-  // Reminder trigger state
-  const [triggeringReminder, setTriggeringReminder] = useState(false);
-  const [reminderMessage, setReminderMessage] = useState('');
-  const [reminderError, setReminderError] = useState('');
 
   const today = useMemo(() => {
     const todayStr = getLocalTodayStr();
@@ -165,31 +158,6 @@ export default function AdminCalendarPage() {
     }
   };
 
-  const handleTriggerTaskReminder = async () => {
-    try {
-      setTriggeringReminder(true);
-      setReminderMessage('');
-      setReminderError('');
-      const res = await fetch('/api/cron/task-reminder?mode=all', {
-        method: 'POST',
-      });
-      const data = await res.json();
-      if (!data.success) {
-        setReminderError(data.error || 'Gagal mengirim pengingat tugas.');
-        return;
-      }
-      setReminderMessage(
-        data.message ||
-          `Pengingat tugas selesai. ${data.remindersCreated || 0} pesan terkirim, ${data.skippedDueToDuplicate || 0} dilewati (anti-spam).`
-      );
-      loadTasks();
-      setTimeout(() => setReminderMessage(''), 8000);
-    } catch (err: any) {
-      setReminderError(err.message || 'Terjadi kesalahan koneksi.');
-    } finally {
-      setTriggeringReminder(false);
-    }
-  };
 
   return (
     <AdminLayout>
@@ -212,20 +180,11 @@ export default function AdminCalendarPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-            {/* Tombol Cek & Kirim Pengingat WA */}
-            <button
-              onClick={handleTriggerTaskReminder}
-              disabled={triggeringReminder}
-              className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/70 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50 active:scale-[0.98]"
-              title="Otomatis terjadwal: Jam 07:00 Pagi (Hari H) & Jam 15:00 Sore (H-1 Sedang/Tinggi & H-2 Tinggi). Klik untuk trigger pengingat tugas sekarang (Anti-Spam: Tidak double)."
-            >
-              {triggeringReminder ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-400" />
-              ) : (
-                <Bell className="w-3.5 h-3.5 text-emerald-400" />
-              )}
-              <span>Kirim Pengingat Tugas (WA)</span>
-            </button>
+            {/* Info: Pengingat Otomatis */}
+            <div className="flex-1 sm:flex-none px-3.5 py-2.5 min-h-[42px] rounded-xl border border-emerald-700/40 bg-emerald-950/30 text-emerald-400 font-semibold text-xs flex items-center gap-1.5">
+              <Bell className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Pengingat otomatis: 07:00 (Hari H) &amp; 15:00 WIB (H-1/H-2)</span>
+            </div>
 
             <Link
               href="/calendar"
@@ -245,31 +204,6 @@ export default function AdminCalendarPage() {
             </button>
           </div>
         </div>
-
-        {/* Feedback Banners */}
-        {reminderMessage && (
-          <div className="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-700/80 text-emerald-200 text-xs font-semibold flex items-center justify-between gap-3 animate-in fade-in">
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>{reminderMessage}</span>
-            </div>
-            <button onClick={() => setReminderMessage('')} className="text-emerald-400 hover:text-white p-1">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
-        {reminderError && (
-          <div className="p-3.5 rounded-2xl bg-red-950/60 border border-red-700/80 text-red-200 text-xs font-semibold flex items-center justify-between gap-3 animate-in fade-in">
-            <div className="flex items-center gap-2.5">
-              <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-              <span>{reminderError}</span>
-            </div>
-            <button onClick={() => setReminderError('')} className="text-red-400 hover:text-white p-1">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
 
         {/* Banner Peringatan Supabase Belum Dimigrate */}
         {!isSupabaseReady && (

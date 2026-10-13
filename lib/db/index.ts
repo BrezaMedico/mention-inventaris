@@ -1938,17 +1938,19 @@ export async function insertNotificationEvent(event: NotificationEvent): Promise
 
     if (error) {
       console.warn('Supabase insert notification_event primary try:', error.message);
-      // Fallback jika database Supabase memiliki check constraint ('BORROW', 'RETURN', 'OVERDUE', 'TEST')
+      // Fallback: jika tipe tidak ada di check constraint (misal schema lama belum dimigrasi),
+      // simpan dengan tipe OVERDUE agar tetap masuk ke Supabase dan bisa di-dispatch.
+      // Jalankan SQL migrasi di halaman kalender untuk menambah TASK_REMINDER ke constraint.
       if (error.code === '23514' || error.message?.includes('check constraint')) {
         const { error: fallbackErr } = await supabase.from('notification_events').insert([{
           id: event.id,
           loan_id: event.loan_id || null,
-          type: 'OVERDUE',
+          type: 'OVERDUE', // sementara sampai schema dimigrasi
           message: event.message,
           status: event.status || 'PENDING',
         }]);
         if (fallbackErr) {
-          console.error('Supabase insert notification_event fallback error:', fallbackErr);
+          console.warn('Supabase insert notification_event fallback error (type constraint):', fallbackErr.message);
         }
       }
     }
