@@ -153,6 +153,9 @@ export interface TaskReminder {
   task_id: string;
   reminder_type: string;
   due_date: string;
-  sent_at: string;
+  status?: 'PENDING' | 'SENT' | 'FAILED' | string;
+  sent_at?: string;
+  error_message?: string;
+  created_at?: string;
 }
 

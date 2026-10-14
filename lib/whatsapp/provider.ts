@@ -149,43 +149,54 @@ class MicroserviceWhatsAppProvider implements IWhatsAppProvider {
 
 export const whatsAppProvider: IWhatsAppProvider = new MicroserviceWhatsAppProvider();
 
+let isDispatchingLock = false;
+
 // Dispatch pending notification events to WhatsApp target group
 export async function dispatchPendingNotifications(): Promise<{ sentCount: number; failedCount: number }> {
-  const config = await getWhatsAppConfig();
-  if (!config.target_group_jid) {
+  if (isDispatchingLock) {
     return { sentCount: 0, failedCount: 0 };
   }
 
-  const status = await whatsAppProvider.getStatus();
-  if (!status.isConnected) {
-    return { sentCount: 0, failedCount: 0 };
-  }
-
-  const pendingEvents = await getPendingNotificationEvents();
-  let sentCount = 0;
-  let failedCount = 0;
-
-  for (const event of pendingEvents) {
-    const res = await whatsAppProvider.sendMessage(config.target_group_jid, event.message);
-    if (res.success) {
-      await markNotificationSent(event.id);
-      sentCount++;
-    } else {
-      // If service is unreachable or socket dropped, stop and leave remaining items as PENDING
-      const isConnectionError =
-        res.error?.includes('not currently connected') ||
-        res.error?.includes('ECONNREFUSED') ||
-        res.error?.includes('Service Unavailable') ||
-        res.error?.includes('tidak dapat dihubungi');
-
-      if (isConnectionError) {
-        break;
-      }
-
-      await markNotificationFailed(event.id, res.error || 'Pengiriman gagal');
-      failedCount++;
+  isDispatchingLock = true;
+  try {
+    const config = await getWhatsAppConfig();
+    if (!config.target_group_jid) {
+      return { sentCount: 0, failedCount: 0 };
     }
-  }
 
-  return { sentCount, failedCount };
+    const status = await whatsAppProvider.getStatus();
+    if (!status.isConnected) {
+      return { sentCount: 0, failedCount: 0 };
+    }
+
+    const pendingEvents = await getPendingNotificationEvents();
+    let sentCount = 0;
+    let failedCount = 0;
+
+    for (const event of pendingEvents) {
+      const res = await whatsAppProvider.sendMessage(config.target_group_jid, event.message);
+      if (res.success) {
+        await markNotificationSent(event.id);
+        sentCount++;
+      } else {
+        // If service is unreachable or socket dropped, stop and leave remaining items as PENDING
+        const isConnectionError =
+          res.error?.includes('not currently connected') ||
+          res.error?.includes('ECONNREFUSED') ||
+          res.error?.includes('Service Unavailable') ||
+          res.error?.includes('tidak dapat dihubungi');
+
+        if (isConnectionError) {
+          break;
+        }
+
+        await markNotificationFailed(event.id, res.error || 'Pengiriman gagal');
+        failedCount++;
+      }
+    }
+
+    return { sentCount, failedCount };
+  } finally {
+    isDispatchingLock = false;
+  }
 }

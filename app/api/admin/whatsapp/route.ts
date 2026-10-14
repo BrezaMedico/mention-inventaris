@@ -5,7 +5,6 @@ import {
   getWhatsAppConfig,
   updateWhatsAppConfig,
   getNotificationEvents,
-  checkAndCreateTaskScheduleReminders,
 } from '@/lib/db';
 
 export async function GET() {
@@ -19,15 +18,6 @@ export async function GET() {
       getWhatsAppConfig(),
       getNotificationEvents(30),
     ]);
-
-    if (status.isConnected && config.target_group_jid) {
-      checkAndCreateTaskScheduleReminders('auto')
-        .then(async () => {
-          await dispatchPendingNotifications();
-        })
-        .catch(() => {});
-      dispatchPendingNotifications().catch(() => {});
-    }
 
     return NextResponse.json({
       success: true,

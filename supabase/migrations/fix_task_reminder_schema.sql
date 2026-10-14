@@ -20,4 +20,4 @@ ALTER TABLE tasks ADD COLUMN IF NOT EXISTS h2_reminder_sent_at TIMESTAMPTZ;
 CREATE INDEX IF NOT EXISTS idx_notification_events_type_status 
   ON notification_events(type, status);
 CREATE INDEX IF NOT EXISTS idx_notification_events_status_created 
-  ON notification_events(status, created_at);
+  ON notification_events(status, created_at); 

@@ -279,9 +279,27 @@ app.post('/trigger-task-reminder', async (req, res) => {
   }
 });
 
-let lastOverdueRunDay = '';
-let lastMorningTaskRunDay = '';
-let lastAfternoonTaskRunDay = '';
+const SCHEDULER_STATE_FILE = path.join(__dirname, 'scheduler_state.json');
+
+function loadSchedulerState() {
+  try {
+    if (fs.existsSync(SCHEDULER_STATE_FILE)) {
+      return JSON.parse(fs.readFileSync(SCHEDULER_STATE_FILE, 'utf-8'));
+    }
+  } catch {}
+  return {};
+}
+
+function saveSchedulerState(state) {
+  try {
+    const current = loadSchedulerState();
+    fs.writeFileSync(SCHEDULER_STATE_FILE, JSON.stringify({ ...current, ...state }, null, 2), 'utf-8');
+  } catch {}
+}
+
+const savedState = loadSchedulerState();
+let lastOverdueRunDay = savedState.lastOverdueRunDay || '';
+let lastTaskReminderRunDay = savedState.lastTaskReminderRunDay || '';
 
 async function triggerOverdueCron() {
   try {
@@ -301,7 +319,7 @@ async function triggerOverdueCron() {
   }
 }
 
-async function triggerTaskReminderCron(mode = 'auto') {
+async function triggerTaskReminderCron(mode = 'all') {
   try {
     const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
     console.log(`[Task Reminder Cron - ${mode}] Dispatching at`, new Date().toISOString());
@@ -342,13 +360,12 @@ async function triggerDispatchPending() {
 }
 
 // Check every 30 seconds for accurate schedule trigger:
-// 1. 07:00 AM WIB: Pengingat tugas Hari H (semua prioritas: Low, Medium, High)
+// 1. 07:00 AM WIB: Pengingat tugas kalender (Hari H, H-1, H-2 sesuai prioritas)
 // 2. 08:00 AM WIB: Pengingat keterlambatan peminjaman barang (Overdue)
-// 3. 15:00 PM (3 Sore) WIB: Pengingat tugas H-1 (Sedang & Tinggi) dan H-2 (Tinggi)
 setInterval(() => {
   const now = new Date();
   
-  // Ambil jam & menit dalam zona waktu Asia/Jakarta (WIB)
+  // Ambil jam & tanggal dalam zona waktu Asia/Jakarta (WIB)
   let currentHour = now.getHours();
   let todayStr = now.toISOString().slice(0, 10);
   
@@ -373,22 +390,18 @@ setInterval(() => {
     }
   } catch {}
 
-  // 1. Jam 07:00 Pagi WIB: Pengingat Hari H (H-0)
-  if (currentHour === 7 && lastMorningTaskRunDay !== todayStr) {
-    lastMorningTaskRunDay = todayStr;
-    triggerTaskReminderCron('morning');
+  // 1. Jam 07:00 Pagi WIB: Pengingat tugas kalender (Hari H, H-1, H-2 digabung 1 pesan ringkas)
+  if (currentHour === 7 && lastTaskReminderRunDay !== todayStr) {
+    lastTaskReminderRunDay = todayStr;
+    saveSchedulerState({ lastTaskReminderRunDay: todayStr });
+    triggerTaskReminderCron('all');
   }
 
   // 2. Jam 08:00 Pagi WIB: Overdue barang
   if (currentHour === 8 && lastOverdueRunDay !== todayStr) {
     lastOverdueRunDay = todayStr;
+    saveSchedulerState({ lastOverdueRunDay: todayStr });
     triggerOverdueCron();
-  }
-
-  // 3. Jam 15:00 (3 Sore) WIB: Pengingat H-1 (Sedang/Tinggi) & H-2 (Tinggi)
-  if (currentHour === 15 && lastAfternoonTaskRunDay !== todayStr) {
-    lastAfternoonTaskRunDay = todayStr;
-    triggerTaskReminderCron('afternoon');
   }
 }, 30 * 1000);
 
