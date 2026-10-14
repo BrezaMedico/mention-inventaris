@@ -2437,16 +2437,31 @@ export async function checkAndCreateTaskScheduleReminders(
     return false;
   };
 
+  let resolvedMode = mode;
+  if (resolvedMode === 'auto') {
+    const now = new Date();
+    let currentHour = 7;
+    try {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Jakarta',
+        hour: 'numeric',
+        hour12: false,
+      }).format(now);
+      currentHour = parseInt(parts, 10);
+    } catch {}
+    resolvedMode = currentHour < 12 ? 'morning' : 'afternoon';
+  }
+
   let skippedCount = 0;
   const eligibleH0Tasks: Task[] = [];
   const eligibleH1Tasks: Task[] = [];
   const eligibleH2Tasks: Task[] = [];
 
-  const checkH0 = mode === 'all' || mode === 'auto' || mode === 'morning' || mode === 'h0';
-  const checkH1 = mode === 'all' || mode === 'auto' || mode === 'afternoon' || mode === 'h1';
-  const checkH2 = mode === 'all' || mode === 'auto' || mode === 'afternoon' || mode === 'h2';
+  const checkH0 = resolvedMode === 'all' || resolvedMode === 'morning' || resolvedMode === 'h0';
+  const checkH1 = resolvedMode === 'all' || resolvedMode === 'afternoon' || resolvedMode === 'h1';
+  const checkH2 = resolvedMode === 'all' || resolvedMode === 'afternoon' || resolvedMode === 'h2';
 
-  // A. Pengingat Hari H (Hari ini): Semua prioritas (LOW, MEDIUM, HIGH)
+  // A. Pengingat Hari H (Hari ini): Dikirim pukul 07.00 WIB untuk semua prioritas (LOW, MEDIUM, HIGH)
   if (checkH0) {
     const h0Candidates = tasksList.filter((t) => t.due_date === jakartaToday);
     for (const task of h0Candidates) {
@@ -2630,7 +2645,7 @@ export async function checkAndCreateTaskAfternoonReminders(): Promise<{
   taskCount: number;
 }> {
   const { tomorrow, dayAfterTomorrow } = getJakartaDateStrings();
-  const res = await checkAndCreateTaskScheduleReminders('all');
+  const res = await checkAndCreateTaskScheduleReminders('afternoon');
   return {
     newEvents: res.newEvents,
     skippedCount: res.skippedCount,

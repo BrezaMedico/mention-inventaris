@@ -17,9 +17,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Ambil mode: 'all' (default: Hari H, H-1, H-2 sekaligus pada 07:00 WIB), 'morning'/'h0', 'afternoon'/'h1'/'h2'
+    // Ambil mode: 'morning' (07:00 WIB, Hari H), 'afternoon' (15:00 WIB, H-1 & H-2), 'auto', atau 'all'
     let mode: 'auto' | 'morning' | 'afternoon' | 'all' | 'h0' | 'h1' | 'h2' =
-      (url.searchParams.get('mode') || 'all') as any;
+      (url.searchParams.get('mode') || 'auto') as any;
     try {
       const body = await request.clone().json();
       if (body?.mode) mode = body.mode;
