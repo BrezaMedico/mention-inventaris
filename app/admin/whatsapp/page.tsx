@@ -21,6 +21,7 @@ import {
   Copy,
   ChevronDown,
   ChevronUp,
+  Bell,
 } from 'lucide-react';
 
 export default function AdminWhatsAppPage() {
@@ -237,6 +238,32 @@ export default function AdminWhatsAppPage() {
       }
     } catch {
       setFeedback({ type: 'error', message: 'Gagal memproses antrian notifikasi.' });
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleTriggerTaskReminder = async (mode: 'auto' | 'morning' | 'afternoon' | 'all' = 'auto', force = false) => {
+    try {
+      setActionLoading(true);
+      setFeedback(null);
+      const res = await fetch('/api/admin/whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'trigger_task_reminder', mode, force }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFeedback({
+          type: 'success',
+          message: data.message || `Pengingat tugas berhasil dievaluasi (${data.mode || mode}).`,
+        });
+        loadWhatsAppInfo();
+      } else {
+        setFeedback({ type: 'error', message: data.error || 'Gagal mengevaluasi pengingat tugas.' });
+      }
+    } catch {
+      setFeedback({ type: 'error', message: 'Terjadi kesalahan saat memicu pengingat tugas.' });
     } finally {
       setActionLoading(false);
     }
@@ -645,13 +672,25 @@ export default function AdminWhatsAppPage() {
               </p>
             </div>
 
-            <button
-              onClick={handleDispatchQueue}
-              disabled={actionLoading || !statusData?.isConnected}
-              className="w-full sm:w-auto px-4 py-2.5 min-h-[40px] rounded-xl bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors disabled:bg-neutral-200 disabled:text-neutral-400 active:scale-[0.98] shrink-0"
-            >
-              Proses Antrian Sekarang
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => handleTriggerTaskReminder('auto')}
+                disabled={actionLoading}
+                className="w-full sm:w-auto px-4 py-2.5 min-h-[40px] rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold uppercase tracking-wider transition-colors disabled:bg-neutral-200 disabled:text-neutral-400 active:scale-[0.98] shrink-0 flex items-center justify-center gap-1.5 shadow-sm"
+                title="Cek tugas dan masukkan ke antrian pengingat WhatsApp sesuai jam (Hari H di pagi hari, H-1/H-2 di sore hari)"
+              >
+                <Bell className="w-3.5 h-3.5 text-purple-200" />
+                <span>Cek &amp; Buat Pengingat Tugas</span>
+              </button>
+
+              <button
+                onClick={handleDispatchQueue}
+                disabled={actionLoading || !statusData?.isConnected}
+                className="w-full sm:w-auto px-4 py-2.5 min-h-[40px] rounded-xl bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors disabled:bg-neutral-200 disabled:text-neutral-400 active:scale-[0.98] shrink-0"
+              >
+                Proses Antrian Sekarang
+              </button>
+            </div>
           </div>
 
           {logs.length === 0 ? (

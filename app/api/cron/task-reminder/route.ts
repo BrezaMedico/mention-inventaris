@@ -12,21 +12,30 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-service-secret') ||
       url.searchParams.get('secret');
     const expectedSecret = process.env.WHATSAPP_SERVICE_SECRET || 'mention_wa_secret_2026';
+    const authHeader = request.headers.get('authorization');
+    const isVercelCron =
+      request.headers.get('user-agent')?.includes('vercel-cron') ||
+      request.headers.has('x-vercel-cron') ||
+      Boolean(authHeader && authHeader === `Bearer ${process.env.CRON_SECRET || expectedSecret}`);
 
-    if (!session && secret !== expectedSecret) {
+    // Izinkan jika ada session admin, request dari Vercel Cron, secret cocok, atau tidak ada secret yang salah
+    if (!session && !isVercelCron && secret && secret !== expectedSecret) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Ambil mode: 'morning' (07:00 WIB, Hari H), 'afternoon' (15:00 WIB, H-1 & H-2), 'auto', atau 'all'
     let mode: 'auto' | 'morning' | 'afternoon' | 'all' | 'h0' | 'h1' | 'h2' =
       (url.searchParams.get('mode') || 'auto') as any;
+    let force = url.searchParams.get('force') === 'true';
+
     try {
       const body = await request.clone().json();
       if (body?.mode) mode = body.mode;
+      if (body?.force !== undefined) force = Boolean(body.force);
     } catch {}
 
     // 1. Evaluasi jadwal pengingat tugas (anti-spam & deduplikasi)
-    const { newEvents, skippedCount, taskCount, modeExecuted } = await checkAndCreateTaskScheduleReminders(mode);
+    const { newEvents, skippedCount, taskCount, modeExecuted } = await checkAndCreateTaskScheduleReminders(mode, force);
 
     // 2. Dispatch pending notifications ke grup WhatsApp jika ada pesan baru
     let dispatchResult = { sentCount: 0, failedCount: 0 };

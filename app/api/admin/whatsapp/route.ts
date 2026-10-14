@@ -5,6 +5,7 @@ import {
   getWhatsAppConfig,
   updateWhatsAppConfig,
   getNotificationEvents,
+  checkAndCreateTaskScheduleReminders,
 } from '@/lib/db';
 
 export async function GET() {
@@ -82,6 +83,28 @@ export async function POST(request: NextRequest) {
     if (action === 'dispatch_queue') {
       const result = await dispatchPendingNotifications();
       return NextResponse.json({ success: true, result });
+    }
+
+    if (action === 'trigger_task_reminder') {
+      const mode = body.mode || 'auto';
+      const force = Boolean(body.force);
+      const reminderRes = await checkAndCreateTaskScheduleReminders(mode, force);
+      let dispatchResult = { sentCount: 0, failedCount: 0 };
+      if (reminderRes.newEvents.length > 0) {
+        dispatchResult = await dispatchPendingNotifications();
+      }
+      return NextResponse.json({
+        success: true,
+        mode: reminderRes.modeExecuted,
+        remindersCreated: reminderRes.newEvents.length,
+        taskCount: reminderRes.taskCount,
+        skippedDueToDuplicate: reminderRes.skippedCount,
+        dispatched: dispatchResult,
+        message:
+          reminderRes.newEvents.length > 0
+            ? `Berhasil memproses jadwal (${reminderRes.modeExecuted}). ${reminderRes.taskCount} tugas dimasukkan ke antrian WhatsApp.`
+            : `Tidak ada tugas baru untuk jadwal (${reminderRes.modeExecuted}). Ditemukan: ${reminderRes.taskCount}, dilewati (anti-spam): ${reminderRes.skippedCount}.`,
+      });
     }
 
     return NextResponse.json({ success: false, error: 'Aksi tidak dikenal.' }, { status: 400 });

@@ -304,9 +304,9 @@ let lastAfternoonTaskRunDay = savedState.lastAfternoonTaskRunDay || '';
 
 async function triggerOverdueCron() {
   try {
-    const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
+    const nextApiUrl = (process.env.NEXT_APP_URL || 'https://mention-inventaris.vercel.app').replace(/\/$/, '');
     console.log('[08:00 AM Cron] Dispatching overdue reminders at', new Date().toISOString());
-    const res = await fetch(`${nextApiUrl}/api/cron/overdue`, {
+    const res = await fetch(`${nextApiUrl}/api/cron/overdue?secret=${SERVICE_SECRET}`, {
       method: 'POST',
       headers: {
         'x-cron-secret': SERVICE_SECRET,
@@ -322,9 +322,9 @@ async function triggerOverdueCron() {
 
 async function triggerTaskReminderCron(mode = 'auto') {
   try {
-    const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
+    const nextApiUrl = (process.env.NEXT_APP_URL || 'https://mention-inventaris.vercel.app').replace(/\/$/, '');
     console.log(`[Task Reminder Cron - ${mode}] Dispatching at`, new Date().toISOString());
-    const res = await fetch(`${nextApiUrl}/api/cron/task-reminder?mode=${mode}`, {
+    const res = await fetch(`${nextApiUrl}/api/cron/task-reminder?mode=${mode}&secret=${SERVICE_SECRET}`, {
       method: 'POST',
       headers: {
         'x-cron-secret': SERVICE_SECRET,
@@ -341,8 +341,8 @@ async function triggerTaskReminderCron(mode = 'auto') {
 // Auto-flush all PENDING notifications from Next.js queue
 async function triggerDispatchPending() {
   try {
-    const nextApiUrl = process.env.NEXT_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${nextApiUrl}/api/cron/dispatch`, {
+    const nextApiUrl = (process.env.NEXT_APP_URL || 'https://mention-inventaris.vercel.app').replace(/\/$/, '');
+    const res = await fetch(`${nextApiUrl}/api/cron/dispatch?secret=${SERVICE_SECRET}`, {
       method: 'POST',
       headers: {
         'x-cron-secret': SERVICE_SECRET,

@@ -2260,7 +2260,13 @@ export async function updateTask(
   if (input.description !== undefined) updateData.description = input.description.trim();
   if (input.pic !== undefined) updateData.pic = input.pic.trim();
   if (input.priority !== undefined) updateData.priority = input.priority;
-  if (input.due_date !== undefined) updateData.due_date = input.due_date;
+  if (input.due_date !== undefined) {
+    updateData.due_date = input.due_date;
+    // Reset flags agar tugas di jadwal baru dapat dikirimkan pengingatnya kembali
+    updateData.h0_reminder_sent_at = null as any;
+    updateData.h1_reminder_sent_at = null as any;
+    updateData.h2_reminder_sent_at = null as any;
+  }
   if (input.color !== undefined) updateData.color = input.color.trim();
 
   try {
@@ -2379,7 +2385,8 @@ function formatTaskItemForWhatsApp(task: Task, index: number): string {
  * - Tidak mengirim pesan kosong jika tidak ada tugas yang valid
  */
 export async function checkAndCreateTaskScheduleReminders(
-  mode: 'auto' | 'all' | 'morning' | 'afternoon' | 'h0' | 'h1' | 'h2' = 'all'
+  mode: 'auto' | 'all' | 'morning' | 'afternoon' | 'h0' | 'h1' | 'h2' = 'all',
+  force = false
 ): Promise<{
   newEvents: NotificationEvent[];
   skippedCount: number;
@@ -2411,10 +2418,15 @@ export async function checkAndCreateTaskScheduleReminders(
 
   // Helper untuk cek apakah tugas & reminder_type sudah pernah berhasil diproses / sedang pending
   const isAlreadyProcessed = (taskId: string, dueDate: string, reminderType: string, taskSentAt?: string): boolean => {
-    // 1. Cek flag di record task
-    if (taskSentAt) return true;
+    if (force) return false;
 
-    // 2. Cek di Supabase task_reminders
+    // 1. Cek flag di record task (hanya berlaku jika dikirim pada tanggal siklus yang sama dengan hari ini)
+    if (taskSentAt) {
+      const sentDateStr = taskSentAt.slice(0, 10);
+      if (sentDateStr === jakartaToday) return true;
+    }
+
+    // 2. Cek di Supabase task_reminders untuk due_date yang sama
     const inSupabase = supabaseReminders.some(
       (r) => r.task_id === taskId && r.due_date === dueDate && r.reminder_type === reminderType && (r.status as string) !== 'FAILED'
     );
@@ -2473,11 +2485,9 @@ export async function checkAndCreateTaskScheduleReminders(
     }
   }
 
-  // B. Pengingat H-1 (Besok): Hanya Sedang & Tinggi (MEDIUM, HIGH)
+  // B. Pengingat H-1 (Besok): Semua prioritas (LOW, MEDIUM, HIGH) agar tidak ada tugas besok yang terlewat
   if (checkH1) {
-    const h1Candidates = tasksList.filter(
-      (t) => t.due_date === jakartaTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
-    );
+    const h1Candidates = tasksList.filter((t) => t.due_date === jakartaTomorrow);
     for (const task of h1Candidates) {
       if (isAlreadyProcessed(task.id, task.due_date, 'H-1', task.h1_reminder_sent_at)) {
         skippedCount++;
@@ -2487,10 +2497,10 @@ export async function checkAndCreateTaskScheduleReminders(
     }
   }
 
-  // C. Pengingat H-2 (Besok lusa): Hanya Tinggi (HIGH)
+  // C. Pengingat H-2 (Besok lusa): Prioritas Sedang & Tinggi (MEDIUM, HIGH)
   if (checkH2) {
     const h2Candidates = tasksList.filter(
-      (t) => t.due_date === jakartaDayAfterTomorrow && t.priority === 'HIGH'
+      (t) => t.due_date === jakartaDayAfterTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
     );
     for (const task of h2Candidates) {
       if (isAlreadyProcessed(task.id, task.due_date, 'H-2', task.h2_reminder_sent_at)) {

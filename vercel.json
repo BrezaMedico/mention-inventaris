@@ -1,19 +1,19 @@
 {
   "crons": [
     {
-      "path": "/api/cron/keepalive",
+      "path": "/api/cron/keepalive?secret=mention_wa_secret_2026",
       "schedule": "0 * * * *"
     },
     {
-      "path": "/api/cron/task-reminder?mode=morning",
+      "path": "/api/cron/task-reminder?mode=morning&secret=mention_wa_secret_2026",
       "schedule": "0 0 * * *"
     },
     {
-      "path": "/api/cron/task-reminder?mode=afternoon",
+      "path": "/api/cron/task-reminder?mode=afternoon&secret=mention_wa_secret_2026",
       "schedule": "0 8 * * *"
     },
     {
-      "path": "/api/cron/overdue",
+      "path": "/api/cron/overdue?secret=mention_wa_secret_2026",
       "schedule": "0 1 * * *"
     }
   ]
