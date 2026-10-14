@@ -2485,9 +2485,11 @@ export async function checkAndCreateTaskScheduleReminders(
     }
   }
 
-  // B. Pengingat H-1 (Besok): Semua prioritas (LOW, MEDIUM, HIGH) agar tidak ada tugas besok yang terlewat
+  // B. Pengingat H-1 (Besok): Hanya Sedang & Tinggi (MEDIUM, HIGH) - dikirim jam 15:00 WIB
   if (checkH1) {
-    const h1Candidates = tasksList.filter((t) => t.due_date === jakartaTomorrow);
+    const h1Candidates = tasksList.filter(
+      (t) => t.due_date === jakartaTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
+    );
     for (const task of h1Candidates) {
       if (isAlreadyProcessed(task.id, task.due_date, 'H-1', task.h1_reminder_sent_at)) {
         skippedCount++;
@@ -2497,10 +2499,10 @@ export async function checkAndCreateTaskScheduleReminders(
     }
   }
 
-  // C. Pengingat H-2 (Besok lusa): Prioritas Sedang & Tinggi (MEDIUM, HIGH)
+  // C. Pengingat H-2 (Besok lusa): Hanya Tinggi (HIGH) - dikirim jam 15:00 WIB
   if (checkH2) {
     const h2Candidates = tasksList.filter(
-      (t) => t.due_date === jakartaDayAfterTomorrow && (t.priority === 'MEDIUM' || t.priority === 'HIGH')
+      (t) => t.due_date === jakartaDayAfterTomorrow && t.priority === 'HIGH'
     );
     for (const task of h2Candidates) {
       if (isAlreadyProcessed(task.id, task.due_date, 'H-2', task.h2_reminder_sent_at)) {
